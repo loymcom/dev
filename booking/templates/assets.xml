@@ -1,0 +1,8 @@
+<odoo>
+    <template id="assets_frontend" inherit_id="web.assets_frontend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/css" href="/booking/static/css/booking.css"/>
+            <script type="text/javascript" src="/booking/static/src/main.js"></script>
+        </xpath>
+    </template>
+</odoo>
