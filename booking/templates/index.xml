@@ -1,7 +1,0 @@
-<odoo>
-    <template id="booking_index">
-        <t t-call="web.layout">
-            <t t-set="main_component" t-value="'BookingApp'"/>
-        </t>
-    </template>
-</odoo>

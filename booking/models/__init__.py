@@ -1,1 +1,1 @@
-from . import booking
+from . import hotel_folio
