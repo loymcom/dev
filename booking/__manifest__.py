@@ -1,15 +1,22 @@
 {
-    'name': 'Fredheim Booking',
-    'version': '1.0',
-    'summary': 'Module Summary',
-    'description': 'Module Description',
-    'category': 'Administration',
-    'author': 'Rick',
-    'website': 'Author Website',
-    'depends': ['base','web'],
+    "name": "Fredheim Booking",
+    "version": "1.0",
+    "summary": "Module Summary",
+    "description": "Module Description",
+    "category": "Administration",
+    "author": "Rick",
+    "website": "Author Website",
+    "depends": [
+        "hotel",
+        "web",
+    ],
     "data": [
-        "templates/assets.xml",
-        "templates/index.xml",
     ],
     "application": True,
+    "assets": {
+        "web.assets_backend": [
+            # "/booking/static/css/booking.css",
+            # "/booking/static/src/main.js",
+        ],
+    },
 }
