@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="hotel_room_view_form" model="ir.ui.view">
+            <field name="name">hotel.room hotel_booking</field>
+            <field name="model">hotel.room</field>
+            <field name="inherit_id" ref="hotel.view_hotel_room_form" />
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page name="appearance" string="Appearance">
+                        <group col="4" string="Appearance" groups="base.group_no_one">
+                            <field name="color" />
+                            <field name="position_h" />
+                            <field name="position_v" />
+                            <field name="width" />
+                            <field name="height" />
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+    </data>
+</odoo>
