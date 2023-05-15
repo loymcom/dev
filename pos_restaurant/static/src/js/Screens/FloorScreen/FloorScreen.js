@@ -122,7 +122,7 @@ odoo.define('pos_restaurant.FloorScreen', function (require) {
             const tableCopy = { ...table };
             delete tableCopy.floor;
             const tableId = await this.rpc({
-                model: 'restaurant.table',
+                model: 'hotel.room',
                 method: 'create_from_ui',
                 args: [tableCopy],
             });
@@ -295,7 +295,7 @@ odoo.define('pos_restaurant.FloorScreen', function (require) {
             this.activeFloor.background_color = color;
             try {
                 await this.rpc({
-                    model: 'restaurant.floor',
+                    model: 'hotel.floor',
                     method: 'write',
                     args: [[this.activeFloor.id], { background_color: color }],
                 });
@@ -320,7 +320,7 @@ odoo.define('pos_restaurant.FloorScreen', function (require) {
             try {
                 const originalSelectedTableId = this.state.selectedTableId;
                 await this.rpc({
-                    model: 'restaurant.table',
+                    model: 'hotel.room',
                     method: 'create_from_ui',
                     args: [{ active: false, id: originalSelectedTableId }],
                 });

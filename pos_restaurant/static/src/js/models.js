@@ -23,7 +23,7 @@ const PosRestaurantPosGlobalState = (PosGlobalState) => class PosRestaurantPosGl
     async _processData(loadedData) {
         await super._processData(...arguments);
         if (this.config.is_table_management) {
-            this.floors = loadedData['restaurant.floor'];
+            this.floors = loadedData['hotel.floor'];
             this.loadRestaurantFloor();
         }
         if (this.config.module_pos_restaurant) {
