@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import logging
+_logger = logging.getLogger(__name__)
+
 from collections import defaultdict
 from datetime import timedelta
 from itertools import groupby
@@ -1576,6 +1579,10 @@ class PosSession(models.Model):
         for model in self._pos_ui_models_to_load():
             loaded_data[model] = self._load_model(model)
         self._pos_data_process(loaded_data)
+        keys = [key for key, value in loaded_data.items()]
+        keys.sort()
+        for key in keys:
+            _logger.warning("{}".format(key))
         return loaded_data
 
     def _get_attributes_by_ptal_id(self):
