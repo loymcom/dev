@@ -135,7 +135,7 @@ odoo.define('pos_restaurant.FloorScreen', function (require) {
             }
             try {
                 const result = await this.rpc({
-                    model: 'pos.config',
+                    model: 'hotel.folio',
                     method: 'get_tables_order_count',
                     args: [this.env.pos.config.id],
                 });

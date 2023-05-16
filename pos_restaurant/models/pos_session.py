@@ -53,12 +53,12 @@ class PosSession(models.Model):
 
         return floors
 
-    def _loader_params_restaurant_printer(self):
-        return {
-            'search_params': {
-                'domain': [('id', 'in', self.config_id.printer_ids.ids)],
-                'fields': ['name', 'proxy_ip', 'product_categories_ids', 'printer_type'],
-            },
-        }
-    def _get_pos_ui_restaurant_printer(self, params):
-        return self.env['restaurant.printer'].search_read(**params['search_params'])
+    # def _loader_params_restaurant_printer(self):
+    #     return {
+    #         'search_params': {
+    #             'domain': [('id', 'in', self.config_id.printer_ids.ids)],
+    #             'fields': ['name', 'proxy_ip', 'product_categories_ids', 'printer_type'],
+    #         },
+    #     }
+    # def _get_pos_ui_restaurant_printer(self, params):
+    #     return self.env['restaurant.printer'].search_read(**params['search_params'])

@@ -12,7 +12,7 @@ class HotelFloor(models.Model):
 
     # restaurant.floor is similar to hotel.floor
     table_ids = fields.One2many('hotel.room', 'floor_id', string='Rooms')
-    pos_config_id = fields.Many2one('pos.config', string='Point of Sale')
+    pos_config_id = fields.Many2one('hotel.folio', string='Point of Sale')
 
     @api.ondelete(at_uninstall=False)
     def _unlink_except_active_pos_session(self):
@@ -35,4 +35,4 @@ class HotelFloor(models.Model):
                     'Open session: %s' % (' '.join(floor.pos_config_id.mapped('name')),))
             if vals.get('pos_config_id') and floor.pos_config_id.id and vals.get('pos_config_id') != floor.pos_config_id.id:
                 raise UserError(_('The %s is already used in another Pos Config.', floor.name))
-        return super(RestaurantFloor, self).write(vals)
+        return super(HotelFloor, self).write(vals)
