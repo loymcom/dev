@@ -14,9 +14,19 @@ class PosSession(models.Model):
             result.append('restaurant.printer')
             if self.config_id.is_table_management:
                 result.append('hotel.floor')
+                result.append('restaurant.floor')
         return result
 
     def _loader_params_hotel_floor(self):
+        return {
+            'search_params': {
+                'domain': [('pos_config_id', '=', self.config_id.id)],
+                'fields': ['name', 'background_color', 'table_ids', 'sequence'],
+                'order': 'sequence',
+            },
+        }
+
+    def _loader_params_restaurant_floor(self):
         return {
             'search_params': {
                 'domain': [('pos_config_id', '=', self.config_id.id)],
@@ -46,6 +56,23 @@ class PosSession(models.Model):
         tables_by_floor_id = {}
         for floor_id, table_group in groupby(tables, key=lambda table: table.floor_id):
             floor_tables = self.env['hotel.room'].concat(*table_group)
+            tables_by_floor_id[floor_id.id] = floor_tables.read(table_params['search_params']['fields'])
+
+        for floor in floors:
+            floor['tables'] = tables_by_floor_id.get(floor['id'], [])
+
+        return floors
+
+    def _get_pos_ui_restaurant_floor(self, params):
+        floors = self.env['restaurant.floor'].search_read(**params['search_params'])
+        floor_ids = [floor['id'] for floor in floors]
+
+        table_params = self._loader_params_hotel_room()
+        table_params['search_params']['domain'] = AND([table_params['search_params']['domain'], [('floor_id', 'in', floor_ids)]])
+        tables = self.env['restaurant.table'].search(table_params['search_params']['domain'], order='floor_id')
+        tables_by_floor_id = {}
+        for floor_id, table_group in groupby(tables, key=lambda table: table.floor_id):
+            floor_tables = self.env['restaurant.table'].concat(*table_group)
             tables_by_floor_id[floor_id.id] = floor_tables.read(table_params['search_params']['fields'])
 
         for floor in floors:

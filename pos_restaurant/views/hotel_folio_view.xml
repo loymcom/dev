@@ -53,6 +53,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="payment_method_ids" widget="many2many_tags"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="payment_method_ids"/>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="row mt16 o_settings_container" invisible="context.get('pos_config_create_mode', False)">
                         <div class="col-12 col-lg-6 o_setting_box"
