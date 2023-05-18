@@ -3,6 +3,7 @@
 from odoo.tools import groupby
 from re import search
 from functools import partial
+from datetime import datetime, timedelta
 
 import pytz
 
@@ -175,49 +176,18 @@ class PosOrder(models.Model):
         return table_orders
 
     @api.model
-    def get_table_draft_orders(self, table_ids):
-        """Generate an object of all draft orders for the given table.
-
-        Generate and return an JSON object with all draft orders for the given table, to send to the
-        front end application.
-
-        :param table_ids: Ids of the selected tables.
-        :type table_ids: list of int.
-        :returns: list -- list of dict representing the table orders
+    def get_table_draft_orders(self, table_ids, session_id):
         """
-        table_orders = self.search_read(
-                domain=self._get_domain_for_draft_orders(table_ids),
-                fields=self._get_fields_for_draft_order())
-
-        self._get_order_lines(table_orders)
-        self._get_payment_lines(table_orders)
-
-        for order in table_orders:
-            order['pos_session_id'] = order['session_id'][0]
-            order['uid'] = search(r"\d{5,}-\d{3,}-\d{4,}", order['pos_reference']).group(0)
-            order['name'] = order['pos_reference']
-            order['creation_date'] = order['create_date']
-            order['server_id'] = order['id']
-            if order['fiscal_position_id']:
-                order['fiscal_position_id'] = order['fiscal_position_id'][0]
-            if order['pricelist_id']:
-                order['pricelist_id'] = order['pricelist_id'][0]
-            if order['partner_id']:
-                order['partner_id'] = order['partner_id'][0]
-            if order['table_id']:
-                order['table_id'] = order['table_id'][0]
-
-            if not 'lines' in order:
-                order['lines'] = []
-            if not 'statement_ids' in order:
-                order['statement_ids'] = []
-
-            del order['id']
-            del order['session_id']
-            del order['pos_reference']
-            del order['create_date']
-
-        return self._add_activated_coupon_to_draft_orders(table_orders)
+        HOTEL.FOLIO
+        """
+        hotel_folio = self.env["pos.session"].browse(session_id).config_id
+        product = self.env["hotel.room"].browse(table_ids[0]).product_id
+        values = {
+            "product_id": product.id,
+            "checkin_date": datetime.now(),
+            "checkout_date": datetime.now() + timedelta(days=1),
+        }
+        hotel_folio.room_line_ids = [(0, 0, values)]
 
     @api.model
     def remove_from_ui(self, server_ids):

@@ -99,3 +99,39 @@ class PosSession(models.Model):
     #     }
     # def _get_pos_ui_restaurant_printer(self, params):
     #     return self.env['restaurant.printer'].search_read(**params['search_params'])
+
+    def close_session_from_ui(self, bank_payment_method_diff_pairs=None):
+        """Calling this method will try to close the session.
+
+        param bank_payment_method_diff_pairs: list[(int, float)]
+            Pairs of payment_method_id and diff_amount which will be used to post
+            loss/profit when closing the session.
+
+        If successful, it returns {'successful': True}
+        Otherwise, it returns {'successful': False, 'message': str, 'redirect': bool}.
+        'redirect' is a boolean used to know whether we redirect the user to the back end or not.
+        When necessary, error (i.e. UserError, AccessError) is raised which should redirect the user to the back end.
+        """
+        bank_payment_method_diffs = dict(bank_payment_method_diff_pairs or [])
+        self.ensure_one()
+        # Even if this is called in `post_closing_cash_details`, we need to call this here too for case
+        # where cash_control = False
+        check_closing_session = self._cannot_close_session(bank_payment_method_diffs)
+        if check_closing_session:
+            return check_closing_session
+
+        validate_result = self.action_pos_session_closing_control(bank_payment_method_diffs=bank_payment_method_diffs)
+
+        # If an error is raised, the user will still be redirected to the back end to manually close the session.
+        # If the return result is a dict, this means that normally we have a redirection or a wizard => we redirect the user
+        if isinstance(validate_result, dict):
+            # imbalance accounting entry
+            return {
+                'successful': False,
+                'message': validate_result.get('name'),
+                'redirect': True
+            }
+
+        self.message_post(body='Point of Sale Session ended')
+
+        return {'successful': True}

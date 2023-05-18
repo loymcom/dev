@@ -105,7 +105,7 @@ const PosRestaurantPosGlobalState = (PosGlobalState) => class PosRestaurantPosGl
     //     }
     //     this.config.iface_printers = !!this.unwatched.printers.length;
     // }
-    async _getTableOrdersFromServer(tableIds) {
+    async _getTableOrdersFromServer_Orig(tableIds) {
         this.set_synch('connecting', 1);
         try {
             const orders = await this.env.services.rpc({
@@ -120,6 +120,19 @@ const PosRestaurantPosGlobalState = (PosGlobalState) => class PosRestaurantPosGl
             return orders;
         } catch (error) {
             this.set_synch('error');
+            throw error;
+        }
+    }
+    async _getTableOrdersFromServer(tableIds) {
+        try {
+            const orders = await this.env.services.rpc({
+                model: 'pos.order',
+                method: 'get_table_draft_orders',
+                args: [tableIds],
+                args: [tableIds, this.env.pos.pos_session.id],
+            });
+            window.location = '/web#action=pos_restaurant.action_client_hotel_folio_menu';
+        } catch (error) {
             throw error;
         }
     }
