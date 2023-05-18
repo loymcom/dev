@@ -8,12 +8,14 @@
     "website": "Author Website",
     "depends": [
         "hotel",
-        "point_of_sale",
+        "pos_restaurant",
     ],
     "data": [
-        "data/hotel_room_type_data.xml",
-        "views/hotel_floor_views.xml",
-        "views/hotel_room_views.xml",
+        "data/default_hotel_room_type.xml",
+        'views/floor_assets_index.xml',
+        "views/hotel_floor_view.xml",
+        "views/hotel_folio_view.xml",
+        "views/hotel_room_view.xml",
     ],
     "license": "LGPL-3",
     # 'assets': {

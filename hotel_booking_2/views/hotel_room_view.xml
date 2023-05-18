@@ -9,7 +9,7 @@
             <field name="arch" type="xml">
                 <notebook position="inside">
                     <page name="appearance" string="Appearance">
-                        <group col="4" string="Appearance" groups="base.group_no_one">
+                        <group col="4" string="Appearance">
                             <field name="color" />
                             <field name="position_h" />
                             <field name="position_v" />
