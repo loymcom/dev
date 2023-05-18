@@ -26,9 +26,9 @@ const PosRestaurantPosGlobalState = (PosGlobalState) => class PosRestaurantPosGl
             this.floors = loadedData['hotel.floor'];
             this.loadRestaurantFloor();
         }
-        if (this.config.module_pos_restaurant) {
-            this._loadRestaurantPrinter(loadedData['restaurant.printer']);
-        }
+        // if (this.config.module_pos_restaurant) {
+        //     this._loadRestaurantPrinter(loadedData['restaurant.printer']);
+        // }
     }
     //@override
     _onReactiveOrderUpdated(order) {
@@ -91,20 +91,20 @@ const PosRestaurantPosGlobalState = (PosGlobalState) => class PosRestaurantPosGl
         await super.load_orders();
         this.loadingOrderState = false;
     }
-    _loadRestaurantPrinter(printers) {
-        this.unwatched.printers = [];
-        // list of product categories that belong to one or more order printer
-        this.printers_category_ids_set = new Set();
-        for (let printerConfig of printers) {
-            let printer = this.create_printer(printerConfig);
-            printer.config = printerConfig;
-            this.unwatched.printers.push(printer);
-            for (let id of printer.config.product_categories_ids) {
-                this.printers_category_ids_set.add(id);
-            }
-        }
-        this.config.iface_printers = !!this.unwatched.printers.length;
-    }
+    // _loadRestaurantPrinter(printers) {
+    //     this.unwatched.printers = [];
+    //     // list of product categories that belong to one or more order printer
+    //     this.printers_category_ids_set = new Set();
+    //     for (let printerConfig of printers) {
+    //         let printer = this.create_printer(printerConfig);
+    //         printer.config = printerConfig;
+    //         this.unwatched.printers.push(printer);
+    //         for (let id of printer.config.product_categories_ids) {
+    //             this.printers_category_ids_set.add(id);
+    //         }
+    //     }
+    //     this.config.iface_printers = !!this.unwatched.printers.length;
+    // }
     async _getTableOrdersFromServer(tableIds) {
         this.set_synch('connecting', 1);
         try {

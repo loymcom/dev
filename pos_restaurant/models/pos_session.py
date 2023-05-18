@@ -11,8 +11,9 @@ class PosSession(models.Model):
     def _pos_ui_models_to_load(self):
         result = super()._pos_ui_models_to_load()
         if self.config_id.module_pos_restaurant:
-            result.append('restaurant.printer')
+            # result.append('restaurant.printer')
             if self.config_id.is_table_management:
+                result.append('hotel.folio')
                 result.append('hotel.floor')
                 result.append('restaurant.floor')
         return result
@@ -79,6 +80,15 @@ class PosSession(models.Model):
             floor['tables'] = tables_by_floor_id.get(floor['id'], [])
 
         return floors
+
+    def _loader_params_hotel_folio(self):
+        return {'search_params': {'domain': [('id', '=', self.config_id.id)], 'fields': []}}
+
+    def _get_pos_ui_hotel_folio(self, params):
+        config = self.env['hotel.folio'].search_read(**params['search_params'])[0]
+        config['use_proxy'] = config['is_posbox'] and (config['iface_electronic_scale'] or config['iface_print_via_proxy']
+                                                       or config['iface_scan_via_proxy'] or config['iface_customer_facing_display_via_proxy'])
+        return config
 
     # def _loader_params_restaurant_printer(self):
     #     return {

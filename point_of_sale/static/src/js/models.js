@@ -188,7 +188,7 @@ class PosGlobalState extends PosModel {
         this.taxes_by_id = loadedData['taxes_by_id'];
         this.pos_session = loadedData['pos.session'];
         this._loadPosSession();
-        this.config = loadedData['pos.config'];
+        this.config = loadedData['hotel.folio'];
         this._loadPoSConfig();
         this.bills = loadedData['pos.bill'];
         this.partners = loadedData['res.partner'];

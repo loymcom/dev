@@ -31,7 +31,7 @@ class PosSession(models.Model):
     company_id = fields.Many2one('res.company', related='config_id.company_id', string="Company", readonly=True)
 
     config_id = fields.Many2one(
-        'pos.config', string='Point of Sale',
+        'hotel.folio', string='Point of Sale',
         required=True,
         index=True)
     name = fields.Char(string='Session ID', required=True, readonly=True, default='/')
