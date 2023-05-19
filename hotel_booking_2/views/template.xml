@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+<template id="floor_index_2" name="Floor Index">
+<html>
+    <head>
+        <t t-call-assets="hotel_booking_2.assets_playground"/>
+        <!-- <t t-call-assets="pos_restaurant.FloorScreen" t-css="false" /> -->
+    </head>
+
+    <body>
+    </body>
+</html>
+</template>
 
 <!-- This contains the tour assets. They are included during testing. -->
 <template id="floor_index" name="Floor Index">&lt;!DOCTYPE html&gt;
