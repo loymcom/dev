@@ -18,7 +18,7 @@ class PosController(PortalAccount):
 
 
 class OwlPlayground(http.Controller):
-    @http.route(['/owl_playground/playground'], type='http', auth='public')
+    @http.route(['/hotel_booking_2/playground'], type='http', auth='public')
     def show_playground(self):
         """
         Renders the owl playground page

@@ -37,6 +37,7 @@
             'web/static/src/core/browser/browser.js',
             'web/static/src/core/registry.js',
             'web/static/src/core/assets.js',
+            "pos_restaurant/static/src/js/Screens/FloorScreen/FloorScreen.js",
             'hotel_booking_2/static/src/**/*',
         ],
     },

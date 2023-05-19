@@ -3,8 +3,9 @@
 <template id="floor_index_2" name="Floor Index">
 <html>
     <head>
-        <t t-call-assets="hotel_booking_2.assets_playground"/>
         <!-- <t t-call-assets="pos_restaurant.FloorScreen" t-css="false" /> -->
+        <t t-call-assets="point_of_sale.assets"/>
+        <t t-call-assets="hotel_booking_2.assets_playground"/>
     </head>
 
     <body>
