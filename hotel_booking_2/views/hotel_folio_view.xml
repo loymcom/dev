@@ -12,8 +12,8 @@
                         Select Room
                     </button>
                     <group>
-                        <field name="module_pos_restaurant" />
-                        <field name="is_table_management" />
+                        <!-- <field name="module_pos_restaurant" />
+                        <field name="is_table_management" /> -->
                     </group>
                 </page>
             </notebook>
