@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
 
-    <t t-name="hotel_booking_2.playground" owl="1">
+    <t t-name="hotel_booking_2.floor" owl="1">
         <div class="p-3">
-            hello world
+            hello world <t t-esc="hotel_folio_id" />
         </div>
         <!-- <FloorScreen floor="'floor'" floors="'floors'" /> -->
     </t>

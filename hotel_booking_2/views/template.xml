@@ -3,6 +3,11 @@
 <template id="floor_index" name="Floor Index">
 <html>
     <head>
+        <script type="text/javascript">
+            var odoo = <t t-out="json.dumps({
+                'hotel_folio_id': hotel_folio_id,
+            })"/>;
+        </script>
         <t t-call-assets="hotel_booking_2.assets_floor"/>
     </head>
 
