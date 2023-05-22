@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-<template id="floor_index" name="Floor Index">
+<template id="hotel_booking_index" name="Floor Index">
 <html>
     <head>
         <script type="text/javascript">
@@ -8,7 +8,7 @@
                 'hotel_folio_id': hotel_folio_id,
             })"/>;
         </script>
-        <t t-call-assets="hotel_booking_2.assets_floor"/>
+        <t t-call-assets="hotel_booking_2.assets_booking"/>
     </head>
 
     <body>

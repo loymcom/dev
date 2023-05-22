@@ -19,7 +19,7 @@
     ],
     "license": "LGPL-3",
     'assets': {
-        'hotel_booking_2.assets_floor': [
+        'hotel_booking_2.assets_booking': [
             # bootstrap
             ('include', 'web._assets_helpers'),
             'web/static/src/scss/pre_variables.scss',

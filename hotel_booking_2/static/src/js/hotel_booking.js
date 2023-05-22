@@ -1,12 +1,11 @@
 /** @odoo-module **/
 
 import { Component } from "@odoo/owl";
-// import { FloorScreen } from "hotel_booking_2.FloorScreen";
 import { FloorScreen } from "@hotel_booking_2/js/FloorScreen/FloorScreen";
 
 
-export class Playground extends Component {
-    static template = "hotel_booking_2.floor";
+export class HotelBooking extends Component {
+    static template = "hotel_booking_2.hotel_booking_ui";
     static components = { FloorScreen };
 
     setup() {

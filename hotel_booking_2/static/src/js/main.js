@@ -2,7 +2,7 @@
 
 import { browser } from "@web/core/browser/browser";
 import { mount } from "@odoo/owl";
-import { Playground } from "./floor";
+import { HotelBooking } from "./hotel_booking";
 
 // The following code ensures that owl mount the component when ready.
 // `templates` contains templates contained in the bundles.
@@ -11,7 +11,7 @@ import { Playground } from "./floor";
 // configuration: https://github.com/odoo/owl/blob/master/doc/reference/app.md#configuration
 import { templates } from "@web/core/assets";
 owl.whenReady( () => {
-    mount(Playground, document.body, { templates, dev: true });
+    mount(HotelBooking, document.body, { templates, dev: true });
 });
 
 
