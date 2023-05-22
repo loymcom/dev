@@ -1,9 +1,9 @@
-odoo.define('pos_restaurant.EditableTable', function(require) {
+odoo.define('hotel_booking_2.EditableTable', function(require) {
     'use strict';
 
     const { useListener } = require("@web/core/utils/hooks");
-    const PosComponent = require('point_of_sale.PosComponent');
-    const Registries = require('point_of_sale.Registries');
+    const PosComponent = require('hotel_booking_2.PosComponent');
+    const Registries = require('hotel_booking_2.Registries');
 
     const { onMounted, onPatched } = owl;
 

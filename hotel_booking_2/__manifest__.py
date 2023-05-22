@@ -40,11 +40,11 @@
 
             # FloorScreen DEPENDENCIES
             "web/static/src/legacy/legacy_component.js",  # PosComponent
-            # "point_of_sale/static/src/js/PosComponent.js",  # FloorScreen, ComponentRegistry
+            "hotel_booking_2/static/src/js/point_of_sale/PosComponent.js",  # FloorScreen, ComponentRegistry
 
-            # "point_of_sale/static/src/js/ClassRegistry.js",  # Registries, ComponentRegistry
-            # "point_of_sale/static/src/js/ComponentRegistry.js",  # Registries
-            # "point_of_sale/static/src/js/Registries.js",  # FloorScreen
+            "hotel_booking_2/static/src/js/point_of_sale/ClassRegistry.js",  # Registries, ComponentRegistry
+            "hotel_booking_2/static/src/js/point_of_sale/ComponentRegistry.js",  # Registries
+            "hotel_booking_2/static/src/js/point_of_sale/Registries.js",  # FloorScreen
 
             "web/static/src/core/browser/browser.js",  # timing, rpc_service
             "web/static/src/core/utils/timing.js",  # FloorScreen
@@ -53,7 +53,7 @@
 
             "web/static/src/core/registry.js",  # rpc_service
             "web/static/src/core/network/rpc_service.js", # utils
-            # "point_of_sale/static/src/js/utils.js",  # FloorScreen
+            "hotel_booking_2/static/src/js/point_of_sale/utils.js",  # FloorScreen
 
             # "pos_restaurant/static/src/js/Screens/FloorScreen/FloorScreen.js",  # hotel.room hotel.floor hotel.folio
             # _save(table)         restaurant.table hotel.room create_from_ui([tableCopy])

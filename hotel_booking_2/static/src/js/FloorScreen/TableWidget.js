@@ -1,8 +1,8 @@
-odoo.define('pos_restaurant.TableWidget', function(require) {
+odoo.define('hotel_booking_2.TableWidget', function(require) {
     'use strict';
 
-    const PosComponent = require('point_of_sale.PosComponent');
-    const Registries = require('point_of_sale.Registries');
+    const PosComponent = require('hotel_booking_2.PosComponent');
+    const Registries = require('hotel_booking_2.Registries');
 
     /**
      * props: {

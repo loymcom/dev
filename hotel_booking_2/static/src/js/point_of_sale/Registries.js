@@ -1,12 +1,12 @@
-odoo.define('point_of_sale.Registries', function(require) {
+odoo.define('hotel_booking_2.Registries', function(require) {
     'use strict';
 
     /**
      * This definition contains all the instances of ClassRegistry.
      */
 
-    const ComponentRegistry = require('point_of_sale.ComponentRegistry');
-    const ClassRegistry = require('point_of_sale.ClassRegistry');
+    const ComponentRegistry = require('hotel_booking_2.ComponentRegistry');
+    const ClassRegistry = require('hotel_booking_2.ClassRegistry');
 
     class ModelRegistry extends ClassRegistry {
         add(baseClass) {

@@ -1,4 +1,4 @@
-odoo.define('point_of_sale.PosComponent', function (require) {
+odoo.define('hotel_booking_2.PosComponent', function (require) {
     'use strict';
 
     const { LegacyComponent } = require("@web/legacy/legacy_component");

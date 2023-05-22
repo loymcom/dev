@@ -1,8 +1,8 @@
-odoo.define('point_of_sale.ComponentRegistry', function(require) {
+odoo.define('hotel_booking_2.ComponentRegistry', function(require) {
     'use strict';
 
-    const PosComponent = require('point_of_sale.PosComponent');
-    const ClassRegistry = require('point_of_sale.ClassRegistry');
+    const PosComponent = require('hotel_booking_2.PosComponent');
+    const ClassRegistry = require('hotel_booking_2.ClassRegistry');
 
     class ComponentRegistry extends ClassRegistry {
         freeze() {

@@ -1,14 +1,19 @@
-odoo.define('pos_restaurant.FloorScreen', function (require) {
-    'use strict';
+/** @odoo-module alias=hotel_booking_2.FloorScreen **/
 
-    const PosComponent = require('point_of_sale.PosComponent');
-    const Registries = require('point_of_sale.Registries');
+    const PosComponent = require('hotel_booking_2.PosComponent');
+    const Registries = require('hotel_booking_2.Registries');
     const { debounce } = require("@web/core/utils/timing");
-    const { isConnectionError } = require('point_of_sale.utils');
+    const { isConnectionError } = require('hotel_booking_2.utils');
+    // This doesn't work
+    // import { PosComponent } from "@hotel_booking_2/js/point_of_sale/PosComponent";
+    // import { Registries } from "@hotel_booking_2/js/Registries";
+    // import { debounce } from "@web/core/utils/timing";
+    // import { isConnectionError } from "@hotel_booking_2/js/point_of_sale/utils";
 
-    const { onPatched, onMounted, onWillUnmount, useRef, useState } = owl;
+    // const { onPatched, onMounted, onWillUnmount, useRef, useState } = owl;
+    import { onPatched, onMounted, onWillUnmount, useRef, useState } from "@odoo/owl";
 
-    class FloorScreen extends PosComponent {
+    export class FloorScreen extends PosComponent {
         /**
          * @param {Object} props
          * @param {Object} props.floor
@@ -122,7 +127,7 @@ odoo.define('pos_restaurant.FloorScreen', function (require) {
             const tableCopy = { ...table };
             delete tableCopy.floor;
             const tableId = await this.rpc({
-                model: 'restaurant.table',
+                model: 'hotel.floor',
                 method: 'create_from_ui',
                 args: [tableCopy],
             });
@@ -135,7 +140,7 @@ odoo.define('pos_restaurant.FloorScreen', function (require) {
             }
             try {
                 const result = await this.rpc({
-                    model: 'pos.config',
+                    model: 'hotel.folio',
                     method: 'get_tables_order_count',
                     args: [this.env.pos.config.id],
                 });
@@ -295,7 +300,7 @@ odoo.define('pos_restaurant.FloorScreen', function (require) {
             this.activeFloor.background_color = color;
             try {
                 await this.rpc({
-                    model: 'restaurant.floor',
+                    model: 'hotel.floor',
                     method: 'write',
                     args: [[this.activeFloor.id], { background_color: color }],
                 });
@@ -320,7 +325,7 @@ odoo.define('pos_restaurant.FloorScreen', function (require) {
             try {
                 const originalSelectedTableId = this.state.selectedTableId;
                 await this.rpc({
-                    model: 'restaurant.table',
+                    model: 'hotel.room',
                     method: 'create_from_ui',
                     args: [{ active: false, id: originalSelectedTableId }],
                 });
@@ -349,11 +354,15 @@ odoo.define('pos_restaurant.FloorScreen', function (require) {
                 }
             }
         }
+        static template = "hotel_booking_2.FloorScreen";
     }
-    FloorScreen.template = 'FloorScreen';
-    FloorScreen.hideOrderSelector = true;
+//     FloorScreen.template = 'hotel_booking_2.FloorScreen';
+//     FloorScreen.hideOrderSelector = true;
 
-    Registries.Component.add(FloorScreen);
+//     Registries.Component.add(FloorScreen);
 
-    return FloorScreen;
-});
+//     // return FloorScreen;
+//     let __exports = {};
+//     __exports.FloorScreen = FloorScreen;
+//     return __exports
+// });

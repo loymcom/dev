@@ -1,8 +1,8 @@
 /** @odoo-module **/
 
 import { Component } from "@odoo/owl";
-// import FloorScreen from "pos_restaurant.FloorScreen";  // Missing dependencies:     ['pos_restaurant.FloorScreen']
-// import { FloorScreen } from "@pos_restaurant/js/Screens/FloorScreen/FloorScreen";
+// import { FloorScreen } from "hotel_booking_2.FloorScreen";
+
 
 export class Playground extends Component {
     static template = "hotel_booking_2.playground";

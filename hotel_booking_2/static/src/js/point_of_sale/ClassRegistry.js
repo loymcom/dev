@@ -1,4 +1,4 @@
-odoo.define('point_of_sale.ClassRegistry', function (require) {
+odoo.define('hotel_booking_2.ClassRegistry', function (require) {
     'use strict';
 
     /**
