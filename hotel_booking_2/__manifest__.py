@@ -19,7 +19,7 @@
     ],
     "license": "LGPL-3",
     'assets': {
-        'hotel_booking_2.assets_playground': [
+        'hotel_booking_2.assets_floor': [
             # bootstrap
             ('include', 'web._assets_helpers'),
             'web/static/src/scss/pre_variables.scss',
@@ -55,7 +55,7 @@
             "web/static/src/core/network/rpc_service.js", # utils
             "hotel_booking_2/static/src/js/point_of_sale/utils.js",  # FloorScreen
 
-            # "pos_restaurant/static/src/js/Screens/FloorScreen/FloorScreen.js",  # hotel.room hotel.floor hotel.folio
+            "hotel_booking_2/static/src/js/FloorScreen/FloorScreen.js",  # hotel.room hotel.floor hotel.folio
             # _save(table)         restaurant.table hotel.room create_from_ui([tableCopy])
             # _tableLongpolling()        pos.config hotel.folio get_tables_order_count([this.env.pos.config.id])
             # setFloorColor(color) restaurant.floor hotel.floor write([this.activeFloor.id], { background_color: color })

@@ -2,13 +2,15 @@
 
 import { Component } from "@odoo/owl";
 // import { FloorScreen } from "hotel_booking_2.FloorScreen";
+import { FloorScreen } from "@hotel_booking_2/js/FloorScreen/FloorScreen";
 
 
 export class Playground extends Component {
     static template = "hotel_booking_2.playground";
-    // static components = { FloorScreen };
+    static components = { FloorScreen };
 
     setup() {
+        
         this.floor = {
             id: 1,
             name: "Floor 1",
@@ -17,6 +19,7 @@ export class Playground extends Component {
             sequence: 1,
             table_ids: [],
         };
+        this.FloorScreen = this.floor;
         this.isShown = true;
         this.mobileSearchBarIsShown = false;
     }

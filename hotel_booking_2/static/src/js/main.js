@@ -2,7 +2,7 @@
 
 import { browser } from "@web/core/browser/browser";
 import { mount } from "@odoo/owl";
-import { Playground } from "./playground";
+import { Playground } from "./floor";
 
 // The following code ensures that owl mount the component when ready.
 // `templates` contains templates contained in the bundles.

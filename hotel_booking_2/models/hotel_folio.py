@@ -14,7 +14,7 @@ class HotelFolio(models.Model):
         return self._action_to_open_ui()
     
     def _action_to_open_ui(self):
-        path = "/floor/ui"
+        path = "/hotel_floor/ui"
         return {
             'type': 'ir.actions.act_url',
             'url': path + '?hotel_folio_id=%d' % self.id,

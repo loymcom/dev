@@ -356,13 +356,3 @@
         }
         static template = "hotel_booking_2.FloorScreen";
     }
-//     FloorScreen.template = 'hotel_booking_2.FloorScreen';
-//     FloorScreen.hideOrderSelector = true;
-
-//     Registries.Component.add(FloorScreen);
-
-//     // return FloorScreen;
-//     let __exports = {};
-//     __exports.FloorScreen = FloorScreen;
-//     return __exports
-// });
