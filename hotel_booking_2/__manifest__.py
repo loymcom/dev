@@ -8,7 +8,7 @@
     "website": "Author Website",
     "depends": [
         "hotel",
-        "pos_restaurant",
+        # "pos_restaurant",
     ],
     "data": [
         "data/default_hotel_room_type.xml",
@@ -40,20 +40,26 @@
 
             # FloorScreen DEPENDENCIES
             "web/static/src/legacy/legacy_component.js",  # PosComponent
-            "point_of_sale/static/src/js/PosComponent.js",  # FloorScreen, ComponentRegistry
+            # "point_of_sale/static/src/js/PosComponent.js",  # FloorScreen, ComponentRegistry
 
-            "point_of_sale/static/src/js/ClassRegistry.js",  # Registries, ComponentRegistry
-            "point_of_sale/static/src/js/ComponentRegistry.js",  # Registries
-            "point_of_sale/static/src/js/Registries.js",  # FloorScreen
+            # "point_of_sale/static/src/js/ClassRegistry.js",  # Registries, ComponentRegistry
+            # "point_of_sale/static/src/js/ComponentRegistry.js",  # Registries
+            # "point_of_sale/static/src/js/Registries.js",  # FloorScreen
 
             "web/static/src/core/browser/browser.js",  # timing, rpc_service
             "web/static/src/core/utils/timing.js",  # FloorScreen
 
+            "web/static/src/core/utils/hooks.js",  # EditableTable
+
             "web/static/src/core/registry.js",  # rpc_service
             "web/static/src/core/network/rpc_service.js", # utils
-            "point_of_sale/static/src/js/utils.js",  # FloorScreen
+            # "point_of_sale/static/src/js/utils.js",  # FloorScreen
 
-            "pos_restaurant/static/src/js/Screens/FloorScreen/FloorScreen.js",
+            # "pos_restaurant/static/src/js/Screens/FloorScreen/FloorScreen.js",  # hotel.room hotel.floor hotel.folio
+            # _save(table)         restaurant.table hotel.room create_from_ui([tableCopy])
+            # _tableLongpolling()        pos.config hotel.folio get_tables_order_count([this.env.pos.config.id])
+            # setFloorColor(color) restaurant.floor hotel.floor write([this.activeFloor.id], { background_color: color })
+            # deleteTable()        restaurant.table hotel.room create_from_ui([{ active: false, id: originalSelectedTableId }])
             'hotel_booking_2/static/src/**/*',
         ],
     },
