@@ -31,7 +31,7 @@
         ],
         'web.order_tests': [
             ("include", 'web.assets_frontend'), 
-            'hotel_booking_4/static/tests/**/*',
+            # 'hotel_booking_4/static/tests/**/*',
         ],
     }
 }

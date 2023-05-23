@@ -26,6 +26,7 @@
         <field name="model">hotel.folio</field>
         <field name="arch" type="xml">
             <booking image_field="image_url" tooltip_field="customer_id"/>
+            <!-- <booking floor_model="hotel.floor" item_model="hotel.room"/> -->
         </field>
     </record>
 

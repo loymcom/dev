@@ -1,9 +1,8 @@
-odoo.define('booking_view.EditableTable', function(require) {
-    'use strict';
+/** @odoo-module alias=booking_view.EditableTable **/
 
     const { useListener } = require("@web/core/utils/hooks");
-    const PosComponent = require('booking_view.PosComponent');
-    const Registries = require('booking_view.Registries');
+    const PosComponent = require('booking_view_pos.PosComponent');
+    const Registries = require('booking_view_pos.Registries');
 
     const { onMounted, onPatched } = owl;
 
@@ -58,4 +57,3 @@ odoo.define('booking_view.EditableTable', function(require) {
     Registries.Component.add(EditableTable);
 
     return EditableTable;
-});

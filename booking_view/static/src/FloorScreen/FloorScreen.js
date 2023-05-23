@@ -1,11 +1,12 @@
 /** @odoo-module alias=booking_view.FloorScreen **/
 
+    const PosComponent = require('booking_view_pos.PosComponent');
     const { debounce } = require("@web/core/utils/timing");
-    const { isConnectionError } = require('booking_view.utils');
+    const { isConnectionError } = require('booking_view_pos.utils');
 
     import { onPatched, onMounted, onWillUnmount, useRef, useState } from "@odoo/owl";
 
-    export class FloorScreen extends Component {
+    export class FloorScreen extends PosComponent {
         /**
          * @param {Object} props
          * @param {Object} props.floor

@@ -6,6 +6,9 @@ export class BookingModel {
     constructor(orm, resModel, fields, archInfo, domain) {
         this.orm = orm;
         this.resModel = resModel;
+        // const { floorModel, itemModel } = archInfo;
+        // this.floorModel = floorModel;
+        // this.itemModel = itemModel;
         const { imageField, limit, tooltipField } = archInfo;
         this.imageField = imageField;
         this.fields = fields;
@@ -52,5 +55,17 @@ export class BookingModel {
             default:
                 this.images = records;
         }
+        // load_booking_data();
     }
+    // async load_booking_data(){
+    //     const loadedData = await this.env.services.rpc({
+    //         model: 'hotel.folio',
+    //         method: 'load_booking_data',
+    //         args: [],
+    //     });
+    //     await this._processData(loadedData);
+    // }
+    // async _processData(loadedData) {
+    //     this.floors = loadedData['hotel.floor'];
+    // }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="booking_view.Renderer" owl="1">
+        <!-- <FloorScreen className="'col-3'" onClick.bind="onImageClick"/> -->
         <div class="row">
             <t t-foreach="props.images" t-as="image" t-key="image.id">
                 <BookingImage image="image" imageField="props.imageField" tooltipField="props.tooltipField" className="'col-3'" onClick.bind="onImageClick"/>

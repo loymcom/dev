@@ -3,6 +3,7 @@
     <t t-name="booking_view.View" owl="1">
         <Layout display="props.display" className="'h-100 overflow-auto'">
             <t t-component="props.Renderer" images="model.images" imageField="model.imageField" tooltipField="model.tooltipField"/>
+            <!-- <t t-component="props.Renderer"/> -->
         </Layout>
     </t>
 </templates>

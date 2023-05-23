@@ -1,8 +1,8 @@
 odoo.define('booking_view.EditBar', function(require) {
     'use strict';
 
-    const PosComponent = require('booking_view.PosComponent');
-    const Registries = require('booking_view.Registries');
+    const PosComponent = require('booking_view_pos.PosComponent');
+    const Registries = require('booking_view_pos.Registries');
 
     const { useState } = owl;
 
