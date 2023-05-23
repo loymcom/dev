@@ -3,6 +3,7 @@
 import { Component } from "@odoo/owl";
 import { FloorScreen } from "@hotel_booking_2/js/FloorScreen/FloorScreen";
 import { useService } from "@web/core/utils/hooks";
+import { makeEnv, startServices } from "@web/env";
 
 
 export class HotelBooking extends Component {
@@ -10,11 +11,14 @@ export class HotelBooking extends Component {
     static components = { FloorScreen };
 
     setup() {
+        // useService fails in hooks.js:192 const { services } = component.env; ENV IS MISSING
         //
-        // useService fails in hooks.js:192 const { services } = component.env; ENV IS MISSING, WHY???
+        // setup environment - await fails in setup()
+        // const env = makeEnv();
+        // await startServices(env);
         //
         // this.orm = useService("orm");
-        // this.rpc = useService("rpc");
+
         this.hotel_folio_id = odoo.hotel_folio_id;
         this.load_server_data();
     }
