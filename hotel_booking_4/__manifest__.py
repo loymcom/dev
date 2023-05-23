@@ -7,6 +7,7 @@
     "author": "Rick, Henrik",
     "website": "Author Website",
     "depends": [
+        "booking_view",
         "hotel",
     ],
     "data": [
@@ -16,4 +17,21 @@
         "views/hotel_room_view.xml",
     ],
     "license": "LGPL-3",
+    'assets': {
+        'web.assets_backend': [
+            'hotel_booking_4/static/src/**/*',
+            'hotel_booking_4/static/tests/**/*',
+            ('remove', 'hotel_booking_4/static/src/dashboard/**/*'),
+        ],
+        'hotel_booking.dashboard': [
+            # To include bootstrap scss variables
+            ("include", 'web._assets_helpers'), 
+            ('include', 'web._assets_backend_helpers'),
+            'hotel_booking_4/static/src/dashboard/**/*',
+        ],
+        'web.order_tests': [
+            ("include", 'web.assets_frontend'), 
+            'hotel_booking_4/static/tests/**/*',
+        ],
+    }
 }
