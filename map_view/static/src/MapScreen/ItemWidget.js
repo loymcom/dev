@@ -1,54 +1,54 @@
-/** @odoo-module alias=booking_view.TableWidget **/
+/** @odoo-module alias=booking_view.ItemWidget **/
 
     import { Component } from "@odoo/owl";
 
     /**
      * props: {
      *  onClick: callback,
-     *  table: table object,
+     *  item: item object,
      * }
      */
-    export class TableWidget extends Component {
-        static template = 'booking_view.TableWidget';
+    export class ItemWidget extends Component {
+        static template = 'booking_view.ItemWidget';
 
         setup() {
             owl.onMounted(this.onMounted);
         }
         onMounted() {
-            const table = this.props.table;
+            const item = this.props.item;
             function unit(val) {
                 return `${val}px`;
             }
             const style = {
-                width: unit(table.width),
-                height: unit(table.height),
-                'line-height': unit(table.height),
-                top: unit(table.position_v),
-                left: unit(table.position_h),
-                'border-radius': table.shape === 'round' ? unit(1000) : '3px',
+                width: unit(item.width),
+                height: unit(item.height),
+                'line-height': unit(item.height),
+                top: unit(item.position_v),
+                left: unit(item.position_h),
+                'border-radius': item.shape === 'round' ? unit(1000) : '3px',
             };
-            if (table.color) {
-                style.background = table.color;
+            if (item.color) {
+                style.background = item.color;
             }
-            if (table.height >= 150 && table.width >= 150) {
+            if (item.height >= 150 && item.width >= 150) {
                 style['font-size'] = '32px';
             }
             // Object.assign(this.el.style, style);
 
-            // const tableCover = this.el.querySelector('.table-cover');
-            // Object.assign(tableCover.style, { height: `${Math.ceil(this.fill * 100)}%` });
+            // const itemCover = this.el.querySelector('.item-cover');
+            // Object.assign(itemCover.style, { height: `${Math.ceil(this.fill * 100)}%` });
         }
         get fill() {
-            // const customerCount = this.env.pos.getCustomerCount(this.props.table.id);
-            // return Math.min(1, Math.max(0, customerCount / this.props.table.seats));
+            // const customerCount = this.env.pos.getCustomerCount(this.props.item.id);
+            // return Math.min(1, Math.max(0, customerCount / this.props.item.seats));
             return 1
         }
         get orderCount() {
-            const table = this.props.table;
-            return table.order_count !== undefined
-                ? table.order_count
+            const item = this.props.item;
+            return item.order_count !== undefined
+                ? item.order_count
                 : this.env.pos
-                      .getTableOrders(table.id)
+                      .getItemOrders(item.id)
                       .filter(o => o.orderlines.length !== 0 || o.paymentlines.length !== 0).length;
         }
         get orderCountClass() {
@@ -61,10 +61,10 @@
             return countClass;
         }
         get customerCountDisplay() {
-            return `${this.env.pos.getCustomerCount(this.props.table.id)}/${this.props.table.seats}`;
+            return `${this.env.pos.getCustomerCount(this.props.item.id)}/${this.props.item.seats}`;
         }
         _getNotifications() {
-            const orders = this.env.pos.getTableOrders(this.props.table.id);
+            const orders = this.env.pos.getItemOrders(this.props.item.id);
 
             let hasChangesCount = 0;
             let hasSkippedCount = 0;

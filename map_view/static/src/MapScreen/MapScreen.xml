@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="booking_view.MapScreen" owl="1">
+        <div class="map-screen screen">
+            <div class="screen-content-flexbox">
+                <t t-if="maps_length > 1">
+                    <div class="map-selector">
+                        <t t-foreach="maps" t-as="map" t-key="map.id">
+                            <span class="button button-map" t-att-class="{ active: map.id === state.selectedMapId }" t-on-click="() => this.selectMap(map)">
+                                <t t-esc="map.name" />
+                            </span>
+                        </t>
+                    </div>
+                </t>
+
+                <div
+                    t-on-click="_onDeselectItem"
+                    t-on-touchstart="_onPinchStart"
+                    t-on-touchmove="_onPinchMove"
+                    t-on-touchend="_onPinchEnd"
+                    class="map-map"
+                    t-ref="map-map-ref"
+                >
+                    <div t-if="isMapEmpty" class="empty-map">
+                        <span>This map has no items yet, use the </span>
+                        <i class="fa fa-plus" role="img" aria-label="Add button" title="Add button"></i>
+                        <span> button in the editing toolbar to create new items.</span>
+                    </div>
+                    <div t-else="" class="items">
+                        <t t-foreach="activeItems" t-as="item" t-key="item.id">
+                            <ItemWidget t-if="item.id !== state.selectedItemId" onClick.bind="onSelectItem" item="item" />
+                            <EditableItem t-else="" item="item" onSaveItem.bind="onSaveItem" />
+                        </t>
+                    </div>
+                    <!-- <span t-if="env.pos.user.role == 'manager'" class="edit-button editing" t-att-class="{ active: state.isEditMode }" t-on-click.stop="toggleEditMode"
+                          t-attf-style="top:{{state.mapMapScrollTop}}px;">
+                        <i class="fa fa-pencil" role="img" aria-label="Edit" title="Edit"></i>
+                    </span> -->
+                    <EditBar t-if="state.isEditMode" selectedItem="selectedItem" mapMapScrollTop="state.mapMapScrollTop"
+                             createItem.bind="createItem" duplicateItem.bind="duplicateItem" renameItem.bind="renameItem"
+                             changeSeatsNum.bind="changeSeatsNum" changeShape.bind="changeShape" setItemColor.bind="setItemColor"
+                             setMapColor.bind="setMapColor" deleteItem.bind="deleteItem"
+                    />
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

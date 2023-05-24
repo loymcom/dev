@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="booking_view.EditableItem" owl="1">
+        <Draggable limitArea="'.map-map'">
+            <Resizeable limitArea="'.map-map'">
+                <div class="item selected" t-on-click.stop="">
+                    <span class="label drag-handle">
+                        <t t-esc="props.item.name" />
+                    </span>
+                    <span class="item-seats">
+                        <t t-esc="props.item.seats" />
+                    </span>
+                    <t t-if="props.item.shape === 'round'">
+                        <div class="item-handle top resize-handle-n"></div>
+                        <div class="item-handle bottom resize-handle-s"></div>
+                        <div class="item-handle left resize-handle-w"></div>
+                        <div class="item-handle right resize-handle-e"></div>
+                    </t>
+                    <t t-if="props.item.shape === 'square'">
+                        <span class='item-handle top right resize-handle-ne'></span>
+                        <span class='item-handle top left resize-handle-nw'></span>
+                        <span class='item-handle bottom right resize-handle-se'></span>
+                        <span class='item-handle bottom left resize-handle-sw'></span>
+                    </t>
+                </div>
+            </Resizeable>
+        </Draggable>
+    </t>
+
+</templates>
