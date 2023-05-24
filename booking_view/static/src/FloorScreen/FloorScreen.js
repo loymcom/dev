@@ -1,14 +1,19 @@
-odoo.define('booking_view.FloorScreen', function (require) {
-    'use strict';
+/** @odoo-module alias=booking_view.FloorScreen **/
 
     const PosComponent = require('booking_view_pos.PosComponent');
     const Registries = require('booking_view_pos.Registries');
     const { debounce } = require("@web/core/utils/timing");
     const { isConnectionError } = require('booking_view_pos.utils');
+    import { Component } from "@odoo/owl";
+    // import { ItemWidget } from "./point_of_sale/ItemWidget";
+    // import { EditableTable } from "./point_of_sale/EditableTable";
+    // import { EditBar } from "./point_of_sale/EditBar";
 
     const { onPatched, onMounted, onWillUnmount, useRef, useState } = owl;
 
-    class FloorScreen extends PosComponent {
+    export class FloorScreen extends Component {
+        static template = 'booking_view.FloorScreen';
+        // static components = { ItemWidget, EditableTable, EditBar };
         /**
          * @param {Object} props
          * @param {Object} props.floor
@@ -164,7 +169,7 @@ odoo.define('booking_view.FloorScreen', function (require) {
             }
         }
         get activeFloor() {
-            return this.env.pos.floors_by_id[this.state.selectedFloorId];
+            return this.props.floors_by_id[this.state.selectedFloorId];
         }
         get activeTables() {
             return this.activeFloor.tables;
@@ -350,10 +355,3 @@ odoo.define('booking_view.FloorScreen', function (require) {
             }
         }
     }
-    FloorScreen.template = 'booking_view.FloorScreen';
-    FloorScreen.hideOrderSelector = true;
-
-    Registries.Component.add(FloorScreen);
-
-    return FloorScreen;
-});
