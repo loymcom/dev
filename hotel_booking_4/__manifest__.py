@@ -20,7 +20,7 @@
     'assets': {
         'web.assets_backend': [
             'hotel_booking_4/static/src/**/*',
-            'hotel_booking_4/static/tests/**/*',
+            # 'hotel_booking_4/static/tests/**/*',
             ('remove', 'hotel_booking_4/static/src/dashboard/**/*'),
         ],
         'hotel_booking.dashboard': [

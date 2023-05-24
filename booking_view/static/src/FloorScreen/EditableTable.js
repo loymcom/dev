@@ -1,4 +1,5 @@
-/** @odoo-module alias=booking_view.EditableTable **/
+odoo.define('booking_view.EditableTable', function(require) {
+    'use strict';
 
     const { useListener } = require("@web/core/utils/hooks");
     const PosComponent = require('booking_view_pos.PosComponent');
@@ -52,8 +53,9 @@
             this.props.onSaveTable(this.props.table);
         }
     }
-    EditableTable.template = 'EditableTable';
+    EditableTable.template = 'booking_view.EditableTable';
 
     Registries.Component.add(EditableTable);
 
     return EditableTable;
+});

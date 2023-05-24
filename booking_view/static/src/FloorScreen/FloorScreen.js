@@ -1,19 +1,21 @@
-/** @odoo-module alias=booking_view.FloorScreen **/
+odoo.define('booking_view.FloorScreen', function (require) {
+    'use strict';
 
     const PosComponent = require('booking_view_pos.PosComponent');
+    const Registries = require('booking_view_pos.Registries');
     const { debounce } = require("@web/core/utils/timing");
     const { isConnectionError } = require('booking_view_pos.utils');
 
-    import { onPatched, onMounted, onWillUnmount, useRef, useState } from "@odoo/owl";
+    const { onPatched, onMounted, onWillUnmount, useRef, useState } = owl;
 
-    export class FloorScreen extends PosComponent {
+    class FloorScreen extends PosComponent {
         /**
          * @param {Object} props
          * @param {Object} props.floor
          */
         setup() {
             super.setup();
-            const floor = this.props.floor ? this.props.floor : this.env.pos.floors[0];
+            const floor = this.props.floor ? this.props.floor : this.props.floors[0];
             this.state = useState({
                 selectedFloorId: floor.id,
                 selectedTableId: null,
@@ -31,15 +33,15 @@
             this.state.floorMapScrollTop = this.floorMapRef.el.getBoundingClientRect().top;
         }
         onMounted() {
-            if (this.env.pos.table) {
-                this.env.pos.unsetTable();
-            }
-            this.env.posbus.trigger('start-cash-control');
-            this.floorMapRef.el.style.background = this.state.floorBackground;
-            this.state.floorMapScrollTop = this.floorMapRef.el.getBoundingClientRect().top;
-            // call _tableLongpolling once then set interval of 5sec.
-            this._tableLongpolling();
-            this.tableLongpolling = setInterval(this._tableLongpolling.bind(this), 5000);
+            // if (this.env.pos.table) {
+            //     this.env.pos.unsetTable();
+            // }
+            // this.env.posbus.trigger('start-cash-control');
+            // this.floorMapRef.el.style.background = this.state.floorBackground;
+            // this.state.floorMapScrollTop = this.floorMapRef.el.getBoundingClientRect().top;
+            // // call _tableLongpolling once then set interval of 5sec.
+            // this._tableLongpolling();
+            // this.tableLongpolling = setInterval(this._tableLongpolling.bind(this), 5000);
         }
         onWillUnmount() {
             clearInterval(this.tableLongpolling);
@@ -125,31 +127,31 @@
                 args: [tableCopy],
             });
             table.id = tableId;
-            this.env.pos.tables_by_id[tableId] = table;
+            this.props.tables_by_id[tableId] = table;
         }
         async _tableLongpolling() {
             if (this.state.isEditMode) {
                 return;
             }
             try {
-                const result = await this.rpc({
-                    model: 'hotel.folio',
-                    method: 'get_tables_order_count',
-                    args: [this.env.pos.config.id],
-                });
-                result.forEach((table) => {
-                    const table_obj = this.env.pos.tables_by_id[table.id];
-                    const unsynced_orders = this.env.pos
-                        .getTableOrders(table_obj.id)
-                        .filter(
-                            (o) =>
-                                o.server_id === undefined &&
-                                (o.orderlines.length !== 0 || o.paymentlines.length !== 0) &&
-                                // do not count the orders that are already finalized
-                                !o.finalized
-                        ).length;
-                    table_obj.order_count = table.orders + unsynced_orders;
-                });
+                // const result = await this.rpc({
+                //     model: 'hotel.folio',
+                //     method: 'get_tables_order_count',
+                //     args: [this.env.pos.config.id],
+                // });
+                // result.forEach((table) => {
+                //     const table_obj = this.env.pos.tables_by_id[table.id];
+                //     const unsynced_orders = this.env.pos
+                //         .getTableOrders(table_obj.id)
+                //         .filter(
+                //             (o) =>
+                //                 o.server_id === undefined &&
+                //                 (o.orderlines.length !== 0 || o.paymentlines.length !== 0) &&
+                //                 // do not count the orders that are already finalized
+                //                 !o.finalized
+                //         ).length;
+                //     table_obj.order_count = table.orders + unsynced_orders;
+                // });
             } catch (error) {
                 if (isConnectionError(error)) {
                     await this.showPopup('OfflineErrorPopup', {
@@ -172,7 +174,7 @@
         }
         get selectedTable() {
             return this.state.selectedTableId !== null
-                ? this.env.pos.tables_by_id[this.state.selectedTableId]
+                ? this.props.tables_by_id[this.state.selectedTableId]
                 : false;
         }
         movePinch(hypot) {
@@ -347,5 +349,11 @@
                 }
             }
         }
-        static template = "booking_view.FloorScreen";
     }
+    FloorScreen.template = 'booking_view.FloorScreen';
+    FloorScreen.hideOrderSelector = true;
+
+    Registries.Component.add(FloorScreen);
+
+    return FloorScreen;
+});

@@ -9,9 +9,9 @@ odoo.define('booking_view_pos.PosComponent', function (require) {
     class PosComponent extends LegacyComponent {
         setup() {
             onRendered(() => {
-                if (this.env.isDebug()) {
-                    console.log('Rendered:', this.constructor.name);
-                }
+                // if (this.env.isDebug()) {
+                //     console.log('Rendered:', this.constructor.name);
+                // }
             });
         }
         /**

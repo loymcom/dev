@@ -35,12 +35,14 @@ export class BookingController extends Component {
 
         onWillStart(async () => {
             await this.model.load();
+            await this.model.loadBookingData();
         });
 
         onWillUpdateProps(async (nextProps) => {
             if (JSON.stringify(nextProps.domain) !== JSON.stringify(this.props.domain)) {
                 this.model.domain = nextProps.domain;
                 await this.model.load();
+                await this.model.loadBookingData();
             }
         });
     }

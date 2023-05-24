@@ -2,7 +2,7 @@
 import { useService } from "@web/core/utils/hooks";
 const { Component } = owl;
 import { BookingImage } from "./booking_image/booking_image";
-// import { FloorScreen } from "./FloorScreen/FloorScreen";
+import { FloorScreen } from "./FloorScreen/FloorScreen";
 
 export class BookingRenderer extends Component {
     setup() {
@@ -14,6 +14,6 @@ export class BookingRenderer extends Component {
     }
 }
 
-BookingRenderer.components = { BookingImage };
-// BookingRenderer.components = { FloorScreen };
+// BookingRenderer.components = { BookingImage };
+BookingRenderer.components = { FloorScreen, BookingImage };
 BookingRenderer.template = "booking_view.Renderer";

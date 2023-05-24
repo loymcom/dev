@@ -55,17 +55,35 @@ export class BookingModel {
             default:
                 this.images = records;
         }
-        // load_booking_data();
     }
-    // async load_booking_data(){
-    //     const loadedData = await this.env.services.rpc({
-    //         model: 'hotel.folio',
-    //         method: 'load_booking_data',
-    //         args: [],
-    //     });
-    //     await this._processData(loadedData);
-    // }
-    // async _processData(loadedData) {
-    //     this.floors = loadedData['hotel.floor'];
-    // }
+    async loadBookingData(){
+        // // TypeError: Cannot read properties of undefined (reading 'services')
+        // const loadedData = await this.env.services.orm({
+        //     model: 'hotel.folio',
+        //     method: 'load_booking_data',
+        //     args: [],
+        // });
+        const loadedData = await this.keepLast.add(
+            this.orm.call(
+                "hotel.folio",
+                "load_booking_data",
+            )
+        );
+        await this._processData(loadedData);
+    }
+    async _processData(loadedData) {
+        this.floors = loadedData['hotel.floor'];
+        this.loadFloor();
+    }
+    loadFloor() {
+        this.floors_by_id = {};
+        this.tables_by_id = {};
+        for (let floor of this.floors) {
+            this.floors_by_id[floor.id] = floor;
+            for (let table of floor.tables) {
+                this.tables_by_id[table.id] = table;
+                table.floor = floor;
+            }
+        }
+    }
 }

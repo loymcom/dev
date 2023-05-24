@@ -65,6 +65,7 @@ class HotelFolio(models.Model):
     # Inspired by pos.session
     #
 
+    @api.model
     def load_booking_data(self):
         loaded_data = {}
         self = self.with_context(loaded_data=loaded_data)
@@ -118,7 +119,7 @@ class HotelFolio(models.Model):
             },
         }
 
-    def _get_pos_ui_hotel_floor(self, params):
+    def _get_booking_ui_hotel_floor(self, params):
         floors = self.env['hotel.floor'].search_read(**params['search_params'])
         floor_ids = [floor['id'] for floor in floors]
 

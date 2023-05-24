@@ -12,7 +12,7 @@ odoo.define('booking_view.EditBar', function(require) {
             this.state = useState({ isColorPicker: false })
         }
     }
-    EditBar.template = 'EditBar';
+    EditBar.template = 'booking_view.EditBar';
 
     Registries.Component.add(EditBar);
 

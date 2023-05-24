@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="booking_view.Renderer" owl="1">
-        <!-- <FloorScreen className="'col-3'" onClick.bind="onImageClick"/> -->
-        <div class="row">
+        <FloorScreen
+            className="'col-3'"
+            onClick.bind="onImageClick"
+            floors="props.floors"
+            floors_by_id="props.floors_by_id"
+            tables_by_id="props.tables_by_id"
+        />
+        <!-- <div class="row">
             <t t-foreach="props.images" t-as="image" t-key="image.id">
                 <BookingImage image="image" imageField="props.imageField" tooltipField="props.tooltipField" className="'col-3'" onClick.bind="onImageClick"/>
             </t>
-        </div>
+        </div> -->
     </t>
 </templates>

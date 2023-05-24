@@ -10,12 +10,14 @@ export class BookingArchParser extends XMLParser {
         const tooltipField = xmlDoc.getAttribute("tooltip_field");
         // const floorModel = xmlDoc.getAttribute("floor_model");
         // const itemModel = xmlDoc.getAttribute("item_model");
+        // const loadBookingDataModel = xmlDoc.getAttribute("load_booking_data_model");
         return {
             imageField,
             limit,
             tooltipField,
             // floorModel,
             // itemModel,
+            // loadBookingDataModel,
         };
     }
 }

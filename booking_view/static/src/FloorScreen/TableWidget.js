@@ -1,4 +1,4 @@
-odoo.define('booking_view.TableWidget', function(require) {
+odoo.define('booking_view.ItemWidget', function(require) {
     'use strict';
 
     const PosComponent = require('booking_view_pos.PosComponent');
@@ -10,7 +10,7 @@ odoo.define('booking_view.TableWidget', function(require) {
      *  table: table object,
      * }
      */
-    class TableWidget extends PosComponent {
+    class ItemWidget extends PosComponent {
         setup() {
             owl.onMounted(this.onMounted);
         }
@@ -78,9 +78,9 @@ odoo.define('booking_view.TableWidget', function(require) {
             return hasChangesCount ? { printing: true } : hasSkippedCount ? { skipped: true } : {};
         }
     }
-    TableWidget.template = 'TableWidget';
+    ItemWidget.template = 'booking_view.ItemWidget';
 
-    Registries.Component.add(TableWidget);
+    Registries.Component.add(ItemWidget);
 
-    return TableWidget;
+    return ItemWidget;
 });
