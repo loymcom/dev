@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="map_view.Renderer" owl="1">
+        <t t-foreach="props.items" t-as="item" t-key="item.id">
+            <p>
+                <t t-esc="item.name" /><br/>
+            </p
+        </t>
+    </t>
+</templates>
