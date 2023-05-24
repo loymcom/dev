@@ -1,13 +1,13 @@
-odoo.define('booking_view.EditableTable', function(require) {
-    'use strict';
+/** @odoo-module alias=booking_view.EditableTable **/
 
     const { useListener } = require("@web/core/utils/hooks");
-    const PosComponent = require('booking_view_pos.PosComponent');
-    const Registries = require('booking_view_pos.Registries');
+    import { Component } from "@odoo/owl";
 
     const { onMounted, onPatched } = owl;
 
-    class EditableTable extends PosComponent {
+    export class EditableTable extends Component {
+        static template = 'booking_view.EditableTable';
+
         setup() {
             super.setup();
             useListener('resize-end', this._onResizeEnd);
@@ -53,9 +53,3 @@ odoo.define('booking_view.EditableTable', function(require) {
             this.props.onSaveTable(this.props.table);
         }
     }
-    EditableTable.template = 'booking_view.EditableTable';
-
-    Registries.Component.add(EditableTable);
-
-    return EditableTable;
-});

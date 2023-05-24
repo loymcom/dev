@@ -1,8 +1,6 @@
-odoo.define('booking_view.ItemWidget', function(require) {
-    'use strict';
+/** @odoo-module alias=booking_view.TableWidget **/
 
-    const PosComponent = require('booking_view_pos.PosComponent');
-    const Registries = require('booking_view_pos.Registries');
+    import { Component } from "@odoo/owl";
 
     /**
      * props: {
@@ -10,7 +8,9 @@ odoo.define('booking_view.ItemWidget', function(require) {
      *  table: table object,
      * }
      */
-    class ItemWidget extends PosComponent {
+    export class TableWidget extends Component {
+        static template = 'booking_view.TableWidget';
+
         setup() {
             owl.onMounted(this.onMounted);
         }
@@ -33,14 +33,15 @@ odoo.define('booking_view.ItemWidget', function(require) {
             if (table.height >= 150 && table.width >= 150) {
                 style['font-size'] = '32px';
             }
-            Object.assign(this.el.style, style);
+            // Object.assign(this.el.style, style);
 
-            const tableCover = this.el.querySelector('.table-cover');
-            Object.assign(tableCover.style, { height: `${Math.ceil(this.fill * 100)}%` });
+            // const tableCover = this.el.querySelector('.table-cover');
+            // Object.assign(tableCover.style, { height: `${Math.ceil(this.fill * 100)}%` });
         }
         get fill() {
-            const customerCount = this.env.pos.getCustomerCount(this.props.table.id);
-            return Math.min(1, Math.max(0, customerCount / this.props.table.seats));
+            // const customerCount = this.env.pos.getCustomerCount(this.props.table.id);
+            // return Math.min(1, Math.max(0, customerCount / this.props.table.seats));
+            return 1
         }
         get orderCount() {
             const table = this.props.table;
@@ -78,9 +79,3 @@ odoo.define('booking_view.ItemWidget', function(require) {
             return hasChangesCount ? { printing: true } : hasSkippedCount ? { skipped: true } : {};
         }
     }
-    ItemWidget.template = 'booking_view.ItemWidget';
-
-    Registries.Component.add(ItemWidget);
-
-    return ItemWidget;
-});

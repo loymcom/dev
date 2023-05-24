@@ -1,19 +1,17 @@
 /** @odoo-module alias=booking_view.FloorScreen **/
 
-    const PosComponent = require('booking_view_pos.PosComponent');
-    const Registries = require('booking_view_pos.Registries');
     const { debounce } = require("@web/core/utils/timing");
     const { isConnectionError } = require('booking_view_pos.utils');
     import { Component } from "@odoo/owl";
-    // import { ItemWidget } from "./point_of_sale/ItemWidget";
-    // import { EditableTable } from "./point_of_sale/EditableTable";
-    // import { EditBar } from "./point_of_sale/EditBar";
+    import { TableWidget } from "./TableWidget";
+    import { EditableTable } from "./EditableTable";
+    import { EditBar } from "./EditBar";
 
     const { onPatched, onMounted, onWillUnmount, useRef, useState } = owl;
 
     export class FloorScreen extends Component {
         static template = 'booking_view.FloorScreen';
-        // static components = { ItemWidget, EditableTable, EditBar };
+        static components = { TableWidget, EditableTable, EditBar };
         /**
          * @param {Object} props
          * @param {Object} props.floor

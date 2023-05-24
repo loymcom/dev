@@ -1,20 +1,14 @@
-odoo.define('booking_view.EditBar', function(require) {
-    'use strict';
+/** @odoo-module alias=booking_view.EditBar **/
 
-    const PosComponent = require('booking_view_pos.PosComponent');
-    const Registries = require('booking_view_pos.Registries');
+    import { Component } from "@odoo/owl";
 
     const { useState } = owl;
 
-    class EditBar extends PosComponent {
+    export class EditBar extends Component {
+        static template = 'booking_view.EditBar';
+
         setup() {
             super.setup();
             this.state = useState({ isColorPicker: false })
         }
     }
-    EditBar.template = 'booking_view.EditBar';
-
-    Registries.Component.add(EditBar);
-
-    return EditBar;
-});

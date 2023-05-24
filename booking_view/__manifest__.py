@@ -23,11 +23,6 @@
             # FloorScreen DEPENDENCIES
             "web/static/src/webclient/webclient.xml",
             # "web/static/src/legacy/legacy_component.js",  # PosComponent
-            "booking_view/static/src/FloorScreen/point_of_sale/PosComponent.js",  # FloorScreen, ComponentRegistry
-
-            "booking_view/static/src/FloorScreen/point_of_sale/ClassRegistry.js",  # Registries, ComponentRegistry
-            "booking_view/static/src/FloorScreen/point_of_sale/ComponentRegistry.js",  # Registries
-            "booking_view/static/src/FloorScreen/point_of_sale/Registries.js",  # FloorScreen
 
             "web/static/src/core/browser/browser.js",  # timing, rpc_service
             "web/static/src/core/utils/timing.js",  # FloorScreen
