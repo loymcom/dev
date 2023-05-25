@@ -18,5 +18,5 @@
         "views/hotel_room_views.xml",
         "views/res_partner_views.xml",
     ],
-    "license": "LGPL-3",
+    "license": "AGPL-3",
 }

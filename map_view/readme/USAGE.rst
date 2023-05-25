@@ -36,7 +36,7 @@ hotel.folio view with button will return action_view_hotel_floor_map
         <field name="inherit_id" ref="hotel.view_hotel_folio_form" />
         <field name="arch" type="xml">
             <field name="room_line_ids" position="before">
-                <button class="btn btn-primary" name="action_view_hotel_floor_map" type="action">
+                <button class="btn btn-primary" name="action_view_hotel_floor_map" type="object">
                     Select Room
                 </button>
             </field>
