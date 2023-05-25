@@ -40,7 +40,7 @@
         <field name="name">hotel.floor.view.map</field>
         <field name="model">hotel.floor</field>
         <field name="arch" type="xml">
-            <map2
+            <map
                 items_field="room_ids"
                 create_item_values="{'room_categ_id': 'hotel_map.default_room_type'}"
             />
@@ -50,7 +50,7 @@
         <field name="name">hotel.floor.view.map</field>
         <field name="model">hotel.floor</field>
         <field name="arch" type="xml">
-            <map2
+            <map
                 items_field="room_ids"
                 create_item_values="{'room_categ_id': 'hotel_map.default_room_type'}"
                 onclick_item_method="action_folio_add_room"
@@ -62,7 +62,7 @@
     <record model="ir.actions.act_window" id="hotel_floor_action">
       <field name="name">Hotel Floors Action</field>
       <field name="res_model">hotel.floor</field>
-      <field name="view_mode">tree,form,gallery,map2</field>
+      <field name="view_mode">tree,form,gallery,map</field>
     </record>
 
     <!-- menu items -->

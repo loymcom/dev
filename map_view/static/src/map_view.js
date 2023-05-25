@@ -7,7 +7,7 @@ import { MapModel } from "./map_model";
 import { MapRenderer } from "./map_renderer";
 
 export const mapView = {
-    type: "map2",
+    type: "map",
     display_name: "Map",
     icon: "fa fa-picture-o",
     multiRecord: true,
@@ -30,4 +30,4 @@ export const mapView = {
     },
 };
 
-registry.category("views").add("map2", mapView);
+registry.category("views").add("map", mapView);

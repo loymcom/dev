@@ -9,7 +9,7 @@ class HotelFolio(models.Model):
         action = {
             "type": "ir.actions.act_window",
             "res_model": "hotel.floor",
-            "views": [[self.env.ref("hotel_map.hotel_floor_view_map_action_folio_add_room").id, "map2"]],
+            "views": [[self.env.ref("hotel_map.hotel_floor_view_map_action_folio_add_room").id, "map"]],
             "context": {"folio_id": self.id},  # folio.room.line field
         }
         return action

@@ -54,7 +54,7 @@ hotel.folio method action_view_hotel_floor_map will return view "hotel_map.hotel
         action = {
             "type": "ir.actions.act_window",
             "res_model": "hotel.floor",
-            "views": [[self.env.ref("hotel_map.hotel_floor_view_map_action_folio_add_room").id, "map2"]],
+            "views": [[self.env.ref("hotel_map.hotel_floor_view_map_action_folio_add_room").id, "map"]],
             "context": {"folio_id": self.id},  # folio.room.line field
         }
         return action
@@ -67,7 +67,7 @@ View hotel_floor_view_map_action_folio_add_room
         <field name="name">hotel.floor.view.map</field>
         <field name="model">hotel.floor</field>
         <field name="arch" type="xml">
-            <map2
+            <map
                 items_field="room_ids"
                 create_item_values="{'room_categ_id': 'hotel_map.default_room_type'}"
                 onclick_item_method="action_folio_add_room"
