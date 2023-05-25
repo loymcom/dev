@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_partner_view_form" model="ir.ui.view">
+        <field name="name">res.partner.view.form.inherit.base</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button class="oe_stat_button" type="object" name="action_view_hotel_folio" groups="hotel.group_hotel_user" icon="fa-usd">
+                    <field string="Folio" name="hotel_folio_count" widget="statinfo"/>
+                </button>
+            </div>
+        </field>
+    </record>
+
+    <menuitem name="Customers" id="res_partner_menu" parent="hotel.hotel_management_menu" action="base.action_partner_form" sequence="5"/>
+
+</odoo>

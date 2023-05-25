@@ -1,5 +1,5 @@
 {
-    "name": "Hotel Floor Test",
+    "name": "Hotel Floor Map",
     "version": "1.0",
     "summary": "Module Summary",
     "description": "Module Description",
@@ -13,7 +13,10 @@
     ],
     "data": [
         "data/default_hotel_room_type.xml",
-        "views/hotel_floor_view.xml",
+        "views/hotel_floor_views.xml",
+        "views/hotel_folio_views.xml",
+        "views/hotel_room_views.xml",
+        "views/res_partner_views.xml",
     ],
     "license": "LGPL-3",
 }

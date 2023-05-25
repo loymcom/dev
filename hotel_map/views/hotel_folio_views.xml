@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- <record id="hotel_folio_action_default_partner_id" model="ir.actions.act_window">
+        <field name="name">Customer Folio</field>
+        <field name="res_model">hotel.folio</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'default_partner_id': active_id}</field>
+        <field name="groups_id" eval="[(4, ref('hotel.group_hotel_user'))]"/>
+    </record> -->
+
+    <record id="view_hotel_folio_form" model="ir.ui.view">
+        <field name="name">hotel.folio.view.form</field>
+        <field name="model">hotel.folio</field>
+        <field name="inherit_id" ref="hotel.view_hotel_folio_form" />
+        <field name="arch" type="xml">
+            <field name="room_line_ids" position="before">
+                <button class="btn btn-primary" name="action_view_hotel_floor_map" type="action">
+                    Select Room
+                </button>
+            </field>
+        </field>
+    </record>
+
+</odoo>

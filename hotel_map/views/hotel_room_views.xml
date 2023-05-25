@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hotel_room_form" model="ir.ui.view">
+        <field name="name">hotel.room.view.form.inherit.hotel</field>
+        <field name="model">hotel.room</field>
+        <field name="inherit_id" ref="hotel.view_hotel_room_form" />
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page name="appearance" string="Appearance">
+                    <group col="4" string="Appearance">
+                        <field name="shape" />
+                        <field name="position_h" />
+                        <field name="position_v" />
+                        <field name="width" />
+                        <field name="height" />
+                        <field name="capacity" />
+                        <field name="color" />
+                        <field name="active" widget="boolean_toggle" />
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>

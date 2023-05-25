@@ -2,7 +2,7 @@
 <odoo>
 
     <record id="hotel_floor_view_form" model="ir.ui.view">
-        <field name="name">hotel.floor hotel_booking</field>
+        <field name="name">hotel.floor.view.form</field>
         <field name="model">hotel.floor</field>
         <field name="inherit_id" ref="hotel.view_hotel_floor_form" />
         <field name="arch" type="xml">
@@ -27,31 +27,45 @@
     </record>
 
     <!-- gallery view -->
-    <record id="hotel_folio_view_gallery" model="ir.ui.view">
-        <field name="name">hotel.floor gallery view</field>
+    <record id="hotel_floor_view_gallery" model="ir.ui.view">
+        <field name="name">hotel.floor.view.gallery</field>
         <field name="model">hotel.floor</field>
         <field name="arch" type="xml">
             <gallery image_field="image_url" tooltip_field="customer_id"/>
         </field>
     </record>
 
-    <!-- map view -->
-    <record id="hotel_folio_view_map" model="ir.ui.view">
-        <field name="name">hotel.floor map view</field>
+    <!-- map views -->
+    <record id="hotel_floor_view_map" model="ir.ui.view">
+        <field name="name">hotel.floor.view.map</field>
         <field name="model">hotel.floor</field>
         <field name="arch" type="xml">
-            <map2 items_field="room_ids" new_item_values="{'room_categ_id': 'default_room_type'}" />
+            <map2
+                items_field="room_ids"
+                create_item_values="{'room_categ_id': 'hotel_map.default_room_type'}"
+            />
+        </field>
+    </record>
+    <record id="hotel_floor_view_map_action_folio_add_room" model="ir.ui.view">
+        <field name="name">hotel.floor.view.map</field>
+        <field name="model">hotel.floor</field>
+        <field name="arch" type="xml">
+            <map2
+                items_field="room_ids"
+                create_item_values="{'room_categ_id': 'hotel_map.default_room_type'}"
+                onclick_item_method="action_folio_add_room"
+            />
         </field>
     </record>
 
    <!-- actions -->
-    <record model="ir.actions.act_window" id="floor_test_action">
-      <field name="name">Floor Test Action</field>
+    <record model="ir.actions.act_window" id="hotel_floor_action">
+      <field name="name">Hotel Floors Action</field>
       <field name="res_model">hotel.floor</field>
       <field name="view_mode">tree,form,gallery,map2</field>
     </record>
 
     <!-- menu items -->
-    <menuitem name="Floor Test" id="floor_test_menu" parent="hotel.hotel_configuration_menu" action="floor_test_action" sequence="100"/>
+    <menuitem name="Floors" id="floor_test_menu" parent="hotel.menu_open_hotel_floor_form_tree" action="hotel_floor_action" sequence="10"/>
 
 </odoo>
