@@ -10,7 +10,7 @@
             <span class="label">
                 <t t-esc="props.item.name" />
             </span>
-            <!-- <span class="item-seats">
+            <!-- <span class="item-capacity">
                 <t t-esc="customerCountDisplay" />
             </span> -->
         </div>

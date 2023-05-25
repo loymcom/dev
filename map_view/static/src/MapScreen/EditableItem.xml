@@ -2,14 +2,14 @@
 <templates id="template" xml:space="preserve">
 
     <t t-name="booking_view.EditableItem" owl="1">
-        <Draggable limitArea="'.map-map'">
-            <Resizeable limitArea="'.map-map'">
+        <Draggable limitArea="'.map'">
+            <Resizeable limitArea="'.map'">
                 <div class="item selected" t-on-click.stop="">
                     <span class="label drag-handle">
                         <t t-esc="props.item.name" />
                     </span>
-                    <span class="item-seats">
-                        <t t-esc="props.item.seats" />
+                    <span class="item-capacity">
+                        <t t-esc="props.item.capacity" />
                     </span>
                     <t t-if="props.item.shape === 'round'">
                         <div class="item-handle top resize-handle-n"></div>

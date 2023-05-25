@@ -19,8 +19,8 @@
                     t-on-touchstart="_onPinchStart"
                     t-on-touchmove="_onPinchMove"
                     t-on-touchend="_onPinchEnd"
-                    class="map-map"
-                    t-ref="map-map-ref"
+                    class="map"
+                    t-ref="map-ref"
                 >
                     <div t-if="isMapEmpty" class="empty-map">
                         <span>This map has no items yet, use the </span>
@@ -39,7 +39,7 @@
                     </span> -->
                     <EditBar t-if="state.isEditMode" selectedItem="selectedItem" mapMapScrollTop="state.mapMapScrollTop"
                              createItem.bind="createItem" duplicateItem.bind="duplicateItem" renameItem.bind="renameItem"
-                             changeSeatsNum.bind="changeSeatsNum" changeShape.bind="changeShape" setItemColor.bind="setItemColor"
+                             changeCapacityNum.bind="changeCapacityNum" changeShape.bind="changeShape" setItemColor.bind="setItemColor"
                              setMapColor.bind="setMapColor" deleteItem.bind="deleteItem"
                     />
                 </div>

@@ -25,7 +25,7 @@
                 mapBackground: map.background_color,
                 mapMapScrollTop: 0,
             });
-            this.mapMapRef = useRef('map-map-ref');
+            this.mapMapRef = useRef('map-ref');
             onPatched(this.onPatched);
             onMounted(this.onMounted);
             onWillUnmount(this.onWillUnmount);
@@ -83,7 +83,7 @@
                     width: 75,
                     height: 75,
                     shape: 'square',
-                    seats: 1,
+                    capacity: 1,
                 };
             }
             newItem.name = this._getNewItemName(newItem.name);
@@ -174,7 +174,7 @@
             this.initalScale = this.getScale();
         }
         getMapNode() {
-            return this.el.querySelector('.map-map > .items, .map-map > .empty-map');
+            return this.el.querySelector('.map > .items, .map > .empty-map');
         }
         getScale() {
             const scale = this.getMapNode().style.getPropertyValue('--scale');
@@ -243,19 +243,19 @@
                 await this._save(selectedItem);
             }
         }
-        async changeSeatsNum() {
+        async changeCapacityNum() {
             const selectedItem = this.selectedItem
             if (!selectedItem) return;
             const { confirmed, payload: inputNumber } = await this.showPopup('NumberPopup', {
-                startingValue: selectedItem.seats,
+                startingValue: selectedItem.capacity,
                 cheap: true,
-                title: this.env._t('Number of Seats ?'),
+                title: this.env._t('Number of Capacity ?'),
                 isInputSelected: true,
             });
             if (!confirmed) return;
-            const newSeatsNum = parseInt(inputNumber, 10) || selectedItem.seats;
-            if (newSeatsNum !== selectedItem.seats) {
-                selectedItem.seats = newSeatsNum;
+            const newCapacityNum = parseInt(inputNumber, 10) || selectedItem.capacity;
+            if (newCapacityNum !== selectedItem.capacity) {
+                selectedItem.capacity = newCapacityNum;
                 await this._save(selectedItem);
             }
         }

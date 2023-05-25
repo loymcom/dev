@@ -12,8 +12,8 @@
             <span class="edit-button" t-att-class="{ disabled: !props.selectedItem }" t-on-click.stop="props.renameItem">
                 <i class="fa fa-font" role="img" aria-label="Rename" title="Rename"></i>
             </span>
-            <span class="edit-button" t-att-class="{ disabled: !props.selectedItem }" t-on-click.stop="props.changeSeatsNum">
-                <i class="fa fa-user" role="img" aria-label="Seats" title="Seats"></i>
+            <span class="edit-button" t-att-class="{ disabled: !props.selectedItem }" t-on-click.stop="props.changeCapacityNum">
+                <i class="fa fa-user" role="img" aria-label="Capacity" title="Capacity"></i>
             </span>
             <span class="edit-button" t-att-class="{ disabled: !props.selectedItem }" t-on-click.stop="props.changeShape">
                 <span t-if="!props.selectedItem or props.selectedItem.shape == 'square'" class="button-option square">

@@ -40,7 +40,7 @@
         }
         get fill() {
             // const customerCount = this.env.pos.getCustomerCount(this.props.item.id);
-            // return Math.min(1, Math.max(0, customerCount / this.props.item.seats));
+            // return Math.min(1, Math.max(0, customerCount / this.props.item.capacity));
             return 1
         }
         get orderCount() {
@@ -61,7 +61,7 @@
             return countClass;
         }
         get customerCountDisplay() {
-            return `${this.env.pos.getCustomerCount(this.props.item.id)}/${this.props.item.seats}`;
+            return `${this.env.pos.getCustomerCount(this.props.item.id)}/${this.props.item.capacity}`;
         }
         _getNotifications() {
             const orders = this.env.pos.getItemOrders(this.props.item.id);
