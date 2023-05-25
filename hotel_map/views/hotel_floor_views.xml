@@ -42,25 +42,25 @@
         <field name="arch" type="xml">
             <map
                 items_field="room_ids"
-                create_item_values="{'room_categ_id': 'hotel_map.default_room_type'}"
+                item_values="{'room_categ_id': %(hotel_map.default_room_type)d}"
             />
         </field>
     </record>
-    <record id="hotel_floor_view_map_action_folio_add_room" model="ir.ui.view">
+    <record id="hotel_floor_view_map_select_room" model="ir.ui.view">
         <field name="name">hotel.floor.view.map</field>
         <field name="model">hotel.floor</field>
         <field name="arch" type="xml">
             <map
                 items_field="room_ids"
-                create_item_values="{'room_categ_id': 'hotel_map.default_room_type'}"
-                onclick_item_method="action_folio_add_room"
+                item_values="{'room_categ_id': %(hotel_map.default_room_type)d}"
+                onclick_method="action_reserve_room_view_folio"
             />
         </field>
     </record>
 
    <!-- actions -->
     <record model="ir.actions.act_window" id="hotel_floor_action">
-      <field name="name">Hotel Floors Action</field>
+      <field name="name">Floors</field>
       <field name="res_model">hotel.floor</field>
       <field name="view_mode">tree,form,gallery,map</field>
     </record>

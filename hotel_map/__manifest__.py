@@ -7,9 +7,9 @@
     "author": "Rick, Henrik",
     "website": "Author Website",
     "depends": [
-        "awesome_gallery",  # hotel.floor
+        "awesome_gallery",  # TODO: When web_map_view is finished, remove all instances of "gallery" in the code.
         "hotel",
-        "map_view",  # hotel.floor
+        "web_map_view",
     ],
     "data": [
         "data/default_hotel_room_type.xml",

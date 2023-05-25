@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="hotel.view_hotel_folio_form" />
         <field name="arch" type="xml">
             <field name="room_line_ids" position="before">
-                <button class="btn btn-primary" name="action_view_hotel_floor_map" type="object">
+                <button class="btn btn-primary" name="action_view_floor_map_select_room" type="object">
                     Select Room
                 </button>
             </field>
