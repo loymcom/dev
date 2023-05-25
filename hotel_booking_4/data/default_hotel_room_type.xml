@@ -1,5 +1,0 @@
-<odoo noupdate="1">
-    <record id="default_room_type" model="hotel.room.type">
-        <field name="name">Default Room Type</field>
-    </record>
-</odoo>
