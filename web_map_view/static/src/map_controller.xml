@@ -4,7 +4,7 @@
         <Layout display="props.display" className="'h-100 overflow-auto'">
             <t 
                 t-component="props.Renderer"
-                items="model.items"
+                maps="model.maps"
             />
         </Layout>
     </t>

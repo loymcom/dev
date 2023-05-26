@@ -27,8 +27,6 @@ export class MapModel {
         );
         this.recordsLength = length;
 
-        this.items = records;
-
-        var foo = "bar";
+        this.maps = records;
     }
 }
