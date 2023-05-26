@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem id="dev_favorite_menu" name="Favorites" parent="hotel.hotel_management_menu" sequence="100" />
+    <menuitem
+        id="menu_action_ui_view"
+        name="UI - Views"
+        action="base.action_ui_view"
+        sequence="10"
+        parent="dev_favorite_menu"
+    />
+    <menuitem
+        id="menu_ir_action_window"
+        name="UI - Window Actions"
+        action="base.ir_action_window"
+        sequence="20"
+        parent="dev_favorite_menu"
+    />
+    <menuitem
+        id="menu_grant_menu_access"
+        name="UI - Menu Items"
+        action="base.grant_menu_access"
+        sequence="30"
+        parent="dev_favorite_menu"
+    />
+    <menuitem
+        id="ir_model_model_fields"
+        name="DB - Fields"
+        action="base.action_model_fields"
+        sequence="40"
+        parent="dev_favorite_menu"
+    />
+    <menuitem
+        id="ir_model_model_menu"
+        name="DB - Models"
+        action="base.action_model_model"
+        sequence="50"
+        parent="dev_favorite_menu"
+    />
+    <menuitem
+        id="ir_model_data_menu"
+        name="DB - External ID"
+        action="base.action_model_data"
+        sequence="60"
+        parent="dev_favorite_menu"
+    />
+    <menuitem
+        id="menu_ir_access_act"
+        name="Security - Access Rights"
+        action="base.ir_access_act"
+        sequence="70"
+        parent="dev_favorite_menu"
+    />
+    <menuitem
+        id="menu_action_rule"
+        name="Security - Record Rules"
+        action="base.action_rule"
+        sequence="80"
+        parent="dev_favorite_menu"
+    />
+</odoo>
