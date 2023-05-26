@@ -5,6 +5,9 @@
             <t 
                 t-component="props.Renderer"
                 maps="model.maps"
+                maps_by_id = "model.maps_by_id"
+                items="model.items"
+                items_by_id = "model.items_by_id"
             />
         </Layout>
     </t>
