@@ -32,8 +32,10 @@ export class MapModel {
                 {},
             )
         );
+        // this.maps = [...records];  // Both cases: this=proxy, Target=MapModel, maps=Array
+        // In MapScreen setup(), this=MapScreen, props.maps=Proxy Target=Array
+        this.maps = records;  
         this.mapsLength = length;
-        this.maps = records;
     }
 
     async loadItems() {
@@ -62,16 +64,16 @@ export class MapModel {
             )
         );
         this.itemsLength = length;
-        this.items = records;
+        this.items = [...records];
     }
 
     async getById() {
         this.maps_by_id = {};
         this.items_by_id = {};
-        for (let item of this.items) {
+        for (let item of [...this.items]) {
             this.items_by_id[item.id] = item;
         }
-        for (let map of this.maps) {
+        for (let map of [...this.maps]) {
             this.maps_by_id[map.id] = map;
             map.items = []
             for (let itemId of map[this.itemsField]) {

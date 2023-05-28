@@ -1,4 +1,4 @@
-/** @odoo-module alias=booking_view.EditableItem **/
+/** @odoo-module alias=web_map_view.EditableItem **/
 
     const { useListener } = require("@web/core/utils/hooks");
     import { Component } from "@odoo/owl";
@@ -6,7 +6,7 @@
     const { onMounted, onPatched } = owl;
 
     export class EditableItem extends Component {
-        static template = 'booking_view.EditableItem';
+        static template = 'web_map_view.EditableItem';
 
         setup() {
             super.setup();

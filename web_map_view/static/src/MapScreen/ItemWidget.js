@@ -1,4 +1,4 @@
-/** @odoo-module alias=booking_view.ItemWidget **/
+/** @odoo-module alias=web_map_view.ItemWidget **/
 
     import { Component } from "@odoo/owl";
 
@@ -9,7 +9,7 @@
      * }
      */
     export class ItemWidget extends Component {
-        static template = 'booking_view.ItemWidget';
+        static template = 'web_map_view.ItemWidget';
 
         setup() {
             owl.onMounted(this.onMounted);
