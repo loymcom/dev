@@ -1,17 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="view_hotel_folio_form" model="ir.ui.view">
-        <field name="name">hotel.folio.view.form</field>
-        <field name="model">hotel.folio</field>
-        <field name="inherit_id" ref="hotel.view_hotel_folio_form" />
+    <record id="view_hotel_session_form" model="ir.ui.view">
+        <field name="name">hotel.session.view.form</field>
+        <field name="model">hotel.session</field>
         <field name="arch" type="xml">
-            <field name="room_line_ids" position="before">
-                <button class="btn btn-primary" name="action_view_floor_map_select_room" type="object">
-                    Select Room
-                </button>
-            </field>
+            <form string="Session">
+                <sheet>
+                    <group>
+                        <field name="name" placeholder="Session Name"/>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="days"/>
+                    </group>
+                </sheet>
+            </form>
         </field>
     </record>
+
+    <record id="view_hotel_session_tree" model="ir.ui.view">
+        <field name="name">hotel.session.view.tree</field>
+        <field name="model">hotel.session</field>
+        <field name="arch" type="xml">
+            <tree string="Session">
+                <field name="name" placeholder="Session Name"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="days"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="hotel_session_action">
+      <field name="name">Hotel Sessions</field>
+      <field name="res_model">hotel.session</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="hotel_session_menu"
+        name="Sessions"
+        parent="hotel.hotel_configuration_menu"
+        action="hotel_session_action"
+        sequence="5"
+    />
 
 </odoo>
