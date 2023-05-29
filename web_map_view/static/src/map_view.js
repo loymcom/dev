@@ -5,6 +5,7 @@ import { MapController } from "./map_controller";
 import { MapArchParser } from "./map_arch_parser";
 import { MapModel } from "./map_model";
 import { MapRenderer } from "./map_renderer";
+import { MapScreen } from "./MapScreen/MapScreen";
 
 export const mapView = {
     type: "map",
@@ -14,7 +15,8 @@ export const mapView = {
     Controller: MapController,
     ArchParser: MapArchParser,
     Model: MapModel,
-    Renderer: MapRenderer,
+    // Renderer: MapRenderer,
+    Renderer: MapScreen,
 
     props(genericProps, view) {
         const { ArchParser } = view;

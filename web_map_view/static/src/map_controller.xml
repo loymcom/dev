@@ -4,7 +4,11 @@
         <Layout display="props.display" className="'h-100 overflow-auto'">
             <t 
                 t-component="props.Renderer"
+                maps="model.maps"
+                mapsLength="model.mapsLength"
+                maps_by_id = "model.maps_by_id"
                 items="model.items"
+                items_by_id = "model.items_by_id"
             />
         </Layout>
     </t>

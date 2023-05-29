@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
 
-    <t t-name="booking_view.MapScreen" owl="1">
+    <t t-name="web_map_view.MapScreen" owl="1">
         <div class="map-screen screen">
             <div class="screen-content-flexbox">
-                <t t-if="maps_length > 1">
+                <!-- <t t-if="maps.length > 1"> -->
+                <t t-if="mapsLength > 1">
                     <div class="map-selector">
                         <t t-foreach="maps" t-as="map" t-key="map.id">
                             <span class="button button-map" t-att-class="{ active: map.id === state.selectedMapId }" t-on-click="() => this.selectMap(map)">

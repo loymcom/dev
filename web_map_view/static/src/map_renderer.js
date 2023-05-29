@@ -2,11 +2,11 @@
 
 import { Component } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
-// import { FloorScreen } from "./FloorScreen/FloorScreen";
+import { MapScreen } from "./MapScreen/MapScreen";
 
 export class MapRenderer extends Component {
     static template = "web_map_view.Renderer";
-    // static components = { FloorScreen };
+    static components = { MapScreen };
 
     setup() {
         this.action = useService("action");

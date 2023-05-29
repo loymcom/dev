@@ -1,4 +1,4 @@
-/** @odoo-module alias=booking_view.MapScreen **/
+/** @odoo-module alias=web_map_view.MapScreen **/
 
     const { debounce } = require("@web/core/utils/timing");
     import { Component } from "@odoo/owl";
@@ -9,7 +9,7 @@
     const { onPatched, onMounted, onWillUnmount, useRef, useState } = owl;
 
     export class MapScreen extends Component {
-        static template = 'booking_view.MapScreen';
+        static template = 'web_map_view.MapScreen';
         static components = { ItemWidget, EditableItem, EditBar };
         /**
          * @param {Object} props
@@ -17,6 +17,7 @@
          */
         setup() {
             super.setup();
+            this.props.maps = [...this.props.maps];
             const map = this.props.map ? this.props.map : this.props.maps[0];
             this.state = useState({
                 selectedMapId: map.id,

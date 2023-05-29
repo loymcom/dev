@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="web_map_view.Renderer" owl="1">
-        <t t-foreach="props.items" t-as="item" t-key="item.id">
+        <t t-foreach="props.maps" t-as="map" t-key="map.id">
             <p>
-                <t t-esc="item.name" /><br/>
+                <t t-esc="map.name" /><br/>
             </p
         </t>
     </t>
