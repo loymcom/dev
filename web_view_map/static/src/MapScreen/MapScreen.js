@@ -1,4 +1,4 @@
-/** @odoo-module alias=web_map_view.MapScreen **/
+/** @odoo-module alias=web_view_map.MapScreen **/
 
     const { debounce } = require("@web/core/utils/timing");
     import { Component } from "@odoo/owl";
@@ -9,7 +9,7 @@
     const { onPatched, onMounted, onWillUnmount, useRef, useState } = owl;
 
     export class MapScreen extends Component {
-        static template = 'web_map_view.MapScreen';
+        static template = 'web_view_map.MapScreen';
         static components = { ItemWidget, EditableItem, EditBar };
         /**
          * @param {Object} props

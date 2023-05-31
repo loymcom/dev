@@ -5,7 +5,7 @@ import { useService } from "@web/core/utils/hooks";
 import { MapScreen } from "./MapScreen/MapScreen";
 
 export class MapRenderer extends Component {
-    static template = "web_map_view.Renderer";
+    static template = "web_view_map.Renderer";
     static components = { MapScreen };
 
     setup() {

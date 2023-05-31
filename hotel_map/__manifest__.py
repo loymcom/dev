@@ -9,7 +9,7 @@
     "depends": [
         "awesome_gallery",  # TODO: When web_map_view is finished, remove all instances of "gallery" in the code.
         "hotel",
-        "web_map_view",
+        "web_view_map",
     ],
     "data": [
         "data/default_hotel_room_type.xml",

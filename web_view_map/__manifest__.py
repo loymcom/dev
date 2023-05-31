@@ -10,8 +10,8 @@
     'data': [],
     'assets': {
         'web.assets_backend': [
-            'web_map_view/static/src/**/*',
-            # 'web_map_view/static/src/*',  # without MapScreen
+            'web_view_map/static/src/**/*',
+            # 'web_view_map/static/src/*',  # without MapScreen
         ],
     },
 }

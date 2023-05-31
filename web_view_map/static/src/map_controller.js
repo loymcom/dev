@@ -32,5 +32,5 @@ export class MapController extends Component {
     }
 }
 
-MapController.template = "web_map_view.View";
+MapController.template = "web_view_map.View";
 MapController.components = { Layout };

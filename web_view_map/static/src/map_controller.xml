@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
-    <t t-name="web_map_view.View" owl="1">
+    <t t-name="web_view_map.View" owl="1">
         <Layout display="props.display" className="'h-100 overflow-auto'">
             <t 
                 t-component="props.Renderer"

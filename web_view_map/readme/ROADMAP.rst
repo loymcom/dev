@@ -1,4 +1,4 @@
-In the first version of ``web_map_view``, the map is a blank area.
+In the first version of ``web_view_map``, the map is a blank area.
 
 In the second version, the user may upload a map image.
 
