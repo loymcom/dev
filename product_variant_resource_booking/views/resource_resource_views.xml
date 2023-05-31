@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="resource_resource_form" model="ir.ui.view">
+        <field name="name">resource.resource.view.form.inherit</field>
+        <field name="model">resource.resource</field>
+        <field name="inherit_id" ref="resource.resource_resource_form" />
+        <field name="arch" type="xml">
+            <field name="resource_type" position="after">
+                <field name="product_attribute_value_id"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
