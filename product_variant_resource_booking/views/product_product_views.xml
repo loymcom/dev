@@ -5,7 +5,7 @@
         <field name="name">product.product.view.tree</field>
         <field name="model">product.product</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree editable="top">
                 <field name="default_code" optional="show" readonly="1"/>
                 <field name="name" readonly="1"/>
                 <field name="product_template_variant_value_ids" widget="many2many_tags" groups="product.group_product_variant" readonly="1"/>
@@ -13,6 +13,7 @@
                 <field name="lst_price" optional="show" string="Sales Price"/>
                 <field name="date_start" />
                 <field name="date_end" />
+                <field name="date_range_id" />
             </tree>
         </field>
     </record>
@@ -24,6 +25,9 @@
                 <field name="name" filter_domain="['|', ('name','ilike',self), ('default_code','ilike',self)]" string="Name"/>
                 <field name="date_start" filter_domain="[('date_start','=',self)]" string="Start Date"/>
                 <field name="date_end" filter_domain="[('date_end','=',self)]" string="End Date"/>
+                <searchpanel>
+                    <field name="date_range_id"/>
+                </searchpanel>
             </search>
         </field>
     </record>

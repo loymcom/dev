@@ -13,7 +13,7 @@ class ProductProduct(models.Model):
         context = self.env.context
         date_format = self.env["res.lang"].search([("code", "=", context["lang"])]).date_format
 
-        domain = context.get("domain")
+        domain = context.get("domain") or []
         for d in domain:
             if isinstance(d, list) or isinstance(d, tuple):
                 if isinstance(d[0], str) and d[0] == "date_start":
@@ -31,6 +31,7 @@ class ProductProduct(models.Model):
 
     date_start = fields.Date(string="Start date", compute="_compute_dates")
     date_end = fields.Date(string="End date", compute="_compute_dates")
+    date_range_id = fields.Many2one("date.range", string="Date Range")
 
     @api.model
     def web_search_read(self, domain=None, fields=None, offset=0, limit=None, order=None, count_limit=None):

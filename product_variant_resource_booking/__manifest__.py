@@ -15,7 +15,7 @@
     "application": False,
     "installable": True,
     "depends": [
-        # "date_range",
+        "date_range",
         "product",
         "resource_booking",
     ],
