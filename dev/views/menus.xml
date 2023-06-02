@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <menuitem id="dev_favorite_menu" name="Favorites" parent="hotel.hotel_management_menu" sequence="100" />
+    <menuitem id="dev_favorite_menu" name="Favorites" parent="base.menu_administration" sequence="200" />
     <menuitem
         id="menu_action_ui_view"
         name="UI - Views"
