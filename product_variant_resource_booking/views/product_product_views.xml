@@ -11,6 +11,8 @@
                 <field name="product_template_variant_value_ids" widget="many2many_tags" groups="product.group_product_variant" readonly="1"/>
                 <field name="company_id" groups="base.group_multi_company" optional="hide" readonly="1"/>
                 <field name="lst_price" optional="show" string="Sales Price"/>
+                <field name="date_start" />
+                <field name="date_end" />
             </tree>
         </field>
     </record>
@@ -20,6 +22,8 @@
         <field name="arch" type="xml">
             <search string="Product">
                 <field name="name" filter_domain="['|', ('name','ilike',self), ('default_code','ilike',self)]" string="Name"/>
+                <field name="date_start" filter_domain="[('date_start','=',self)]" string="Start Date"/>
+                <field name="date_end" filter_domain="[('date_end','=',self)]" string="End Date"/>
             </search>
         </field>
     </record>
