@@ -8,12 +8,13 @@
             <tree editable="top">
                 <field name="default_code" optional="show" readonly="1"/>
                 <field name="name" readonly="1"/>
-                <field name="product_template_variant_value_ids" widget="many2many_tags" groups="product.group_product_variant" readonly="1"/>
+                <field name="product_template_attribute_value_ids" widget="many2many_tags" groups="product.group_product_variant" readonly="1"/>
                 <field name="company_id" groups="base.group_multi_company" optional="hide" readonly="1"/>
                 <field name="lst_price" optional="show" string="Sales Price"/>
+                <field name="date_range_id" />
                 <field name="date_start" />
                 <field name="date_end" />
-                <field name="date_range_id" />
+                <field name="partner_id" />
             </tree>
         </field>
     </record>
@@ -34,7 +35,7 @@
 
     <!-- Action & Menuitem -->
     <record id="product_action" model="ir.actions.act_window">
-        <field name="name">Products</field>
+        <field name="name">Packages</field>
         <field name="res_model">product.product</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[]</field>
@@ -44,7 +45,7 @@
     </record>
     <menuitem
         id="product_menu"
-        name="Products"
+        name="Packages"
         action="product_action"
         parent="resource_booking.resource_booking_main_menu"
         sequence="5"

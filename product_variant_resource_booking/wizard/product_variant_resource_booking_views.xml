@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_variant_resource_booking_form_view" model="ir.ui.view">
+        <field name="name">product.variant.resource.booking.form.view</field>
+        <field name="model">product.variant.resource.booking</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="date_range_id" />
+                    <field name="date_start" />
+                    <field name="date_end" />
+                    <field name="partner_id" />
+                    <field name="product_attribute_value_id" />
+                </group>
+                <group>
+                    <button string="Next" name="view_product_product" type="object" class="btn-primary" data-hotkey="n"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                </group>
+            </form>
+
+        </field>
+    </record>
+
+    <!-- Action & Menuitem -->
+    <record id="wizard_action" model="ir.actions.act_window">
+        <field name="name">Package Wizard</field>
+        <field name="res_model">product.variant.resource.booking</field>
+        <field name="view_mode">form</field>
+    </record>
+    <menuitem
+        id="wizard_menu"
+        name="Wizard"
+        action="wizard_action"
+        parent="resource_booking.resource_booking_main_menu"
+        sequence="3"
+    />
+
+</odoo>

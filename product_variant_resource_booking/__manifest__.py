@@ -20,7 +20,9 @@
         "resource_booking",
     ],
     "data": [
+        "security/ir.model.access.csv",
         "views/product_product_views.xml",
         "views/resource_resource_views.xml",
+        "wizard/product_variant_resource_booking_views.xml",
     ],
 }
