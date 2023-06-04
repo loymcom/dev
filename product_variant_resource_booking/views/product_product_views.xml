@@ -34,7 +34,7 @@
     </record>
 
     <!-- Action & Menuitem -->
-    <record id="product_action" model="ir.actions.act_window">
+    <record id="product_product_action" model="ir.actions.act_window">
         <field name="name">Packages</field>
         <field name="res_model">product.product</field>
         <field name="view_mode">tree,form</field>
@@ -44,9 +44,9 @@
         <field name="search_view_id" ref="product_product_view_search" />
     </record>
     <menuitem
-        id="product_menu"
+        id="product_product_menu"
         name="Packages"
-        action="product_action"
+        action="product_product_action"
         parent="resource_booking.resource_booking_main_menu"
         sequence="5"
     />

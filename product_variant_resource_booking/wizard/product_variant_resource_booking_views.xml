@@ -6,7 +6,7 @@
         <field name="model">product.variant.resource.booking</field>
         <field name="arch" type="xml">
             <form>
-                <group>
+                <group string="Package Wizard">
                     <field name="date_range_id" />
                     <field name="date_start" />
                     <field name="date_end" />
@@ -15,7 +15,6 @@
                 </group>
                 <group>
                     <button string="Next" name="view_product_product" type="object" class="btn-primary" data-hotkey="n"/>
-                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
                 </group>
             </form>
 

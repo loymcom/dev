@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+        id="product_template_menu"
+        name="Products"
+        action="sale.product_template_action"
+        parent="resource_booking.resource_booking_type_configuration_menu"
+        sequence="50"
+    />
+
+</odoo>
