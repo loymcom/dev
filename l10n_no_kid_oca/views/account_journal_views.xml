@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_account_journal_form">
+        <field name="name">account.journal inherit kid</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form" />
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page name="kid" string="KID" attrs="{'invisible': [('type', '!=', 'sale')]}">
+                    <group>
+                        <field name="l10n_no_kid_partner_digits" />
+                        <field name="l10n_no_kid_move_digits" />
+                        <field name="l10n_no_kid_mod" />
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+</odoo>
