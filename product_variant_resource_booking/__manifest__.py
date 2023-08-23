@@ -15,12 +15,14 @@
     "application": False,
     "installable": True,
     "depends": [
+        # "base_do_after_create_or_write",
         "date_range",
         "product",
         "resource_booking",
     ],
     "data": [
         "security/ir.model.access.csv",
+        "views/product_attribute_views.xml",
         "views/product_product_views.xml",
         "views/product_template_views.xml",
         "views/resource_resource_views.xml",
