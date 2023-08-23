@@ -1,6 +1,6 @@
 {
     "name": "Todo app",
-    "version": "1.0",
+    "version": "16.0.1.0.0",
     "summary": "React Demo",
     "description": "Module Description",
     "category": "Administration",
@@ -16,4 +16,12 @@
         
     ],
     "license": "AGPL-3",
+   'assets': {
+        'todo.assets': [
+            'todo/static/src/index.js'
+            # 'todo/static/src/components/*.js',
+            # 'todo/static/src/index.css',
+            # 'todo/static/src/components/*.css'
+        ]
+    }
 }

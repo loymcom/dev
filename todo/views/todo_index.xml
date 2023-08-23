@@ -1,29 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+<!-- https://realpython.com/the-ultimate-flask-front-end/ -->
+
 <template id="index" name="todo index">&lt;!DOCTYPE html&gt;
-    <html>
-        <head>
-	        <title>Custom React Todo</title>
-	        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-	        <meta http-equiv="content-type" content="text/html, charset=utf-8" />               
-	    </head>
-	    <body>
-            <div class="o_main_content" id="todos-example"/>
-            <script type="text/javascript">
-                var odoo = <t t-out="json.dumps({
-                    'debug': debug,
-                    })"/>;
-                // Prevent the menu_service to load anything. In an ideal world, POS assets would only contain
-                // what is genuinely necessary, and not the whole backend.
-                odoo.loadMenusPromise = Promise.resolve();
-            </script>
-            <t t-call-assets="web.assets_common" t-css="false" />
-            <script src="https://unpkg.com/react@18/umd/react.development.js" ></script>
-            <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" ></script>                   
-            <!-- <t t-call-assets="todo.assets"/> -->
-        </body>
-    </html>
+
+<html>
+  <head lang="en">
+    <meta charset="UTF-8"/>
+    <title>Flask React</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!-- styles -->
+  </head>
+  <body>
+    <div class="container">
+      <h1>Flask React</h1>
+      <br/>
+      <div id="content"></div>
+    </div>
+    <!-- scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+    <script type="text/jsx">
+
+      /*** @jsx React.DOM */
+
+      var realPython = React.createClass({
+        render: function() {
+          return (<h2>Greetings, from Real Python!</h2>);
+        }
+      });
+
+      ReactDOM.render(
+        React.createElement(realPython, null),
+        document.getElementById('content')
+      );
+
+    </script>
+  </body>
+</html>
+
 </template>
 
 </odoo>
