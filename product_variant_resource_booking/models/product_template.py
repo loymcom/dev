@@ -62,3 +62,9 @@ class ProductTemplate(models.Model):
     #                     "resource_booking_type_combination_rel_id": None,
     #                 }
     #             )
+
+    date_range_ids = fields.Many2many(
+        comodel_name="date.range",
+        relation="product_template_date_range_rel",
+        string="Date Ranges",
+    )
