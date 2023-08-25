@@ -2,14 +2,16 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    "name": "TEMPLATE",
+    "name": "Product Date Range",
     "summary": "",
     "author": "AppsToGROW, Odoo Community Association (OCA)",
     "category": "Uncategorized",
     "data": [
+        "views/date_range_views.xml",
+        "views/product_template_views.xml",
     ],
     "depends": [
-        "base",
+        "product",
     ],
     "development_status": "Alpha",
     "license": "AGPL-3",
