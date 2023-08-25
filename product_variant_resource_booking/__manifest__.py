@@ -23,10 +23,7 @@
     ],
     "data": [
         "security/ir.model.access.csv",
-        "views/product_attribute_views.xml",
         "views/product_product_views.xml",
-        "views/product_template_views.xml",
-        "views/resource_booking_views.xml",
         "views/resource_resource_views.xml",
         "wizard/product_variant_resource_booking_views.xml",
         "wizard/resource_booking_sale_views.xml",

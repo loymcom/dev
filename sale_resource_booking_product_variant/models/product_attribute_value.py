@@ -26,6 +26,7 @@ class ProductAttributeValue(models.Model):
 
     def write(self, vals):
         super().write(vals)
+        # Update product variants
         product_vals = {}
         if "resource_booking_type_id" in vals:
             product_vals["resource_booking_type_id"] = vals["resource_booking_type_id"]
