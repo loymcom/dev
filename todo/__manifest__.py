@@ -10,7 +10,7 @@
         "base",
     ],
     "data": [
-        "views/todo_index.xml",
+        "views/index.xml",
     ],
     "qweb": [
         

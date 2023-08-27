@@ -40,7 +40,7 @@ def transpile_jsx(content_bundle):
         raise CompileError(cmd_output)
     return out
 
-
+# RESTART ODOO to debug this
 class JsxAsset(JavascriptAsset):
     @property
     def content(self):

@@ -24,28 +24,6 @@
             <script src="https://unpkg.com/react@18/umd/react.development.js" ></script>
             <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" ></script>                   
             <t t-call-assets="todo.assets"/>
-
-            <!-- https://realpython.com/the-ultimate-flask-front-end/ -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.min.js"></script>
-            <script src="http://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
-    
-            <script type="text/jsx">
-
-            /*** @jsx React.DOM */
-
-            var realPython = React.createClass({
-                render: function() {
-                return (<h2>Greetings, from Real Python!</h2>);
-                }
-            });
-
-            ReactDOM.render(
-                React.createElement(realPython, null),
-                document.getElementById('content')
-            );
-
-            </script>
         </body>
     </html>
 </template>
