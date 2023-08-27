@@ -3,7 +3,6 @@ from odoo import api, fields, models
 class ProductAttributeValue(models.Model):
     _inherit = "product.attribute.value"
 
-    # From sale_resource_booking
     resource_booking_type_id = fields.Many2one(
         "resource.booking.type",
         string="Booking type",

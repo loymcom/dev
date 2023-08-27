@@ -8,6 +8,7 @@
     "category": "Uncategorized",
     "data": [
         "views/product_attribute_views.xml",
+        "views/product_template_views.xml",
         "views/menus.xml",
     ],
     "depends": [

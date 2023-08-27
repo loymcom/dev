@@ -40,24 +40,6 @@ class ProductProduct(models.Model):
     date_end = fields.Date(string="End date", compute="_compute_dates")
     partner_id = fields.Many2one("res.partner", string="Contact", compute="_compute_partner_id")
 
-    # def _do_after_create_or_write(self, create=None, write=None):
-    #     super()._do_after_create_or_write(create, write)
-    #     # If different types on different variants: remove from product template.
-    #     if self.env.context.get("resource_booking_type_loop"):
-    #         return
-    #     product_templates = self.mapped("product_tmpl_id")
-    #     for tmpl in product_templates:
-    #         types = set(v.resource_booking_type_id for v in tmpl.product_variant_ids)
-    #         combinations = set(v.resource_booking_type_combination_rel_id for v in tmpl.product_variant_ids)
-    #         if len(types) > 1 or len(combinations) > 1:
-    #             if tmpl.resource_booking_type_id or tmpl.resource_booking_type_combination_rel_id:
-    #                 tmpl.with_context(resource_booking_type_loop=True).write(
-    #                     {
-    #                         "resource_booking_type_id": None,
-    #                         "resource_booking_type_combination_rel_id": None,
-    #                     }
-    #                 )
-
     def create_sale_order_and_resource_booking(self):
         pass
 

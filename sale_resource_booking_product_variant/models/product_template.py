@@ -32,7 +32,3 @@ class ProductTemplate(models.Model):
         inverse="_inverse_resource_booking_type",
         store=False,
     )
-
-    # @api.depends("product_variant_ids.resource_booking_type_id")
-    # def _compute_resource_booking_hide(self):
-    resource_booking_hide = fields.Boolean(compute="_compute_resource_booking_hide")
