@@ -10,8 +10,15 @@
                 <button name="action_sale_order_wizard" string="Quote" type="object" help="Generate quotation."/>
             </header>
             <group name="booking" position="inside">
-                <field name="product_id" />
-                <field name="date_range_id" />
+                <field
+                    name="product_id"
+                    domain="[
+                        ('resource_booking_type_id', '=', type_id),
+                        '|',
+                        ('resource_booking_type_combination_rel_id', 'in', [combination_id]),
+                        ('resource_booking_type_combination_rel_id', '=', None),
+                    ]"
+                />
             </group>
         </field>
     </record>

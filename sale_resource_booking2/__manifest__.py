@@ -2,13 +2,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Sell Product Variants with Resources",
+    "name": "Sell Resource Bookings 2",
     "summary": "",
     "author": "AppsToGROW, Odoo Community Association (OCA)",
     "category": "Uncategorized",
     "data": [
-        "views/product_attribute_views.xml",
-        "views/menus.xml",
+        "views/resource_booking_views.xml",
     ],
     "depends": [
         "sale_resource_booking",
