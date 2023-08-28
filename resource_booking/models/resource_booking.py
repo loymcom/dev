@@ -612,6 +612,7 @@ class ResourceBooking(models.Model):
                         attendees_to_confirm |= attendee
             attendees_to_confirm.write({"state": "accepted"})
         self.recompute()
+        # recompute() is deprecated. Use flush_model(), flush_recordset() or env.flush_all().
 
     def action_unschedule(self):
         """Remove associated meetings."""
