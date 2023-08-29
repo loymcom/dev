@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Product Variant Resource Booking",
+    "name": "Product Variant Resource Booking - DEPRECATED",
     "summary": "",
     "version": "16.0.1.0.0",
     "development_status": "Alpha",

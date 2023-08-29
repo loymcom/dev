@@ -5,7 +5,7 @@
         Place items in a rectangle or image or map. Inspired by pos_restaurant FloorScreen.
     """,
     'license': 'LGPL-3',
-    'version': '0.1',
+    'version': '16.0.1.0.0',
     'depends': ['web'],
     'data': [],
     'assets': {

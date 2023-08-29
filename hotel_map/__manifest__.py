@@ -1,6 +1,6 @@
 {
     "name": "Hotel Floor Map",
-    "version": "1.0",
+    "version": "16.0.1.0.0",
     "summary": "Module Summary",
     "description": "Module Description",
     "category": "Administration",
