@@ -7,6 +7,7 @@
     "author": "AppsToGROW, " "Odoo Community Association (OCA)",
     "category": "Administration",
     "data": [
+        "views/res_partner_views.xml",
         "views/resource_booking_views.xml",
     ],
     "depends": [

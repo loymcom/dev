@@ -22,6 +22,6 @@
     </record>
 
     <record id="resource_booking.resource_booking_action" model="ir.actions.act_window">
-        <field name="view_mode">calendar,tree,form,timeline</field>
+        <field name="view_mode">timeline,calendar,tree,form</field>
     </record>
 </odoo>
