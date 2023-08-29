@@ -1,8 +1,8 @@
-#! /bin/bash
+import subprocess
 
-repo=../OCA/calendar
-module=resource_booking
-user_org=ows-cloud
+from .mig_module_common import repo, module, user_org
+
+
 
 
 cd $repo

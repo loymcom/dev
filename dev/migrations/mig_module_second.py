@@ -2,10 +2,7 @@ from glob import glob
 import os
 import re
 from xml.etree import ElementTree
-
-
-repo = "../OCA/calendar"
-module = "resource_booking"
+from mig_module_common import repo, module
 
 
 os.chdir(repo + "/" + module)
@@ -88,6 +85,11 @@ def log_files_operation(log_message, filepaths, operation, *args, **kwargs):
 print("TODO: MIGRATE {} FROM 15.0 TO 16.0 (see https://github.com/OCA/maintainer-tools/wiki/Migration-to-version-16.0)".format(module))
 print("")
 
+# Squash
+print("Squash administrative commits (if any)")
+print("    - git log --oneline")
+print("    - git rebase -i HEAD~9")
+
 # Set version 16.0.1.0.0
 log_files_operation(
     log_message="Set version 16.0.1.0.0",
@@ -101,10 +103,6 @@ log_files_operation(
 if os.path.isdir('migrations'):
     # os.system("rm -rf "+cwd+"/migrations")
     print("Remove the migrations\n    - migrations")
-
-# Squash
-print("Squash administrative commits (if any)")
-print("    - git log --oneline")
 
 # Replace name_search with _rec_names_search
 log_files_operation(
@@ -186,3 +184,4 @@ print("    - Put unaccent=False on field definitions where no distinction should
 print("    - Add tests to increase code coverage.")
 print("    - Check tasks of previous versions if you are migrating from lower versions than v15.")
 print("    - Do the rest of the changes you need to do for making the module works on new version.")
+print("Test the module")
