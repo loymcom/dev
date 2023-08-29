@@ -11,6 +11,7 @@
         "views/product_template_views.xml",
     ],
     "depends": [
+        "date_range",
         "product",
     ],
     "development_status": "Alpha",
