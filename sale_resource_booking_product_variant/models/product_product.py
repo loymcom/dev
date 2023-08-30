@@ -50,5 +50,5 @@ class ProductProduct(models.Model):
 
     def action_view_resource_booking(self):
         action = super().action_view_resource_booking()
-        action["context"]["default_partner_id"] = self.partner_id
+        action["context"]["default_partner_id"] = self.partner_id.id
         return action
