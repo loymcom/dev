@@ -1,0 +1,41 @@
+# ERROR if adding the same module name from multiple repos.
+
+oca/calendar:
+    - "*"
+
+oca/connector:
+    - "*"
+
+oca/connector-telephony:
+    - "*"
+
+oca/e-commerce:
+    - "*"
+
+oca/product-attribute:
+    - "*"
+
+oca/product-pack:
+    - "*"
+
+oca/project:
+    - "*"
+
+oca/sale-workflow:
+    - "*"
+
+oca/server-ux:
+    - "*"
+
+oca/web:
+    - "*"
+
+ows/dev:
+    - "*"
+
+# ows/temp:
+#     - "asterisk_click2dial"
+#     - "base_phone"
+#     - "sale_product_pack"
+#     # - "sale_resource_booking"
+#     - "website_sale_resource_booking"

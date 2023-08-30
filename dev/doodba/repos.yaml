@@ -1,0 +1,140 @@
+# See https://github.com/Tecnativa/doodba#optodoocustomsrcreposyaml
+./odoo:
+  defaults:
+    # Shallow repositories ($DEPTH_DEFAULT=1) are faster & thinner
+    # You may need a bigger depth when merging PRs (use $DEPTH_MERGE
+    # for a sane value of 100 commits)
+    depth: $DEPTH_DEFAULT
+  remotes:
+    ocb: https://github.com/oca/ocb.git
+    odoo: https://github.com/odoo/odoo.git
+    openupgrade: https://github.com/oca/openupgrade.git
+  target: ocb $ODOO_VERSION
+  merges:
+    - ocb $ODOO_VERSION
+    # Example of a merge of the PR with the number <PR>
+    # - oca refs/pull/<PR>/head
+
+oca/calendar:
+  defaults:
+    depth: $DEPTH_MERGE
+  remotes:
+    origin: https://github.com/oca/calendar.git
+    ows: https://github.com/ows-cloud/calendar.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+    - ows 16.0-mig-resource_booking
+
+oca/connector:
+  defaults:
+    depth: $DEPTH_DEFAULT
+  remotes:
+    origin: https://github.com/oca/calendar.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+
+oca/connector-telephony:
+  defaults:
+    depth: 200 # $DEPTH_MERGE
+  remotes:
+    origin: https://github.com/oca/connector-telephony.git
+    ows: https://github.com/ows-cloud/connector-telephony.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+    - origin refs/pull/300/head # [16.0][MIG] base_phone: Migration to 16.0
+    # - ows 16.0-mig-asterisk_click2dial
+
+oca/e-commerce:
+  defaults:
+    depth: $DEPTH_MERGE
+  remotes:
+    origin: https://github.com/oca/e-commerce.git
+    ows: https://github.com/ows-cloud/e-commerce.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+    - ows 16.0-mig-website_sale_resource_booking
+
+oca/product-attribute:
+  defaults:
+    depth: $DEPTH_MERGE
+  remotes:
+    origin: https://github.com/oca/product-attribute.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+    - origin refs/pull/1289/head # 16.0 [MIG] product_list_pricelist_price
+    - origin refs/pull/1347/head # [16.0][MIG] product_attribute_value_menu: Migration to 16.0
+
+oca/product-pack:
+  defaults:
+    depth: $DEPTH_MERGE
+  remotes:
+    origin: https://github.com/oca/product-pack.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+
+oca/project:
+  defaults:
+    depth: $DEPTH_DEFAULT
+  remotes:
+    origin: https://github.com/oca/project.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+
+
+oca/sale-workflow:
+  defaults:
+    depth: $DEPTH_MERGE
+  remotes:
+    origin: https://github.com/oca/sale-workflow.git
+    ows: https://github.com/ows-cloud/sale-workflow.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+    - ows 16.0-mig-sale_resource_booking
+
+oca/server-ux:
+  defaults:
+    depth: $DEPTH_DEFAULT
+  remotes:
+    origin: https://github.com/oca/server-ux.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+
+oca/web:
+  defaults:
+    depth: 200 # $DEPTH_DEFAULT
+  remotes:
+    origin: https://github.com/oca/web.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+    - origin refs/pull/2549/head # [16.0] [MIG] web_calendar_slot_duration
+    - origin refs/pull/2328/head # [16.0] [MIG] web_ir_actions_act_multi: Migration to 16.0
+    - origin refs/pull/2600/head # [16.0][FIX] web_timeline: Add record -> popup form
+
+ows/dev:
+  defaults:
+    depth: 1 # $DEPTH_MERGE
+  remotes:
+    origin: https://github.com/ows-cloud/dev.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+
+# LAST
+# ows/temp:
+#   defaults:
+#     depth: 1 # $DEPTH_MERGE
+#   remotes:
+#     origin: https://github.com/ows-cloud/temp.git
+#   target: origin $ODOO_VERSION
+#   merges:
+#     - origin $ODOO_VERSION
