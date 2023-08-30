@@ -37,7 +37,7 @@ class ProductProduct(models.Model):
     def create(self, vals_list):
         products = super().create(vals_list)
 
-        # COPY FROM product.attribute.value
+        # Get values from product.attribute.value
         for product in products:
             type = set(ptav.product_attribute_value_id.resource_booking_type_id for ptav in product.product_template_attribute_value_ids)
             if type and len(type) == 1:
@@ -47,3 +47,8 @@ class ProductProduct(models.Model):
                 product.resource_booking_type_combination_rel_id = type_combination_rel.pop().id
 
         return products
+
+    def action_view_resource_booking(self):
+        action = super().action_view_resource_booking()
+        action["context"]["default_partner_id"] = self.partner_id
+        return action

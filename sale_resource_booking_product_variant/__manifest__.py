@@ -8,10 +8,12 @@
     "category": "Uncategorized",
     "data": [
         "views/product_attribute_views.xml",
+        "views/product_product_views.xml",
         "views/product_template_views.xml",
         "views/menus.xml",
     ],
     "depends": [
+        "partner_product_price",
         "sale_resource_booking",
     ],
     "development_status": "Alpha",
