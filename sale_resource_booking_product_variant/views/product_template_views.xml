@@ -8,10 +8,10 @@
         <field name="inherit_id" ref="sale_resource_booking.product_template_form_view" />
         <field name="arch" type="xml">
             <field name="resource_booking_type_id" position="attributes">
-                <attribute name="attrs">{'readonly': [('product_variant_count', '&gt;', 1)]}</attribute>
+                <attribute name="attrs">{'readonly': [('product_variant_count', '&gt;', 1), ('is_product_variant', '=', False)]}</attribute>
             </field>
             <field name="resource_booking_type_combination_rel_id" position="attributes">
-                <attribute name="attrs">{'readonly': [('product_variant_count', '&gt;', 1)]}</attribute>
+                <attribute name="attrs">{'readonly': [('product_variant_count', '&gt;', 1), ('is_product_variant', '=', False)]}</attribute>
             </field>
         </field>
     </record>
@@ -21,7 +21,7 @@
         <field name="inherit_id" ref="product.product_template_search_view"/>
         <field name="arch" type="xml">
             <search position="inside">
-                <filter string="Booking Type" name="resource_booking_type" domain="[('product_variant_ids.resource_booking_type_id', 'not in', [False, None])]"/>
+                <filter string="Booking Type" name="resource_booking_type" domain="[('product_variant_ids.resource_booking_type_id', 'not in', [False, None])]" groups="resource_booking.group_user"/>
             </search>
         </field>
     </record>

@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="product.product_search_form_view"/>
         <field name="arch" type="xml">
             <search position="inside">
-                <filter string="Booking Type" name="resource_booking_type" domain="[('resource_booking_type_id', 'not in', [False, None])]"/>
+                <filter string="Booking Type" name="resource_booking_type" domain="[('resource_booking_type_id', 'not in', [False, None])]" groups="resource_booking.group_user"/>
             </search>
         </field>
     </record>
