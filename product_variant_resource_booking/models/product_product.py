@@ -29,16 +29,10 @@ class ProductProduct(models.Model):
             record.date_start = date_start
             record.date_end = date_end
 
-    def _compute_partner_id(self):
-        partner_id = self.env.context.get("partner_id")
-        for record in self:
-            record.partner_id = partner_id
-
     # TODO: Prefix all of them with booking_?
     date_range_id = fields.Many2one("date.range", string="Date Range")
     date_start = fields.Date(string="Start date", compute="_compute_dates")
     date_end = fields.Date(string="End date", compute="_compute_dates")
-    partner_id = fields.Many2one("res.partner", string="Contact", compute="_compute_partner_id")
 
     def create_sale_order_and_resource_booking(self):
         pass
