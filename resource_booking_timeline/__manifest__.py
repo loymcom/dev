@@ -9,6 +9,7 @@
     "data": [
         "views/res_partner_views.xml",
         "views/resource_booking_views.xml",
+        "views/menus.xml",
     ],
     "depends": [
         "resource_booking",
