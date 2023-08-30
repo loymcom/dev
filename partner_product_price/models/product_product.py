@@ -13,7 +13,7 @@ class ProductProduct(models.Model):
 
         for product in self:
             product.partner_id = partner_id
-            product.partner_price = pricelist._get_product_price(product)
+            product.partner_price = pricelist._get_product_price(product, quantity=1)
 
     partner_id = fields.Many2one(
         "res.partner",
