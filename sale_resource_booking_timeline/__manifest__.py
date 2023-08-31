@@ -10,7 +10,7 @@
         "views/resource_booking_views.xml",
     ],
     "depends": [
-        "resource_booking",
+        "sale_resource_booking",
         "web_timeline",
     ],
     "license": "AGPL-3",
