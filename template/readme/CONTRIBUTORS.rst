@@ -1,1 +1,1 @@
-* Henrik Norlin <henrik@appstogrow.co>
+* Henrik Norlin (Ows)
