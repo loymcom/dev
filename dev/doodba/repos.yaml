@@ -25,6 +25,7 @@ oca/calendar:
   merges:
     - origin $ODOO_VERSION
     - ows 16.0-mig-resource_booking
+   # - ows 16.0-fix-unfitting-resource_booking
 
 oca/connector:
   defaults:
@@ -60,7 +61,7 @@ oca/e-commerce:
 
 oca/product-attribute:
   defaults:
-    depth: $DEPTH_MERGE
+    depth: 200 # $DEPTH_MERGE
   remotes:
     origin: https://github.com/oca/product-attribute.git
   target: origin $ODOO_VERSION
@@ -68,6 +69,7 @@ oca/product-attribute:
     - origin $ODOO_VERSION
     - origin refs/pull/1289/head # 16.0 [MIG] product_list_pricelist_price
     - origin refs/pull/1347/head # [16.0][MIG] product_attribute_value_menu: Migration to 16.0
+    - origin refs/pull/1408/head # [16.0][ADD] partner_product_price
 
 oca/product-pack:
   defaults:
@@ -87,7 +89,6 @@ oca/project:
   merges:
     - origin $ODOO_VERSION
 
-
 oca/sale-workflow:
   defaults:
     depth: $DEPTH_MERGE
@@ -97,7 +98,8 @@ oca/sale-workflow:
   target: origin $ODOO_VERSION
   merges:
     - origin $ODOO_VERSION
-    - ows 16.0-mig-sale_resource_booking
+    - origin refs/pull/2663/head # [16.0][IMP] sale_resource_booking: Buttons (product variant -> booking -> sale order)
+    - origin refs/pull/2664/head # [16.0][ADD] sale_resource_booking_product_variant
 
 oca/server-ux:
   defaults:
@@ -110,7 +112,7 @@ oca/server-ux:
 
 oca/web:
   defaults:
-    depth: 200 # $DEPTH_DEFAULT
+    depth: 250 # $DEPTH_DEFAULT
   remotes:
     origin: https://github.com/oca/web.git
   target: origin $ODOO_VERSION
@@ -118,7 +120,6 @@ oca/web:
     - origin $ODOO_VERSION
     - origin refs/pull/2549/head # [16.0] [MIG] web_calendar_slot_duration
     - origin refs/pull/2328/head # [16.0] [MIG] web_ir_actions_act_multi: Migration to 16.0
-    - origin refs/pull/2600/head # [16.0][FIX] web_timeline: Add record -> popup form
 
 ows/dev:
   defaults:
