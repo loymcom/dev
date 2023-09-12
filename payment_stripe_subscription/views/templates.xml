@@ -6,7 +6,7 @@
                     <title>Checkout</title>
                 </head>
                 <body>
-                    <form action="/create-checkout-session" method="POST">
+                    <form action="/stripe_subscrioption/create-checkout-session" method="POST">
                         <input type="hidden" name="priceId" value="price_1NnxerDpz7PDW22cdo4gRYuT" />
                         <button type="submit">Checkout Ows Test Product</button>
                     </form>
