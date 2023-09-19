@@ -4,12 +4,42 @@
             <html>
                 <head>
                     <title>Checkout</title>
+
+                    <t t-call-assets="payment_stripe_subscription.test"/>
+
                 </head>
                 <body>
                     <form action="/stripe_subscrioption/create-checkout-session" method="POST">
                         <input type="hidden" name="priceId" value="price_1NnxerDpz7PDW22cdo4gRYuT" />
                         <button type="submit">Checkout Ows Test Product</button>
                     </form>
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdown-trigger-2023-09-14">14</button>
+                        <div class="dropdown-menu slots-dropdown" aria-labelledby="dropdown-trigger-2023-09-14">
+                                <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modal-confirm-1694689200">13:00</button>
+                                <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modal-confirm-1694692800">14:00</button>
+                                <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modal-confirm-1694696400">15:00</button>
+                                <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modal-confirm-1694700000">16:00</button>
+                        </div>
+                    </div>
+<div class="container">
+  <h2>Dropdowns</h2>
+  <p>The .dropdown class is used to indicate a dropdown menu.</p>
+  <p>Use the .dropdown-menu class to actually build the dropdown menu.</p>
+  <p>To open the dropdown menu, use a button or a link with a class of .dropdown-toggle and data-toggle="dropdown".</p>
+  <div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li><a href="#">HTML</a></li>
+      <li class="dropdown-header">Dropdown header 1</li>
+      <li><a href="#">CSS</a></li>
+      <li class="divider"></li>
+      <li class="active">Active</li>
+      <li><a href="#">JavaScript</a></li>
+    </ul>
+  </div>
+</div>
                 </body>
             </html>
          </template>
