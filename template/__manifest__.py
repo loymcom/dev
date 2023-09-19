@@ -7,6 +7,7 @@
     "author": "Ows, Odoo Community Association (OCA)",
     "category": "Uncategorized",
     "data": [
+        "views/my_model_views.xml",
     ],
     "depends": [
         "base",
