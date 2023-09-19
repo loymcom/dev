@@ -87,18 +87,18 @@
         ptav = product.template.attribute.value (newstart silver standard room type, newstart silver premium room type)
         pp = product.product (newstart silver standard room, newstart silver premium room)
     -->
-    <record id="room_type_pa" model="product.attribute">
+    <record id="room_type_id" model="product.attribute">
         <field name="name">Room Type</field>
         <field name="sequence">10</field>
     </record>
     <record id="standard_room_type_pav" model="product.attribute.value">
         <field name="name">Standard Room</field>
-        <field name="attribute_id" ref="room_type_pa"/>
+        <field name="attribute_id" ref="room_type_id"/>
         <field name="sequence">1</field>
     </record>
     <record id="premium_room_type_pav" model="product.attribute.value">
         <field name="name">Premium Room</field>
-        <field name="attribute_id" ref="room_type_pa"/>
+        <field name="attribute_id" ref="room_type_id"/>
         <field name="sequence">2</field>
     </record>
     <record id="newstart_silver_pt" model="product.template">
@@ -109,41 +109,21 @@
     </record>
     <record id="newstart_silver_room_type_ptal" model="product.template.attribute.line">
         <field name="product_tmpl_id" ref="newstart_silver_pt"/>
-        <field name="attribute_id" ref="room_type_pa"/>
-        <field
-            name="value_ids"
-            eval="[(6, 0, [ref('standard_room_type_pav'), ref('premium_room_type_pav')])]"
-        />
+        <field name="attribute_id" ref="room_type_id"/>
+        <field name="value_ids" eval="[(6, 0, [ref('fredheim_rb_demo.standard_room_type_pav'), ref('fredheim_rb_demo.premium_room_type_pav')])]"/>
     </record>
     <!-- product.template.attribute.value -->
     <function model="ir.model.data" name="_update_xmlids">
         <value model="base" eval="[{
             'xml_id': 'fredheim_rb_demo.newstart_silver_standard_room_type_ptav',
-            'record': ref('newstart_silver_room_type_ptal'),
-            'noupdate': True,
-        }]"/>
-    </function>
-        <!-- <value model="base" eval="[{
-            'xml_id': 'fredheim_rb_demo.newstart_silver_standard_room_type_ptav',
-            'record': obj().env.ref('newstart_silver_room_type_ptal').product_template_value_ids[0],
+            'record': obj().env.ref('fredheim_rb_demo.newstart_silver_room_type_ptal').product_template_value_ids[0],
             'noupdate': True,
         }, {
             'xml_id': 'fredheim_rb_demo.newstart_silver_premium_room_type_ptav',
-            'record': obj().env.ref('newstart_silver_room_type_ptal').product_template_value_ids[1],
+            'record': obj().env.ref('fredheim_rb_demo.newstart_silver_room_type_ptal').product_template_value_ids[1],
             'noupdate': True,
-        }]"/> -->
-        <!-- This does not give error - EDIT it also gives error:
-        <value model="base" eval="[{
-            'xml_id': 'fredheim_rb_demo.newstart_silver_standard_room_type_ptav',
-            'record': ref('newstart_silver_room_type_ptal'),
-            'noupdate': True,
-        }]"/> -->
-        <!-- <value model="base" eval="[{
-            'xml_id': 'newstart_silver_standard_room_type_ptav',
-            'record': ref('newstart_silver_room_type_ptal'),
-            'noupdate': True,
-        }]"/> -->
-
+        },]"/>
+    </function>
     <record id="newstart_silver_premium_room_type_ptav" model="product.template.attribute.value">
         <field name="price_extra">1000.0</field>
     </record>
@@ -151,13 +131,18 @@
     <function model="ir.model.data" name="_update_xmlids">
         <value model="base" eval="[{
             'xml_id': 'fredheim_rb_demo.newstart_silver_standard_room_pp',
-            'record': obj().env.ref('newstart_silver_pt')._get_variant_for_combination(obj().env.ref('newstart_silver_standard_room_type_ptav')),
+            'record': obj().env.ref('fredheim_rb_demo.newstart_silver_pt')._get_variant_for_combination(obj().env.ref('fredheim_rb_demo.newstart_silver_standard_room_type_ptav')),
             'noupdate': True,
         }, {
             'xml_id': 'fredheim_rb_demo.newstart_silver_premium_room_pp',
-            'record': obj().env.ref('newstart_silver_pt')._get_variant_for_combination(obj().env.ref('newstart_silver_premium_room_type_ptav')),
+            'record': obj().env.ref('fredheim_rb_demo.newstart_silver_pt')._get_variant_for_combination(obj().env.ref('fredheim_rb_demo.newstart_silver_premium_room_type_ptav')),
             'noupdate': True,
         },]"/>
     </function>
-
+    <record id="newstart_silver_standard_room_pp" model="product.product">
+        <field name="resource_booking_type_id" ref="resource_booking_type_room_standard" />
+    </record>
+    <record id="newstart_silver_premium_room_pp" model="product.product">
+        <field name="resource_booking_type_id" ref="resource_booking_type_room_premium" />
+    </record>
 </data>
