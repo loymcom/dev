@@ -297,7 +297,7 @@
     </function>
 
     <!-- RESOURCE BOOKING -->
-    <!-- <record id="resource_booking_session_unlocx" model="resource.booking">
+    <record id="resource_booking_session_unlocx" model="resource.booking">
         <field name="name">UNLOCX</field>
         <field name="partner_id" ref="base.main_partner" />
         <field name="type_id" ref="resource_booking_type_session" />
@@ -309,5 +309,6 @@
         />
         <field name="start">2023-10-16</field>
         <field name="stop">2023-10-26</field>
-    </record> -->
+        <field name="duration_in_timeline">01:00</field>
+    </record>
 </data>
