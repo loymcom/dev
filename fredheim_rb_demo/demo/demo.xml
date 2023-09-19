@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data noupdate="1">
+
+    <!-- RESOURCE -->
+    <record id="resource_resource_session" model="resource.resource">
+        <field name="name">SESSION</field>
+        <field name="resource_type">material</field>
+    </record>
+    <record id="resource_resource_room_standard_1" model="resource.resource">
+        <field name="name">Standard Room 1</field>
+        <field name="resource_type">material</field>
+    </record>
+    <record id="resource_resource_room_standard_2" model="resource.resource">
+        <field name="name">Standard Room 2</field>
+        <field name="resource_type">material</field>
+    </record>
+    <record id="resource_resource_room_premium_1" model="resource.resource">
+        <field name="name">Premium Room 1</field>
+        <field name="resource_type">material</field>
+    </record>
+    <record id="resource_resource_room_premium_2" model="resource.resource">
+        <field name="name">Premium Room 2</field>
+        <field name="resource_type">material</field>
+    </record>
+
+    <!-- RESOURCE COMBINATION -->
+    <record id="resource_booking_combination_session" model="resource.booking.combination">
+        <field name="name">SESSION</field>
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_session')])]" />
+    </record>
+    <record id="resource_booking_combination_room_standard_1" model="resource.booking.combination">
+        <field name="name">Standard Room 1</field>
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_room_standard_1')])]" />
+    </record>
+    <record id="resource_booking_combination_room_standard_2" model="resource.booking.combination">
+        <field name="name">Standard Room 2</field>
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_room_standard_2')])]" />
+    </record>
+    <record id="resource_booking_combination_room_premium_1" model="resource.booking.combination">
+        <field name="name">Premium Room 1</field>
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_room_premium_1')])]" />
+    </record>
+    <record id="resource_booking_combination_room_premium_2" model="resource.booking.combination">
+        <field name="name">Premium Room 2</field>
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_room_premium_2')])]" />
+    </record>
+
+    <!-- RESOURCE BOOKING TYPE -->
+    <record id="resource_booking_type_session" model="resource.booking.type">
+        <field name="name">SESSION</field>
+    </record>
+    <record id="resource_booking_type_room_standard" model="resource.booking.type">
+        <field name="name">Standard Room</field>
+    </record>
+    <record id="resource_booking_type_room_premium" model="resource.booking.type">
+        <field name="name">Premium Room</field>
+    </record>
+
+    <!-- RESOURCE BOOKING TYPE COMBINATION REL -->
+    <record id="resource_booking_type_combination_rel_session" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_session" />
+        <field name="combination_id" ref="resource_booking_combination_session" />
+    </record>
+    <record id="resource_booking_type_combination_rel_room_standard_1" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_room_standard" />
+        <field name="combination_id" ref="resource_booking_combination_room_standard_1" />
+    </record>
+    <record id="resource_booking_type_combination_rel_room_standard_2" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_room_standard" />
+        <field name="combination_id" ref="resource_booking_combination_room_standard_2" />
+    </record>
+    <record id="resource_booking_type_combination_rel_room_premium_1" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_room_premium" />
+        <field name="combination_id" ref="resource_booking_combination_room_premium_1" />
+    </record>
+    <record id="resource_booking_type_combination_rel_room_premium_2" model="resource.booking.type.combination.rel">
+        <field name="type_id" ref="resource_booking_type_room_premium" />
+        <field name="combination_id" ref="resource_booking_combination_room_premium_2" />
+    </record>
+
+    <!--
+        PRODUCT
+        pa = product.attribute (room type)
+        pav = product.attribute.value (standard room type, premium room type)
+        pt = product.template (newstart silver)
+        ptal = product.template.attribute.line (newstart silver room type)
+        ptav = product.template.attribute.value (newstart silver standard room type, newstart silver premium room type)
+        pp = product.product (newstart silver standard room, newstart silver premium room)
+    -->
+    <record id="room_type_pa" model="product.attribute">
+        <field name="name">Room Type</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="standard_room_type_pav" model="product.attribute.value">
+        <field name="name">Standard Room</field>
+        <field name="attribute_id" ref="room_type_pa"/>
+        <field name="sequence">1</field>
+    </record>
+    <record id="premium_room_type_pav" model="product.attribute.value">
+        <field name="name">Premium Room</field>
+        <field name="attribute_id" ref="room_type_pa"/>
+        <field name="sequence">2</field>
+    </record>
+    <record id="newstart_silver_pt" model="product.template">
+        <field name="name">NEWSTART Silver 10 days</field>
+        <field name="categ_id" ref="product.product_category_all"/>
+        <field name="list_price">2000.0</field>
+        <field name="detailed_type">service</field>
+    </record>
+    <record id="newstart_silver_room_type_ptal" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="newstart_silver_pt"/>
+        <field name="attribute_id" ref="room_type_pa"/>
+        <field
+            name="value_ids"
+            eval="[(6, 0, [ref('standard_room_type_pav'), ref('premium_room_type_pav')])]"
+        />
+    </record>
+    <!-- product.template.attribute.value -->
+    <function model="ir.model.data" name="_update_xmlids">
+        <value model="base" eval="[{
+            'xml_id': 'fredheim_rb_demo.newstart_silver_standard_room_type_ptav',
+            'record': ref('newstart_silver_room_type_ptal'),
+            'noupdate': True,
+        }]"/>
+    </function>
+        <!-- <value model="base" eval="[{
+            'xml_id': 'fredheim_rb_demo.newstart_silver_standard_room_type_ptav',
+            'record': obj().env.ref('newstart_silver_room_type_ptal').product_template_value_ids[0],
+            'noupdate': True,
+        }, {
+            'xml_id': 'fredheim_rb_demo.newstart_silver_premium_room_type_ptav',
+            'record': obj().env.ref('newstart_silver_room_type_ptal').product_template_value_ids[1],
+            'noupdate': True,
+        }]"/> -->
+        <!-- This does not give error - EDIT it also gives error:
+        <value model="base" eval="[{
+            'xml_id': 'fredheim_rb_demo.newstart_silver_standard_room_type_ptav',
+            'record': ref('newstart_silver_room_type_ptal'),
+            'noupdate': True,
+        }]"/> -->
+        <!-- <value model="base" eval="[{
+            'xml_id': 'newstart_silver_standard_room_type_ptav',
+            'record': ref('newstart_silver_room_type_ptal'),
+            'noupdate': True,
+        }]"/> -->
+
+    <record id="newstart_silver_premium_room_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">1000.0</field>
+    </record>
+    <!-- product.product -->
+    <function model="ir.model.data" name="_update_xmlids">
+        <value model="base" eval="[{
+            'xml_id': 'fredheim_rb_demo.newstart_silver_standard_room_pp',
+            'record': obj().env.ref('newstart_silver_pt')._get_variant_for_combination(obj().env.ref('newstart_silver_standard_room_type_ptav')),
+            'noupdate': True,
+        }, {
+            'xml_id': 'fredheim_rb_demo.newstart_silver_premium_room_pp',
+            'record': obj().env.ref('newstart_silver_pt')._get_variant_for_combination(obj().env.ref('newstart_silver_premium_room_type_ptav')),
+            'noupdate': True,
+        },]"/>
+    </function>
+
+</data>
