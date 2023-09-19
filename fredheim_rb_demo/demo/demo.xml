@@ -1,26 +1,95 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <data noupdate="1">
 
+    <!-- RESOURCE CALENDAR -->
+    <record id="resource_calendar_24_7" model="resource.calendar">
+        <field name="name">Available 24/7</field>
+    </record>
+    <record id="resource_calendar_24_7" model="resource.calendar">
+        <field name="attendance_ids" eval="[(6, 0, [])]" />
+    </record>
+    <record id="resource_calendar_24_7_monday" model="resource.calendar.attendance">
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+        <field name="name">Monday</field>
+        <field name="dayofweek">0</field>
+        <field name="day_period">morning</field>
+        <field name="hour_from">0.0</field>
+        <field name="hour_to">24.0</field>
+    </record>
+    <record id="resource_calendar_24_7_tuesday" model="resource.calendar.attendance">
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+        <field name="name">Tuesday</field>
+        <field name="dayofweek">1</field>
+        <field name="day_period">morning</field>
+        <field name="hour_from">0.0</field>
+        <field name="hour_to">24.0</field>
+    </record>
+    <record id="resource_calendar_24_7_wednesday" model="resource.calendar.attendance">
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+        <field name="name">Wednesday</field>
+        <field name="dayofweek">2</field>
+        <field name="day_period">morning</field>
+        <field name="hour_from">0.0</field>
+        <field name="hour_to">24.0</field>
+    </record>
+    <record id="resource_calendar_24_7_thursday" model="resource.calendar.attendance">
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+        <field name="name">Thursday</field>
+        <field name="dayofweek">3</field>
+        <field name="day_period">morning</field>
+        <field name="hour_from">0.0</field>
+        <field name="hour_to">24.0</field>
+    </record>
+    <record id="resource_calendar_24_7_friday" model="resource.calendar.attendance">
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+        <field name="name">Friday</field>
+        <field name="dayofweek">4</field>
+        <field name="day_period">morning</field>
+        <field name="hour_from">0.0</field>
+        <field name="hour_to">24.0</field>
+    </record>
+    <record id="resource_calendar_24_7_saturday" model="resource.calendar.attendance">
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+        <field name="name">Saturday</field>
+        <field name="dayofweek">5</field>
+        <field name="day_period">morning</field>
+        <field name="hour_from">0.0</field>
+        <field name="hour_to">24.0</field>
+    </record>
+    <record id="resource_calendar_24_7_sunday" model="resource.calendar.attendance">
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+        <field name="name">Sunday</field>
+        <field name="dayofweek">6</field>
+        <field name="day_period">morning</field>
+        <field name="hour_from">0.0</field>
+        <field name="hour_to">24.0</field>
+    </record>
+
     <!-- RESOURCE -->
     <record id="resource_resource_session" model="resource.resource">
         <field name="name">SESSION</field>
         <field name="resource_type">material</field>
+        <field name="calendar_id" ref="resource_calendar_24_7" />
     </record>
     <record id="resource_resource_room_standard_1" model="resource.resource">
         <field name="name">Standard Room 1</field>
         <field name="resource_type">material</field>
+        <field name="calendar_id" ref="resource_calendar_24_7" />
     </record>
     <record id="resource_resource_room_standard_2" model="resource.resource">
         <field name="name">Standard Room 2</field>
         <field name="resource_type">material</field>
+        <field name="calendar_id" ref="resource_calendar_24_7" />
     </record>
     <record id="resource_resource_room_premium_1" model="resource.resource">
         <field name="name">Premium Room 1</field>
         <field name="resource_type">material</field>
+        <field name="calendar_id" ref="resource_calendar_24_7" />
     </record>
     <record id="resource_resource_room_premium_2" model="resource.resource">
         <field name="name">Premium Room 2</field>
         <field name="resource_type">material</field>
+        <field name="calendar_id" ref="resource_calendar_24_7" />
     </record>
 
     <!-- RESOURCE COMBINATION -->
@@ -48,12 +117,15 @@
     <!-- RESOURCE BOOKING TYPE -->
     <record id="resource_booking_type_session" model="resource.booking.type">
         <field name="name">SESSION</field>
+        <field name="resource_calendar_id" ref="resource_calendar_24_7" />
     </record>
     <record id="resource_booking_type_room_standard" model="resource.booking.type">
         <field name="name">Standard Room</field>
+        <field name="resource_calendar_id" ref="resource_calendar_24_7" />
     </record>
     <record id="resource_booking_type_room_premium" model="resource.booking.type">
         <field name="name">Premium Room</field>
+        <field name="resource_calendar_id" ref="resource_calendar_24_7" />
     </record>
 
     <!-- RESOURCE BOOKING TYPE COMBINATION REL -->
@@ -95,12 +167,16 @@
         <field name="name">Standard Room</field>
         <field name="attribute_id" ref="room_type_id"/>
         <field name="sequence">1</field>
+        <field name="resource_booking_type_id" ref="resource_booking_type_room_standard"/>
     </record>
     <record id="premium_room_type_pav" model="product.attribute.value">
         <field name="name">Premium Room</field>
         <field name="attribute_id" ref="room_type_id"/>
         <field name="sequence">2</field>
+        <field name="resource_booking_type_id" ref="resource_booking_type_room_premium"/>
     </record>
+
+    <!-- NEWSTART SILVER -->
     <record id="newstart_silver_pt" model="product.template">
         <field name="name">NEWSTART Silver 10 days</field>
         <field name="categ_id" ref="product.product_category_all"/>
@@ -139,10 +215,99 @@
             'noupdate': True,
         },]"/>
     </function>
-    <record id="newstart_silver_standard_room_pp" model="product.product">
-        <field name="resource_booking_type_id" ref="resource_booking_type_room_standard" />
+
+    <!-- NEWSTART GOLD -->
+    <record id="newstart_gold_pt" model="product.template">
+        <field name="name">NEWSTART Gold 10 days</field>
+        <field name="categ_id" ref="product.product_category_all"/>
+        <field name="list_price">2000.0</field>
+        <field name="detailed_type">service</field>
     </record>
-    <record id="newstart_silver_premium_room_pp" model="product.product">
-        <field name="resource_booking_type_id" ref="resource_booking_type_room_premium" />
+    <record id="newstart_gold_room_type_ptal" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="newstart_gold_pt"/>
+        <field name="attribute_id" ref="room_type_id"/>
+        <field name="value_ids" eval="[(6, 0, [ref('fredheim_rb_demo.standard_room_type_pav'), ref('fredheim_rb_demo.premium_room_type_pav')])]"/>
     </record>
+    <!-- product.template.attribute.value -->
+    <function model="ir.model.data" name="_update_xmlids">
+        <value model="base" eval="[{
+            'xml_id': 'fredheim_rb_demo.newstart_gold_standard_room_type_ptav',
+            'record': obj().env.ref('fredheim_rb_demo.newstart_gold_room_type_ptal').product_template_value_ids[0],
+            'noupdate': True,
+        }, {
+            'xml_id': 'fredheim_rb_demo.newstart_gold_premium_room_type_ptav',
+            'record': obj().env.ref('fredheim_rb_demo.newstart_gold_room_type_ptal').product_template_value_ids[1],
+            'noupdate': True,
+        },]"/>
+    </function>
+    <record id="newstart_gold_premium_room_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">1000.0</field>
+    </record>
+    <!-- product.product -->
+    <function model="ir.model.data" name="_update_xmlids">
+        <value model="base" eval="[{
+            'xml_id': 'fredheim_rb_demo.newstart_gold_standard_room_pp',
+            'record': obj().env.ref('fredheim_rb_demo.newstart_gold_pt')._get_variant_for_combination(obj().env.ref('fredheim_rb_demo.newstart_gold_standard_room_type_ptav')),
+            'noupdate': True,
+        }, {
+            'xml_id': 'fredheim_rb_demo.newstart_gold_premium_room_pp',
+            'record': obj().env.ref('fredheim_rb_demo.newstart_gold_pt')._get_variant_for_combination(obj().env.ref('fredheim_rb_demo.newstart_gold_premium_room_type_ptav')),
+            'noupdate': True,
+        },]"/>
+    </function>
+
+    <!-- UNLOCX -->
+    <record id="unlocx_pt" model="product.template">
+        <field name="name">UNLOCX 10 days</field>
+        <field name="categ_id" ref="product.product_category_all"/>
+        <field name="list_price">2000.0</field>
+        <field name="detailed_type">service</field>
+    </record>
+    <record id="unlocx_room_type_ptal" model="product.template.attribute.line">
+        <field name="product_tmpl_id" ref="unlocx_pt"/>
+        <field name="attribute_id" ref="room_type_id"/>
+        <field name="value_ids" eval="[(6, 0, [ref('fredheim_rb_demo.standard_room_type_pav'), ref('fredheim_rb_demo.premium_room_type_pav')])]"/>
+    </record>
+    <!-- product.template.attribute.value -->
+    <function model="ir.model.data" name="_update_xmlids">
+        <value model="base" eval="[{
+            'xml_id': 'fredheim_rb_demo.unlocx_standard_room_type_ptav',
+            'record': obj().env.ref('fredheim_rb_demo.unlocx_room_type_ptal').product_template_value_ids[0],
+            'noupdate': True,
+        }, {
+            'xml_id': 'fredheim_rb_demo.unlocx_premium_room_type_ptav',
+            'record': obj().env.ref('fredheim_rb_demo.unlocx_room_type_ptal').product_template_value_ids[1],
+            'noupdate': True,
+        },]"/>
+    </function>
+    <record id="unlocx_premium_room_type_ptav" model="product.template.attribute.value">
+        <field name="price_extra">1000.0</field>
+    </record>
+    <!-- product.product -->
+    <function model="ir.model.data" name="_update_xmlids">
+        <value model="base" eval="[{
+            'xml_id': 'fredheim_rb_demo.unlocx_standard_room_pp',
+            'record': obj().env.ref('fredheim_rb_demo.unlocx_pt')._get_variant_for_combination(obj().env.ref('fredheim_rb_demo.unlocx_standard_room_type_ptav')),
+            'noupdate': True,
+        }, {
+            'xml_id': 'fredheim_rb_demo.unlocx_premium_room_pp',
+            'record': obj().env.ref('fredheim_rb_demo.unlocx_pt')._get_variant_for_combination(obj().env.ref('fredheim_rb_demo.unlocx_premium_room_type_ptav')),
+            'noupdate': True,
+        },]"/>
+    </function>
+
+    <!-- RESOURCE BOOKING -->
+    <!-- <record id="resource_booking_session_unlocx" model="resource.booking">
+        <field name="name">UNLOCX</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_session" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_session" />
+        <field
+            name="product_template_ids"
+            eval="[(6, 0, [ref('fredheim_rb_demo.newstart_silver_pt'), ref('fredheim_rb_demo.newstart_gold_pt'), ref('fredheim_rb_demo.unlocx_pt')])]"
+        />
+        <field name="start">2023-10-16</field>
+        <field name="stop">2023-10-26</field>
+    </record> -->
 </data>
