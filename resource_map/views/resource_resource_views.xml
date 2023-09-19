@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="resource_resource_view_form">
+        <field name="name">resource.resource.view.form</field>
+        <field name="model">resource.resource</field>
+        <field name="inherit_id" ref="resource.resource_resource_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="inside">
+                <group col="4" string="Appearance">
+                    <field name="map_id" />
+                    <field name="shape" />
+                    <field name="position_h" />
+                    <field name="position_v" />
+                    <field name="width" />
+                    <field name="height" />
+                    <field name="capacity" />
+                    <field name="color" />
+                    <field name="active" widget="boolean_toggle" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

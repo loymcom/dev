@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="resource_resource_map_view_map" model="ir.ui.view">
+        <field name="name">resource.resource.map.view.map</field>
+        <field name="model">resource.resource.map</field>
+        <field name="arch" type="xml">
+            <map
+                items_field="resource_ids"
+            />
+        </field>
+    </record>
+    <record id="resource_resource_map_view_tree" model="ir.ui.view">
+        <field name="name">resource.resource.map.view.tree</field>
+        <field name="model">resource.resource.map</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+    <record id="resource_resource_map_action" model="ir.actions.act_window">
+        <field name="name">Resource Map</field>
+        <field name="res_model">resource.resource.map</field>
+        <field name="view_mode">tree,map</field>
+    </record>
+    <menuitem
+        id="resource_resource_map_menu"
+        name="Resource Map"
+        action="resource_resource_map_action"
+        parent="resource.menu_resource_config"
+        sequence="10"
+    />
+
+</odoo>
