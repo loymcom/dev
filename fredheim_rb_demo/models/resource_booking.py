@@ -5,4 +5,3 @@ class ResourceBooking(models.Model):
 
     def action_save(self):
         pass
-        # self.env.flush_all()

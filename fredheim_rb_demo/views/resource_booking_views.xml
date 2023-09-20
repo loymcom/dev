@@ -6,14 +6,14 @@
         <field name="model">resource.booking</field>
         <field name="inherit_id" ref="resource_booking.resource_booking_form" />
         <field name="arch" type="xml">
-            <field name="state" position="before">
+            <button name="%(portal.portal_share_action)d" position="before">
                 <button
                     name="action_save"
                     class="oe_highlight"
                     string="Save"
                     type="object"
                 />
-            </field>
+            </button>
         </field>
     </record>
 </data>
