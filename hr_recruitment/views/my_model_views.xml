@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="my_model_view_form">
+        <field name="name">my.model.view.form</field>
+        <field name="model">my.model</field>
+        <field name="inherit_id" ref="dependency_module.my_model_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[name='some_field')]" position="after">
+                <field name="my_field" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
