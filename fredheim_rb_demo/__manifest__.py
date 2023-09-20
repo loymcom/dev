@@ -8,6 +8,7 @@
     "category": "Uncategorized",
     "demo": [
         "demo/demo.xml",
+        "views/resource_booking_views.xml",
     ],
     "depends": [
         "sale_resource_booking_product_variant",

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+    <!-- Views -->
+    <record id="resource_booking_form" model="ir.ui.view">
+        <field name="name">Resource booking form inherit</field>
+        <field name="model">resource.booking</field>
+        <field name="inherit_id" ref="resource_booking.resource_booking_form" />
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <button
+                    name="action_save"
+                    class="oe_highlight"
+                    string="Save"
+                    type="object"
+                />
+            </field>
+        </field>
+    </record>
+</data>
