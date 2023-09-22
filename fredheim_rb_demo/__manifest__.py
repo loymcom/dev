@@ -6,7 +6,7 @@
     "summary": "",
     "author": "Ows, Odoo Community Association (OCA)",
     "category": "Uncategorized",
-    "demo": [
+    "data": [
         "demo/demo.xml",
         "views/resource_booking_views.xml",
     ],

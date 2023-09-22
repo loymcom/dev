@@ -13,7 +13,65 @@
                     string="Save"
                     type="object"
                 />
+
+                <button
+                    name="action_bookings_this_interval"
+                    class="oe_highlight"
+                    string="Bookings"
+                    type="object"
+                    attrs="{'invisible': [('available_product_tmpl_ids', '=', [])]}"
+                />
+                <button
+                    name="action_contacts_this_interval"
+                    class="oe_highlight"
+                    string="Contacts"
+                    type="object"
+                    attrs="{'invisible': [('available_product_tmpl_ids', '=', [])]}"
+                />
             </button>
+            <field name="partner_id" position="after">
+                <field name="partner_ids" widget="many2many_tags" />
+            </field>
         </field>
     </record>
+    <record id="resource_booking_view_tree" model="ir.ui.view">
+        <field name="name">resource.booking.tree.inherit</field>
+        <field name="model">resource.booking</field>
+        <field name="inherit_id" ref="resource_booking.resource_booking_view_tree" />
+        <field name="arch" type="xml">
+            <tree position="inside">
+                <field name="available_product_tmpl_ids" invisible="1" />
+                <button
+                    class="btn btn-primary"
+                    type="object"
+                    name="action_bookings_this_interval"
+                    string="Bookings"
+                    attrs="{'invisible': [('available_product_tmpl_ids', '=', [])]}"
+                />
+                <button
+                    class="btn btn-primary"
+                    type="object"
+                    name="action_contacts_this_interval"
+                    string="Contacts"
+                    attrs="{'invisible': [('available_product_tmpl_ids', '=', [])]}"
+                />
+            </tree>
+            <field name="partner_id" position="after">
+                <field name="partner_ids" widget="many2many_tags" />
+                <field name="product_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="resource_booking_intervals_action" model="ir.actions.act_window">
+        <field name="name">Intervals</field>
+        <field name="res_model">resource.booking</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[("available_product_tmpl_ids", "!=", False)]</field>
+    </record>
+    <menuitem
+        id="resource_booking_menu_intervals"
+        action="resource_booking_intervals_action"
+        parent="resource_booking.resource_booking_main_menu"
+    />
 </data>
