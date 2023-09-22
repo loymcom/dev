@@ -12,6 +12,7 @@
     ],
     "depends": [
         "contacts",
+        "hr",
         "sale_management",
         "website_sale_resource_booking",  # oca/calendar, oca/sale-workflow, oca/e-commerce
         "partner_product_price",  # oca/product-attribute

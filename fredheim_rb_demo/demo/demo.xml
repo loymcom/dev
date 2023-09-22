@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <data noupdate="0">
 
-    <!-- RESOURCE CALENDAR -->
+    <!-- RESOURCE CALENDAR - AVAILABLE 24/7 -->
+
     <record id="resource_calendar_24_7" model="resource.calendar">
         <field name="name">Available 24/7</field>
     </record>
@@ -65,7 +66,8 @@
         <field name="hour_to">24.0</field>
     </record>
 
-    <!-- RESOURCE -->
+    <!-- MATERIAL RESOURCES -->
+
     <record id="resource_resource_session" model="resource.resource">
         <field name="name">SESSION</field>
         <field name="resource_type">material</field>
@@ -101,8 +103,39 @@
         <field name="resource_type">material</field>
         <field name="calendar_id" ref="resource_calendar_24_7" />
     </record> -->
+    <record id="resource_resource_workspace_1" model="resource.resource">
+        <field name="name">Workspace 1</field>
+        <field name="resource_type">material</field>
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+    </record>
+    <record id="resource_resource_workspace_2" model="resource.resource">
+        <field name="name">Workspace 2</field>
+        <field name="resource_type">material</field>
+        <field name="calendar_id" ref="resource_calendar_24_7" />
+    </record>
+
+    <!-- HUMAN RESOURCES -->
+
+    <record id="hr.employee_han" model="hr.employee"> <!-- Walter Horton -->
+        <field name="Dennis Doctor" />
+    </record>
+    <record id="hr.employee_hne" model="hr.employee"> <!-- Abigail Peterson -->
+        <field name="Tine Therapist" />
+    </record>
+    <function model="ir.model.data" name="_update_xmlids">
+        <value model="base" eval="[{
+            'xml_id': 'hr.resource_han',
+            'record': obj().env.ref('hr.employee_han').resource_id,
+            'noupdate': False,
+        }, {
+            'xml_id': 'hr.resource_hne',
+            'record': obj().env.ref('hr.employee_hne').resource_id,
+            'noupdate': False,
+        },]"/>
+    </function>
 
     <!-- RESOURCE COMBINATION -->
+
     <record id="resource_booking_combination_session" model="resource.booking.combination">
         <field name="name">SESSION</field>
         <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_session')])]" />
