@@ -189,7 +189,7 @@
     <record id="newstart_silver_pt" model="product.template">
         <field name="name">NEWSTART Silver 10 days</field>
         <field name="categ_id" ref="product.product_category_all"/>
-        <field name="list_price">2000.0</field>
+        <field name="list_price">1500.0</field>
         <field name="detailed_type">service</field>
         <field name="website_published" eval="1" />
     </record>
@@ -387,7 +387,7 @@
         <field name="combination_auto_assign" eval="False" />
         <field name="combination_id" ref="resource_booking_combination_session" />
         <field
-            name="product_template_ids"
+            name="available_product_tmpl_ids"
             eval="[(6, 0, [ref('fredheim_rb_demo.newstart_silver_pt'), ref('fredheim_rb_demo.newstart_gold_pt')])]"
         />
         <field name="start" eval="DateTime.now() + relativedelta(days=2, hour=22, minute=0, second=0)"/>
@@ -400,7 +400,7 @@
         <field name="combination_auto_assign" eval="False" />
         <field name="combination_id" ref="resource_booking_combination_session" />
         <field
-            name="product_template_ids"
+            name="available_product_tmpl_ids"
             eval="[(6, 0, [ref('fredheim_rb_demo.unlocx_pt')])]"
         />
         <field name="start" eval="DateTime.now() + relativedelta(days=16, hour=22, minute=0, second=0)"/>
@@ -413,7 +413,7 @@
         <field name="combination_auto_assign" eval="False" />
         <field name="combination_id" ref="resource_booking_combination_session" />
         <field
-            name="product_template_ids"
+            name="available_product_tmpl_ids"
             eval="[(6, 0, [ref('fredheim_rb_demo.newstart_silver_pt'), ref('fredheim_rb_demo.newstart_gold_pt')])]"
         />
         <field name="start" eval="DateTime.now() + relativedelta(days=30, hour=22, minute=0, second=0)"/>
@@ -426,7 +426,7 @@
         <field name="combination_auto_assign" eval="False" />
         <field name="combination_id" ref="resource_booking_combination_session" />
         <field
-            name="product_template_ids"
+            name="available_product_tmpl_ids"
             eval="[(6, 0, [ref('fredheim_rb_demo.newstart_silver_pt'), ref('fredheim_rb_demo.newstart_gold_pt'), ref('fredheim_rb_demo.unlocx_pt')])]"
         />
         <field name="start" eval="DateTime.now() + relativedelta(days=44, hour=22, minute=0, second=0)"/>
