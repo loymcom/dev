@@ -33,11 +33,19 @@
         <field name="arch" type="xml">
             <tree position="inside">
                 <field name="period_product_tmpl_ids" invisible="1" />
+                <field
+                    name="period_booking_count"
+                    attrs="{'invisible': [('period_product_tmpl_ids', '=', [])]}"
+                />
                 <button
                     class="btn btn-primary"
                     type="object"
                     name="action_bookings_this_period"
                     string="Bookings"
+                    attrs="{'invisible': [('period_product_tmpl_ids', '=', [])]}"
+                />
+                <field
+                    name="period_partner_count"
                     attrs="{'invisible': [('period_product_tmpl_ids', '=', [])]}"
                 />
                 <button

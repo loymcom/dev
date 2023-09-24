@@ -1,23 +1,27 @@
-from odoo import fields, models
+from collections import defaultdict
+
+from odoo import api, fields, models
 
 
 class Partner(models.Model):
     _inherit = "res.partner"
 
-    def _compute_resource_booking_combination_id(self):
+    def _compute_resource_booking_combination_ids(self):
+        # Period -> Contacts -> Combinations in this period
         period_id = self.env.context.get("resource_booking_period_id")
         if period_id:
             period = self.env["resource.booking"].browse(period_id)
             bookings = period._get_bookings_this_period()
-            partner_booking = {
-                p.id: b.combination_id.id for b in bookings for p in b.partner_ids
-            }
+            combinations = defaultdict(list)
+            for booking in bookings:
+                for partner in booking.partner_ids:
+                    combinations[partner.id].append(booking.combination_id.id)
             for partner in self:
-                partner.resource_booking_combination_id = partner_booking[partner.id]
+                partner.resource_booking_combination_ids = combinations[partner.id]
         else:
-            self.resource_booking_combination_id = None
+            self.resource_booking_combination_ids = None
 
-    resource_booking_combination_id = fields.Many2one(
+    resource_booking_combination_ids = fields.Many2many(
         "resource.booking.combination",
-        compute="_compute_resource_booking_combination_id",
+        compute="_compute_resource_booking_combination_ids",
     )

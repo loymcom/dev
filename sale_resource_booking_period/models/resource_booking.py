@@ -13,6 +13,22 @@ class ResourceBooking(models.Model):
         string="Period Products",
     )
 
+    period_booking_count = fields.Integer(
+        "Bookings",
+        compute="_compute_period",
+    )
+    period_partner_count = fields.Integer(
+        "Contacts",
+        compute="_compute_period",
+    )
+
+    def _compute_period(self):
+        for period in self:
+            period.period_booking_count = len(period._get_bookings_this_period())
+            period.period_partner_count = len(
+                period._get_bookings_this_period().mapped("partner_ids")
+            )
+
     def _get_available_slots(self, start_dt, end_dt):
         result = super()._get_available_slots(start_dt, end_dt)
         # If the product has booking periods,
@@ -59,7 +75,7 @@ class ResourceBooking(models.Model):
 
     def _get_bookings_this_period(self):
         return self.search([
-            ("type_id", "!=", self.type_id.id),
+            ("type_id.period_statistics", "=", True),
             "|",
             "&", ("start", ">", self.start),("start", "<", self.stop),
             "&", ("stop", ">", self.start),("stop", "<", self.stop),

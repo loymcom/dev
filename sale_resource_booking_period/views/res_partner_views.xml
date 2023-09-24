@@ -7,7 +7,10 @@
         <field name="mode">primary</field>
         <field name="arch" type="xml">
             <field name="display_name" position="before">
-                <field name="resource_booking_combination_id"/>
+                <field
+                    name="resource_booking_combination_ids"
+                    widget="many2many_tags"
+                />
             </field>
         </field>
     </record>
