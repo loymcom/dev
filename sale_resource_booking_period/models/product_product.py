@@ -10,7 +10,7 @@ class ProductProduct(models.Model):
         combination_ids = self._get_resource_booking_combination_ids()
         action["domain"] = [
             "|",
-            ("available_product_tmpl_ids", "in", self.product_tmpl_id.id),
+            ("period_product_tmpl_ids", "in", self.product_tmpl_id.id),
             ("combination_id", "in", combination_ids),
         ]
         return action

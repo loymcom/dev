@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="resource_booking.resource_booking_type_form" />
         <field name="arch" type="xml">
             <group name="settings" position="inside">
-                <field name="period_statistics" />
+                <field name="period_type" />
             </group>
         </field>
     </record>

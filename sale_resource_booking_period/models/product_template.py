@@ -8,4 +8,5 @@ class ProductTemplate(models.Model):
         comodel_name="resource.booking",
         relation="resource_booking_period_for_product_template_rel",
         string="Booking Periods",
+        domain="[('type_id.period_type', '=', 'period')]",
     )
