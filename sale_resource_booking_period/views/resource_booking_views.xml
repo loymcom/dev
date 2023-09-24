@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<data>
-    <!-- Views -->
+<odoo>
     <record id="resource_booking_form" model="ir.ui.view">
         <field name="name">Resource booking form inherit</field>
         <field name="model">resource.booking</field>
@@ -8,30 +7,23 @@
         <field name="arch" type="xml">
             <button name="%(portal.portal_share_action)d" position="before">
                 <button
-                    name="action_save"
-                    class="oe_highlight"
-                    string="Save"
-                    type="object"
-                />
-
-                <button
-                    name="action_bookings_this_interval"
+                    name="action_bookings_this_period"
                     class="oe_highlight"
                     string="Bookings"
                     type="object"
-                    attrs="{'invisible': [('available_product_tmpl_ids', '=', [])]}"
+                    attrs="{'invisible': [('period_product_tmpl_ids', '=', [])]}"
                 />
                 <button
-                    name="action_contacts_this_interval"
+                    name="action_contacts_this_period"
                     class="oe_highlight"
                     string="Contacts"
                     type="object"
-                    attrs="{'invisible': [('available_product_tmpl_ids', '=', [])]}"
+                    attrs="{'invisible': [('period_product_tmpl_ids', '=', [])]}"
                 />
             </button>
-            <field name="partner_id" position="after">
-                <field name="partner_ids" widget="many2many_tags" />
-            </field>
+            <group name="booking" position="inside">
+                <field name="period_product_tmpl_ids" widget="many2many_tags" />
+            </group>
         </field>
     </record>
     <record id="resource_booking_view_tree" model="ir.ui.view">
@@ -40,20 +32,20 @@
         <field name="inherit_id" ref="resource_booking.resource_booking_view_tree" />
         <field name="arch" type="xml">
             <tree position="inside">
-                <field name="available_product_tmpl_ids" invisible="1" />
+                <field name="period_product_tmpl_ids" invisible="1" />
                 <button
                     class="btn btn-primary"
                     type="object"
-                    name="action_bookings_this_interval"
+                    name="action_bookings_this_period"
                     string="Bookings"
-                    attrs="{'invisible': [('available_product_tmpl_ids', '=', [])]}"
+                    attrs="{'invisible': [('period_product_tmpl_ids', '=', [])]}"
                 />
                 <button
                     class="btn btn-primary"
                     type="object"
-                    name="action_contacts_this_interval"
+                    name="action_contacts_this_period"
                     string="Contacts"
-                    attrs="{'invisible': [('available_product_tmpl_ids', '=', [])]}"
+                    attrs="{'invisible': [('period_product_tmpl_ids', '=', [])]}"
                 />
             </tree>
             <field name="partner_id" position="after">
@@ -63,15 +55,15 @@
         </field>
     </record>
 
-    <record id="resource_booking_intervals_action" model="ir.actions.act_window">
-        <field name="name">Intervals</field>
+    <record id="resource_booking_periods_action" model="ir.actions.act_window">
+        <field name="name">Periods</field>
         <field name="res_model">resource.booking</field>
         <field name="view_mode">tree,form</field>
-        <field name="domain">[("available_product_tmpl_ids", "!=", False)]</field>
+        <field name="domain">[("period_product_tmpl_ids", "!=", False)]</field>
     </record>
     <menuitem
-        id="resource_booking_menu_intervals"
-        action="resource_booking_intervals_action"
+        id="resource_booking_menu_periods"
+        action="resource_booking_periods_action"
         parent="resource_booking.resource_booking_main_menu"
     />
-</data>
+</odoo>

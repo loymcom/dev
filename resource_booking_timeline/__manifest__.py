@@ -2,22 +2,16 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Fredheim Resource Booking Demo",
+    "name": "Resource Booking Timeline",
     "summary": "",
     "author": "Ows, Odoo Community Association (OCA)",
     "category": "Uncategorized",
     "data": [
-        "demo/demo.xml",
         "views/resource_booking_views.xml",
     ],
     "depends": [
-        "contacts",
-        "hr",
-        "sale_management",
-        "website_sale_resource_booking",  # oca/calendar, oca/sale-workflow, oca/e-commerce
-        "partner_product_price",  # oca/product-attribute
-        "sale_resource_booking_product_variant",
-        "sale_resource_booking_timeline",
+        "resource_booking",
+        "web_timeline",
     ],
     "development_status": "Alpha",
     "license": "AGPL-3",
