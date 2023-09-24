@@ -13,8 +13,9 @@
         "views/resource_booking_views.xml",
     ],
     "depends": [
+        "resource_booking_period",
         "sale_resource_booking",  # with booking.product_id
-        "web_timeline",
+        # "web_timeline",
     ],
     "license": "AGPL-3",
     "maintainers": ["ows-cloud"],

@@ -8,7 +8,14 @@
             <notebook position="inside">
                 <page name="resource_booking" string="Booking">
                     <group name="resource_booking" string="Intervals available for booking">
-                        <field name="booking_period_ids" />
+                        <field name="booking_period_ids">
+                            <tree>
+                                <field name="name" />
+                                <field name="type_id" />
+                                <field name="start" />
+                                <field name="stop" />
+                            </tree>
+                        </field>
                     </group>
                 </page>
             </notebook>

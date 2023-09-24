@@ -75,7 +75,7 @@ class ResourceBooking(models.Model):
 
     def _get_bookings_this_period(self):
         return self.search([
-            ("type_id.period_statistics", "=", True),
+            ("type_id.period_type", "=", "statistics"),
             "|",
             "&", ("start", ">", self.start),("start", "<", self.stop),
             "&", ("stop", ">", self.start),("stop", "<", self.stop),

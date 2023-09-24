@@ -11,14 +11,14 @@
                     class="oe_highlight"
                     string="Bookings"
                     type="object"
-                    attrs="{'invisible': [('period_product_tmpl_ids', '=', [])]}"
+                    attrs="{'invisible': [('period_type', '!=', 'period')]}"
                 />
                 <button
                     name="action_contacts_this_period"
                     class="oe_highlight"
                     string="Contacts"
                     type="object"
-                    attrs="{'invisible': [('period_product_tmpl_ids', '=', [])]}"
+                    attrs="{'invisible': [('period_type', '!=', 'period')]}"
                 />
             </button>
             <group name="booking" position="inside">
@@ -32,28 +32,27 @@
         <field name="inherit_id" ref="resource_booking.resource_booking_view_tree" />
         <field name="arch" type="xml">
             <tree position="inside">
-                <field name="period_product_tmpl_ids" invisible="1" />
                 <field
                     name="period_booking_count"
-                    attrs="{'invisible': [('period_product_tmpl_ids', '=', [])]}"
+                    attrs="{'invisible': [('period_type', '!=', 'period')]}"
                 />
                 <button
                     class="btn btn-primary"
                     type="object"
                     name="action_bookings_this_period"
                     string="Bookings"
-                    attrs="{'invisible': [('period_product_tmpl_ids', '=', [])]}"
+                    attrs="{'invisible': [('period_type', '!=', 'period')]}"
                 />
                 <field
                     name="period_partner_count"
-                    attrs="{'invisible': [('period_product_tmpl_ids', '=', [])]}"
+                    attrs="{'invisible': [('period_type', '!=', 'period')]}"
                 />
                 <button
                     class="btn btn-primary"
                     type="object"
                     name="action_contacts_this_period"
                     string="Contacts"
-                    attrs="{'invisible': [('period_product_tmpl_ids', '=', [])]}"
+                    attrs="{'invisible': [('period_type', '!=', 'period')]}"
                 />
             </tree>
             <field name="partner_id" position="after">
@@ -67,7 +66,7 @@
         <field name="name">Periods</field>
         <field name="res_model">resource.booking</field>
         <field name="view_mode">tree,form</field>
-        <field name="domain">[("period_product_tmpl_ids", "!=", False)]</field>
+        <field name="domain">[("type_id.period_type", "=", "period")]</field>
     </record>
     <menuitem
         id="resource_booking_menu_periods"
