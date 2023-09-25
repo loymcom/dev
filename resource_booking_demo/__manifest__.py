@@ -11,14 +11,13 @@
         "views/resource_booking_views.xml",
     ],
     "depends": [
-        "contacts",
+        "contacts",  # optional
+        "sale_management",  # optional
         "hr",
         "payment_demo",  # or payment_custom
-        "sale_management",
         "website_sale_resource_booking",  # oca/calendar, oca/sale-workflow, oca/e-commerce
         "partner_product_price",  # oca/product-attribute
         "resource_booking_timeline",
-        "sale_resource_booking_product_variant",
         "sale_resource_booking_period",
     ],
     "development_status": "Alpha",

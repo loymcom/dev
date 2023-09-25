@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="product_template_form_view" model="ir.ui.view">
-        <field name="name">product.template.view.form.inherit.timeline</field>
+        <field name="name">product.template.view.form.inherit</field>
         <field name="model">product.template</field>
-        <field name="inherit_id" ref="product.product_template_form_view" />
+        <field name="inherit_id" ref="sale_resource_booking.product_template_form_view" />
         <field name="arch" type="xml">
+            <field name="resource_booking_type_id" position="attributes">
+                <attribute name="domain">[("period_type", "!=", "period")]</attribute>
+            </field>
             <notebook position="inside">
                 <page name="resource_booking" string="Booking">
-                    <group name="resource_booking" string="Intervals available for booking">
-                        <field name="booking_period_ids">
+                    <group name="resource_booking" string="Booking Periods">
+                        <field
+                            name="booking_period_ids"
+                            context="{'form_view_ref':'resource_booking_period.resource_booking_view_form_period'}"
+                        >
                             <tree>
                                 <field name="name" />
                                 <field name="type_id" />

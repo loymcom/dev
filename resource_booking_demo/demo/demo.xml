@@ -71,7 +71,7 @@
     <record id="resource_resource_session" model="resource.resource">
         <field name="name">SESSION</field>
         <field name="resource_type">material</field>
-        <field name="calendar_id" ref="resource_calendar_24_7" />
+        <field name="calendar_id" ref="resource_calendar_24_7" />"
     </record>
     <record id="resource_resource_room_basic_1" model="resource.resource">
         <field name="name">Basic Room 1</field>
@@ -166,18 +166,21 @@
         <field name="duration" eval="264" />
         <field name="slot_duration" eval="24" />
         <field name="resource_calendar_id" ref="resource_calendar_24_7" />
+        <field name="period_type">period</field>
     </record>
     <record id="resource_booking_type_basic_room" model="resource.booking.type">
         <field name="name">Basic Room</field>
         <field name="duration" eval="240" />
         <field name="slot_duration" eval="24" />
         <field name="resource_calendar_id" ref="resource_calendar_24_7" />
+        <field name="period_type">statistics</field>
     </record>
     <record id="resource_booking_type_premium_room" model="resource.booking.type">
         <field name="name">Premium Room</field>
         <field name="duration" eval="240" />
         <field name="slot_duration" eval="24" />
         <field name="resource_calendar_id" ref="resource_calendar_24_7" />
+        <field name="period_type">statistics</field>
     </record>
     <record id="resource_booking_type_massage" model="resource.booking.type">
         <field name="name">Massage 30 minutes</field>

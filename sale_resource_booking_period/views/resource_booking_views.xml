@@ -3,74 +3,21 @@
     <record id="resource_booking_form" model="ir.ui.view">
         <field name="name">Resource booking form inherit</field>
         <field name="model">resource.booking</field>
-        <field name="inherit_id" ref="resource_booking.resource_booking_form" />
+        <field name="inherit_id" ref="sale_resource_booking.resource_booking_form" />
         <field name="arch" type="xml">
-            <button name="%(portal.portal_share_action)d" position="before">
-                <button
-                    name="action_bookings_this_period"
-                    class="oe_highlight"
-                    string="Bookings"
-                    type="object"
-                    attrs="{'invisible': [('period_type', '!=', 'period')]}"
-                />
-                <button
-                    name="action_contacts_this_period"
-                    class="oe_highlight"
-                    string="Contacts"
-                    type="object"
-                    attrs="{'invisible': [('period_type', '!=', 'period')]}"
-                />
-            </button>
+            <field name="product_id" position="before">
+                <field name="period_type" invisible="1" />
+            </field>
+            <field name="product_id" position="attributes">
+                <attribute name="attrs">{'invisible': [('period_type', '=', 'period')]}</attribute>
+            </field>
             <group name="booking" position="inside">
-                <field name="period_product_tmpl_ids" widget="many2many_tags" />
+                <field
+                    name="period_product_tmpl_ids"
+                    widget="many2many_tags"
+                    attrs="{'invisible': [('period_type', '!=', 'period')]}"
+                />
             </group>
         </field>
     </record>
-    <record id="resource_booking_view_tree" model="ir.ui.view">
-        <field name="name">resource.booking.tree.inherit</field>
-        <field name="model">resource.booking</field>
-        <field name="inherit_id" ref="resource_booking.resource_booking_view_tree" />
-        <field name="arch" type="xml">
-            <tree position="inside">
-                <field
-                    name="period_booking_count"
-                    attrs="{'invisible': [('period_type', '!=', 'period')]}"
-                />
-                <button
-                    class="btn btn-primary"
-                    type="object"
-                    name="action_bookings_this_period"
-                    string="Bookings"
-                    attrs="{'invisible': [('period_type', '!=', 'period')]}"
-                />
-                <field
-                    name="period_partner_count"
-                    attrs="{'invisible': [('period_type', '!=', 'period')]}"
-                />
-                <button
-                    class="btn btn-primary"
-                    type="object"
-                    name="action_contacts_this_period"
-                    string="Contacts"
-                    attrs="{'invisible': [('period_type', '!=', 'period')]}"
-                />
-            </tree>
-            <field name="partner_id" position="after">
-                <field name="partner_ids" widget="many2many_tags" />
-                <field name="product_id"/>
-            </field>
-        </field>
-    </record>
-
-    <record id="resource_booking_periods_action" model="ir.actions.act_window">
-        <field name="name">Periods</field>
-        <field name="res_model">resource.booking</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[("type_id.period_type", "=", "period")]</field>
-    </record>
-    <menuitem
-        id="resource_booking_menu_periods"
-        action="resource_booking_periods_action"
-        parent="resource_booking.resource_booking_main_menu"
-    />
 </odoo>
