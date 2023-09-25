@@ -341,14 +341,48 @@
         <field name="duration" eval="0.5" />
     </record>
 
+    <!-- SERVICES -->
+
+    <record id="website_sale.services" model="product.public.category">
+        <field name="sequence">1</field>
+    </record>
+    <record id="massage_pp" model="product.product">
+        <field name="name">Massage 25 minutes</field>
+        <field name="categ_id" ref="product.product_category_all"/>
+        <field name="list_price">20.0</field>
+        <field name="detailed_type">service</field>
+        <field name="website_published" eval="1" />
+        <field name="resource_booking_type_id" ref="resource_booking_type_massage"/>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('website_sale.services')])]"/>
+    </record>
+    <record id="consultation_pp" model="product.product">
+        <field name="name">Consultation 25 minutes</field>
+        <field name="categ_id" ref="product.product_category_all"/>
+        <field name="list_price">20.0</field>
+        <field name="detailed_type">service</field>
+        <field name="website_published" eval="1" />
+        <field name="resource_booking_type_id" ref="resource_booking_type_consultation"/>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('website_sale.services')])]"/>
+    </record>
+    <record id="doctor_pp" model="product.product">
+        <field name="name">Doctor 25 minutes</field>
+        <field name="categ_id" ref="product.product_category_all"/>
+        <field name="list_price">40.0</field>
+        <field name="detailed_type">service</field>
+        <field name="website_published" eval="1" />
+        <field name="resource_booking_type_id" ref="resource_booking_type_doctor"/>
+        <field name="public_categ_ids" eval="[(6, 0, [ref('website_sale.services')])]"/>
+    </record>
+
     <!--
-        PRODUCT
+        PRODUCTS FOR PERIODS
         pa = product.attribute (room type)
         pav = product.attribute.value (basic room type, premium room type)
         pt = product.template (newstart silver)
         ptal = product.template.attribute.line (newstart silver room type)
         ptav = product.template.attribute.value (newstart silver basic room type, newstart silver premium room type)
         pp = product.product (newstart silver basic room, newstart silver premium room)
+        ppl = product.pack.line
     -->
     <record id="room_type_id" model="product.attribute">
         <field name="name">Room Type</field>
@@ -380,6 +414,9 @@
         <field name="list_price">1500.0</field>
         <field name="detailed_type">service</field>
         <field name="website_published" eval="1" />
+        <field name="pack_ok" eval="1" />
+        <field name="pack_type">detailed</field>
+        <field name="pack_component_price">ignored</field>
     </record>
     <record id="newstart_silver_room_type_ptal" model="product.template.attribute.line">
         <field name="product_tmpl_id" ref="newstart_silver_pt"/>
@@ -424,6 +461,21 @@
             'noupdate': False,
         },]"/>
     </function>
+    <record id="massage_newstart_silver_basic_room_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="newstart_silver_basic_room_pp" />
+        <field name="product_id" ref="massage_pp" />
+        <field name="quantity">1</field>
+    </record>
+    <record id="massage_newstart_silver_premium_room_1_person_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="newstart_silver_premium_room_1_person_pp" />
+        <field name="product_id" ref="massage_pp" />
+        <field name="quantity">1</field>
+    </record>
+    <record id="massage_newstart_silver_premium_room_2_people_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="newstart_silver_premium_room_2_people_pp" />
+        <field name="product_id" ref="massage_pp" />
+        <field name="quantity">1</field>
+    </record>
 
     <!-- PRODUCT: NEWSTART GOLD -->
     <record id="newstart_gold_pt" model="product.template">
@@ -432,6 +484,9 @@
         <field name="list_price">2000.0</field>
         <field name="detailed_type">service</field>
         <field name="website_published" eval="1" />
+        <field name="pack_ok" eval="1" />
+        <field name="pack_type">detailed</field>
+        <field name="pack_component_price">ignored</field>
     </record>
     <record id="newstart_gold_room_type_ptal" model="product.template.attribute.line">
         <field name="product_tmpl_id" ref="newstart_gold_pt"/>
@@ -476,6 +531,21 @@
             'noupdate': False,
         },]"/>
     </function>
+    <record id="massagenewstart_gold_basic_room_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="newstart_gold_basic_room_pp" />
+        <field name="product_id" ref="massage_pp" />
+        <field name="quantity">2</field>
+    </record>
+    <record id="massage_newstart_gold_premium_room_1_person_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="newstart_gold_premium_room_1_person_pp" />
+        <field name="product_id" ref="massage_pp" />
+        <field name="quantity">2</field>
+    </record>
+    <record id="massage_newstart_gold_premium_room_2_people_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="newstart_gold_premium_room_2_people_pp" />
+        <field name="product_id" ref="massage_pp" />
+        <field name="quantity">2</field>
+    </record>
 
     <!-- PRODUCT: DEPRESSION -->
     <record id="depression_pt" model="product.template">
@@ -484,6 +554,9 @@
         <field name="list_price">2500.0</field>
         <field name="detailed_type">service</field>
         <field name="website_published" eval="1" />
+        <field name="pack_ok" eval="1" />
+        <field name="pack_type">detailed</field>
+        <field name="pack_component_price">ignored</field>
     </record>
     <record id="depression_room_type_ptal" model="product.template.attribute.line">
         <field name="product_tmpl_id" ref="depression_pt"/>
@@ -528,38 +601,20 @@
             'noupdate': False,
         },]"/>
     </function>
-
-    <!-- SERVICES -->
-
-    <record id="website_sale.services" model="product.public.category">
-        <field name="sequence">1</field>
+    <record id="massage_depression_basic_room_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="depression_basic_room_pp" />
+        <field name="product_id" ref="massage_pp" />
+        <field name="quantity">3</field>
     </record>
-    <record id="massage_pt" model="product.product">
-        <field name="name">Massage 25 minutes</field>
-        <field name="categ_id" ref="product.product_category_all"/>
-        <field name="list_price">20.0</field>
-        <field name="detailed_type">service</field>
-        <field name="website_published" eval="1" />
-        <field name="resource_booking_type_id" ref="resource_booking_type_massage"/>
-        <field name="public_categ_ids" eval="[(6, 0, [ref('website_sale.services')])]"/>
+    <record id="massage_depression_premium_room_1_person_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="depression_premium_room_1_person_pp" />
+        <field name="product_id" ref="massage_pp" />
+        <field name="quantity">3</field>
     </record>
-    <record id="consultation_pt" model="product.product">
-        <field name="name">Consultation 25 minutes</field>
-        <field name="categ_id" ref="product.product_category_all"/>
-        <field name="list_price">20.0</field>
-        <field name="detailed_type">service</field>
-        <field name="website_published" eval="1" />
-        <field name="resource_booking_type_id" ref="resource_booking_type_consultation"/>
-        <field name="public_categ_ids" eval="[(6, 0, [ref('website_sale.services')])]"/>
-    </record>
-    <record id="doctor_pt" model="product.product">
-        <field name="name">Doctor 25 minutes</field>
-        <field name="categ_id" ref="product.product_category_all"/>
-        <field name="list_price">40.0</field>
-        <field name="detailed_type">service</field>
-        <field name="website_published" eval="1" />
-        <field name="resource_booking_type_id" ref="resource_booking_type_doctor"/>
-        <field name="public_categ_ids" eval="[(6, 0, [ref('website_sale.services')])]"/>
+    <record id="massage_depression_premium_room_2_people_ppl" model="product.pack.line">
+        <field name="parent_product_id" ref="depression_premium_room_2_people_pp" />
+        <field name="product_id" ref="massage_pp" />
+        <field name="quantity">3</field>
     </record>
 
     <!-- RESOURCE BOOKING: PERIODS -->
