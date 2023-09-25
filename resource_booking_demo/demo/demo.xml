@@ -266,6 +266,81 @@
         <field name="combination_id" ref="resource_booking_combination_doctor_workspace_2" />
     </record>
 
+    <!-- RESOURCE BOOKING: SHOW EACH COMBINATION IN TIMELINE -->
+
+    <record id="resource_booking_basic_room_1" model="resource.booking">
+        <field name="name">Show Basic Room 1</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_basic_room" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_basic_room_1" />
+        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
+        <field name="duration" eval="0.5" />
+    </record>
+    <record id="resource_booking_basic_room_2" model="resource.booking">
+        <field name="name">Show Basic Room 2</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_basic_room" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_basic_room_2" />
+        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
+        <field name="duration" eval="0.5" />
+    </record>
+    <record id="resource_booking_premium_room_1" model="resource.booking">
+        <field name="name">Show Premium Room 1</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_premium_room" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_premium_room_1" />
+        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
+        <field name="duration" eval="0.5" />
+    </record>
+    <record id="resource_booking_premium_room_2" model="resource.booking">
+        <field name="name">Show Premium Room 2</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_premium_room" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_premium_room_2" />
+        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
+        <field name="duration" eval="0.5" />
+    </record>
+    <record id="resource_booking_therapist_workspace_1" model="resource.booking">
+        <field name="name">Show Terri Therapist with Workspace 1</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_massage" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_therapist_workspace_1" />
+        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
+        <field name="duration" eval="0.5" />
+    </record>
+    <record id="resource_booking_therapist_workspace_2" model="resource.booking">
+        <field name="name">Show Terri Therapist with Workspace 2</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_massage" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_therapist_workspace_2" />
+        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
+        <field name="duration" eval="0.5" />
+    </record>
+    <record id="resource_booking_doctor_workspace_1" model="resource.booking">
+        <field name="name">Show Don Doctor with Workspace 1</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_doctor" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_doctor_workspace_1" />
+        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
+        <field name="duration" eval="0.5" />
+    </record>
+    <record id="resource_booking_doctor_workspace_2" model="resource.booking">
+        <field name="name">Show Don Doctor with Workspace 2</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_doctor" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_doctor_workspace_2" />
+        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
+        <field name="duration" eval="0.5" />
+    </record>
+
     <!--
         PRODUCT
         pa = product.attribute (room type)
@@ -538,81 +613,6 @@
         <field name="start" eval="DateTime.now() + relativedelta(days=44, hour=22, minute=0, second=0)"/>
     </record>
 
-    <!-- RESOURCE BOOKING: COMBINATIONS TO SHOW IN TIMELINE -->
-
-    <record id="resource_booking_basic_room_1" model="resource.booking">
-        <field name="name">Show Basic Room 1</field>
-        <field name="partner_id" ref="base.main_partner" />
-        <field name="type_id" ref="resource_booking_type_basic_room" />
-        <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_basic_room_1" />
-        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
-        <field name="duration" eval="0.5" />
-    </record>
-    <record id="resource_booking_basic_room_2" model="resource.booking">
-        <field name="name">Show Basic Room 2</field>
-        <field name="partner_id" ref="base.main_partner" />
-        <field name="type_id" ref="resource_booking_type_basic_room" />
-        <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_basic_room_2" />
-        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
-        <field name="duration" eval="0.5" />
-    </record>
-    <record id="resource_booking_premium_room_1" model="resource.booking">
-        <field name="name">Show Premium Room 1</field>
-        <field name="partner_id" ref="base.main_partner" />
-        <field name="type_id" ref="resource_booking_type_premium_room" />
-        <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_premium_room_1" />
-        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
-        <field name="duration" eval="0.5" />
-    </record>
-    <record id="resource_booking_premium_room_2" model="resource.booking">
-        <field name="name">Show Premium Room 2</field>
-        <field name="partner_id" ref="base.main_partner" />
-        <field name="type_id" ref="resource_booking_type_premium_room" />
-        <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_premium_room_2" />
-        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
-        <field name="duration" eval="0.5" />
-    </record>
-    <record id="resource_booking_therapist_workspace_1" model="resource.booking">
-        <field name="name">Show Terri Therapist with Workspace 1</field>
-        <field name="partner_id" ref="base.main_partner" />
-        <field name="type_id" ref="resource_booking_type_massage" />
-        <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_therapist_workspace_1" />
-        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
-        <field name="duration" eval="0.5" />
-    </record>
-    <record id="resource_booking_therapist_workspace_2" model="resource.booking">
-        <field name="name">Show Terri Therapist with Workspace 2</field>
-        <field name="partner_id" ref="base.main_partner" />
-        <field name="type_id" ref="resource_booking_type_massage" />
-        <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_therapist_workspace_2" />
-        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
-        <field name="duration" eval="0.5" />
-    </record>
-    <record id="resource_booking_doctor_workspace_1" model="resource.booking">
-        <field name="name">Show Don Doctor with Workspace 1</field>
-        <field name="partner_id" ref="base.main_partner" />
-        <field name="type_id" ref="resource_booking_type_doctor" />
-        <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_doctor_workspace_1" />
-        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
-        <field name="duration" eval="0.5" />
-    </record>
-    <record id="resource_booking_doctor_workspace_2" model="resource.booking">
-        <field name="name">Show Don Doctor with Workspace 2</field>
-        <field name="partner_id" ref="base.main_partner" />
-        <field name="type_id" ref="resource_booking_type_doctor" />
-        <field name="combination_auto_assign" eval="False" />
-        <field name="combination_id" ref="resource_booking_combination_doctor_workspace_2" />
-        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
-        <field name="duration" eval="0.5" />
-    </record>
-
     <!-- PRICELIST & CONTACT -->
 
     <record id="discount_pricelist" model="product.pricelist">
@@ -636,4 +636,11 @@
         <field name="res_id" eval="'res.partner,'+str(ref('resource_booking_demo.discount_partner'))"/>
         <field name="company_id" ref="base.main_company"/>
     </record>
+
+    <!-- PAYMENT PROVIDER -->
+
+    <record id="payment.payment_provider_transfer" model="payment.provider">
+        <field name="state">enabled</field>
+    </record>
+
 </data>
