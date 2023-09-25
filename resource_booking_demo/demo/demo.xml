@@ -406,7 +406,7 @@
     <record id="depression_pt" model="product.template">
         <field name="name">GET OUT OF DEPRESSION in 10 days</field>
         <field name="categ_id" ref="product.product_category_all"/>
-        <field name="list_price">2000.0</field>
+        <field name="list_price">2500.0</field>
         <field name="detailed_type">service</field>
         <field name="website_published" eval="1" />
     </record>
@@ -500,7 +500,6 @@
             eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt')])]"
         />
         <field name="start" eval="DateTime.now() + relativedelta(days=2, hour=22, minute=0, second=0)"/>
-        <field name="duration" eval="240" />
     </record>
     <record id="resource_booking_session_depression" model="resource.booking">
         <field name="name">DEPRESSION</field>
@@ -513,7 +512,6 @@
             eval="[(6, 0, [ref('resource_booking_demo.depression_pt')])]"
         />
         <field name="start" eval="DateTime.now() + relativedelta(days=16, hour=22, minute=0, second=0)"/>
-        <field name="duration" eval="240" />
     </record>
     <record id="resource_booking_session_newstart_2" model="resource.booking">
         <field name="name">NEWSTART</field>
@@ -526,7 +524,6 @@
             eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt')])]"
         />
         <field name="start" eval="DateTime.now() + relativedelta(days=30, hour=22, minute=0, second=0)"/>
-        <field name="duration" eval="240" />
     </record>
     <record id="resource_booking_session_depression_2" model="resource.booking">
         <field name="name">DEPRESSION and NEWSTART</field>
@@ -539,7 +536,6 @@
             eval="[(6, 0, [ref('resource_booking_demo.newstart_silver_pt'), ref('resource_booking_demo.newstart_gold_pt'), ref('resource_booking_demo.depression_pt')])]"
         />
         <field name="start" eval="DateTime.now() + relativedelta(days=44, hour=22, minute=0, second=0)"/>
-        <field name="duration" eval="240" />
     </record>
 
     <!-- RESOURCE BOOKING: COMBINATIONS TO SHOW IN TIMELINE -->
