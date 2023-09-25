@@ -12,13 +12,14 @@
     ],
     "depends": [
         "contacts",  # optional
-        "sale_management",  # optional
         "payment_custom",  # optional
+        "sale_management",  # optional
+        "web_responsive",  # optional oca/web
         "website_sale_resource_booking",  # oca/calendar, oca/sale-workflow, oca/e-commerce
         "partner_product_price",  # oca/product-attribute
         "resource_booking_timeline",
         "sale_resource_booking_period",
-        "product_pack_template",
+        "product_pack_template",  # oca/product-pack
     ],
     "development_status": "Alpha",
     "license": "AGPL-3",

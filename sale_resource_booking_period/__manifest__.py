@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Resource Booking Periods",
+    "name": "Sell Resource Booking Periods",
     "summary": "",
     "author": "Ows, Odoo Community Association (OCA)",
     "category": "Appointments",

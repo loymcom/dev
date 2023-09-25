@@ -14,6 +14,8 @@
                         <field
                             name="booking_period_ids"
                             context="{'form_view_ref':'resource_booking_period.resource_booking_view_form_period'}"
+                            nolabel="1"
+                            colspan="2"
                         >
                             <tree>
                                 <field name="name" />
