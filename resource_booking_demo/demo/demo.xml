@@ -71,7 +71,7 @@
     <record id="resource_resource_session" model="resource.resource">
         <field name="name">SESSION</field>
         <field name="resource_type">material</field>
-        <field name="calendar_id" ref="resource_calendar_24_7" />"
+        <field name="calendar_id" ref="resource_calendar_24_7" />
     </record>
     <record id="resource_resource_room_basic_1" model="resource.resource">
         <field name="name">Basic Room 1</field>
@@ -104,25 +104,44 @@
         <field name="calendar_id" ref="resource_calendar_24_7" />
     </record>
 
-    <!-- HUMAN RESOURCES -->
+    <!-- USERs & HUMAN RESOURCES -->
 
+    <record id="user_doctor" model="res.users">
+        <field name="name">Don Doctor</field>
+        <field name="login">don.doctor@resource_booking.demo</field>
+    </record>
+    <record id="user_therapist" model="res.users">
+        <field name="name">Terri Therapist</field>
+        <field name="login">terri.therapist@resource_booking.demo</field>
+    </record>
+    <record id="resource_doctor" model="resource.resource">
+        <field name="name">Don Doctor</field>
+        <field name="user_id" ref="user_doctor" />
+    </record>
+    <record id="resource_therapist" model="resource.resource">
+        <field name="name">Terri Therapist</field>
+        <field name="user_id" ref="user_therapist" />
+    </record>
+    <!-- hr  -->
+    <!-- <record id="hr_doctor" model="hr.employee">
+        <field name="name">Don Doctor</field>
+        <field name="user_id" ref="user_doctor">
+    </record>
+    <record id="hr_therapist" model="res.users">
+        <field name="name">Terri Therapist</field>
+        <field name="user_id" ref="user_therapist">
+    </record>
     <function model="ir.model.data" name="_update_xmlids">
         <value model="base" eval="[{
-            'xml_id': 'resource_booking_demo.resource_han',
-            'record': obj().env.ref('hr.employee_han').resource_id,
+            'xml_id': 'resource_booking_demo.resource_doctor',
+            'record': obj().env.ref('hr.employee_doctor').resource_id,
             'noupdate': False,
         }, {
-            'xml_id': 'resource_booking_demo.resource_hne',
-            'record': obj().env.ref('hr.employee_hne').resource_id,
+            'xml_id': 'resource_booking_demo.resource_therapist',
+            'record': obj().env.ref('hr.employee_therapist').resource_id,
             'noupdate': False,
         },]"/>
-    </function>
-    <record id="resource_han" model="resource.resource"> <!-- Walter Horton -->
-        <field name="name">Don Doctor</field>
-    </record>
-    <record id="resource_hne" model="resource.resource"> <!-- Abigail Peterson -->
-        <field name="name">Terri Therapist</field>
-    </record>
+    </function> -->
 
     <!-- RESOURCE COMBINATION -->
 
@@ -147,16 +166,16 @@
         <field name="resource_ids" eval="[(6, 0, [ref('resource_resource_room_premium_2')])]" />
     </record>
     <record id="resource_booking_combination_doctor_workspace_1" model="resource.booking.combination">
-        <field name="resource_ids" eval="[(6, 0, [ref('resource_han'), ref('resource_resource_workspace_1')])]" />
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_doctor'), ref('resource_resource_workspace_1')])]" />
     </record>
     <record id="resource_booking_combination_doctor_workspace_2" model="resource.booking.combination">
-        <field name="resource_ids" eval="[(6, 0, [ref('resource_han'), ref('resource_resource_workspace_2')])]" />
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_doctor'), ref('resource_resource_workspace_2')])]" />
     </record>
     <record id="resource_booking_combination_therapist_workspace_1" model="resource.booking.combination">
-        <field name="resource_ids" eval="[(6, 0, [ref('resource_hne'), ref('resource_resource_workspace_1')])]" />
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_therapist'), ref('resource_resource_workspace_1')])]" />
     </record>
     <record id="resource_booking_combination_therapist_workspace_2" model="resource.booking.combination">
-        <field name="resource_ids" eval="[(6, 0, [ref('resource_hne'), ref('resource_resource_workspace_2')])]" />
+        <field name="resource_ids" eval="[(6, 0, [ref('resource_therapist'), ref('resource_resource_workspace_2')])]" />
     </record>
 
     <!-- RESOURCE BOOKING TYPE -->
@@ -585,6 +604,15 @@
         <field name="type_id" ref="resource_booking_type_doctor" />
         <field name="combination_auto_assign" eval="False" />
         <field name="combination_id" ref="resource_booking_combination_doctor_workspace_1" />
+        <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
+        <field name="duration" eval="0.5" />
+    </record>
+    <record id="resource_booking_doctor_workspace_2" model="resource.booking">
+        <field name="name">Show Don Doctor with Workspace 2</field>
+        <field name="partner_id" ref="base.main_partner" />
+        <field name="type_id" ref="resource_booking_type_doctor" />
+        <field name="combination_auto_assign" eval="False" />
+        <field name="combination_id" ref="resource_booking_combination_doctor_workspace_2" />
         <field name="start" eval="DateTime.now() - relativedelta(days=1, hour=9, minute=0, second=0)"/>
         <field name="duration" eval="0.5" />
     </record>
