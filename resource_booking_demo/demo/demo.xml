@@ -203,20 +203,20 @@
     </record>
     <record id="resource_booking_type_massage" model="resource.booking.type">
         <field name="name">Massage 30 minutes</field>
-        <field name="duration" eval="30" />
-        <field name="slot_duration" eval="30" />
+        <field name="duration" eval="0.5" />
+        <field name="slot_duration" eval="0.5" />
         <field name="resource_calendar_id" ref="resource_calendar_24_7" />
     </record>
     <record id="resource_booking_type_consultation" model="resource.booking.type">
         <field name="name">Consultation 30 minutes</field>
-        <field name="duration" eval="30" />
-        <field name="slot_duration" eval="30" />
+        <field name="duration" eval="0.5" />
+        <field name="slot_duration" eval="0.5" />
         <field name="resource_calendar_id" ref="resource_calendar_24_7" />
     </record>
     <record id="resource_booking_type_doctor" model="resource.booking.type">
         <field name="name">Doctor consultation 30 minutes</field>
-        <field name="duration" eval="30" />
-        <field name="slot_duration" eval="30" />
+        <field name="duration" eval="0.5" />
+        <field name="slot_duration" eval="0.5" />
         <field name="resource_calendar_id" ref="resource_calendar_24_7" />
     </record>
 
@@ -415,7 +415,7 @@
         <field name="detailed_type">service</field>
         <field name="website_published" eval="1" />
         <field name="pack_ok" eval="1" />
-        <field name="pack_type">detailed</field>
+        <field name="pack_type">non_detailed</field>
         <field name="pack_component_price">ignored</field>
     </record>
     <record id="newstart_silver_room_type_ptal" model="product.template.attribute.line">
@@ -485,7 +485,7 @@
         <field name="detailed_type">service</field>
         <field name="website_published" eval="1" />
         <field name="pack_ok" eval="1" />
-        <field name="pack_type">detailed</field>
+        <field name="pack_type">non_detailed</field>
         <field name="pack_component_price">ignored</field>
     </record>
     <record id="newstart_gold_room_type_ptal" model="product.template.attribute.line">
@@ -555,7 +555,7 @@
         <field name="detailed_type">service</field>
         <field name="website_published" eval="1" />
         <field name="pack_ok" eval="1" />
-        <field name="pack_type">detailed</field>
+        <field name="pack_type">non_detailed</field>
         <field name="pack_component_price">ignored</field>
     </record>
     <record id="depression_room_type_ptal" model="product.template.attribute.line">

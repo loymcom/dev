@@ -18,7 +18,6 @@
         "partner_product_price",  # oca/product-attribute
         "resource_booking_timeline",
         "sale_resource_booking_period",
-        "sale_product_pack",
         "product_pack_template",
     ],
     "development_status": "Alpha",
