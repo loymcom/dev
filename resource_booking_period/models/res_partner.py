@@ -23,5 +23,6 @@ class Partner(models.Model):
 
     resource_booking_combination_ids = fields.Many2many(
         "resource.booking.combination",
+        string="Booking Combination",
         compute="_compute_resource_booking_combination_ids",
     )

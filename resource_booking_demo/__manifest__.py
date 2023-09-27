@@ -7,7 +7,7 @@
     "author": "Ows, Odoo Community Association (OCA)",
     "category": "Uncategorized",
     "data": [
-        "demo/demo.xml",
+        "data/demo.xml",
         "views/resource_booking_views.xml",
     ],
     "depends": [

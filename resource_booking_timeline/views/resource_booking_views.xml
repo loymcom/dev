@@ -10,7 +10,6 @@
                 date_stop="stop"
                 string="Bookings"
                 default_group_by="combination_id"
-                event_open_popup="true"
                 zoomKey="ctrlKey"
             >
                 <field name="combination_id" />
