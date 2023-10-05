@@ -3,7 +3,7 @@
     <record id="resource_booking_view_form" model="ir.ui.view">
         <field name="name">Resource booking form inherit</field>
         <field name="model">resource.booking</field>
-        <field name="inherit_id" ref="resource_booking.resource_booking_form" />
+        <field name="inherit_id" ref="resource_booking.resource_booking_view_form" />
         <field name="arch" type="xml">
             <field name="type_id" position="attributes">
                 <attribute name="domain">[("period_type", "!=", "period")]</attribute>
@@ -13,7 +13,7 @@
     <record id="resource_booking_view_form_period" model="ir.ui.view">
         <field name="name">Resource booking form inherit for period</field>
         <field name="model">resource.booking</field>
-        <field name="inherit_id" ref="resource_booking.resource_booking_form" />
+        <field name="inherit_id" ref="resource_booking.resource_booking_view_form" />
         <field name="mode">primary</field>
         <field name="arch" type="xml">
             <button name="%(portal.portal_share_action)d" position="before">
@@ -73,12 +73,12 @@
         <field name="view_mode">tree,form</field>
         <field name="domain">[("type_id.period_type", "=", "period")]</field>
     </record>
-    <record id="resource_booking_periods_action_view_tree" model="ir.actions.act_window.view">
+    <record id="resource_booking_action_period_view_tree" model="ir.actions.act_window.view">
         <field name="act_window_id" ref="resource_booking_period_action" />
         <field name="view_mode">tree</field>
         <field name="view_id" ref="resource_booking_view_tree_period" />
     </record>
-    <record id="resource_booking_periods_action_view_form" model="ir.actions.act_window.view">
+    <record id="resource_booking_action_period_view_form" model="ir.actions.act_window.view">
         <field name="act_window_id" ref="resource_booking_period_action" />
         <field name="view_mode">form</field>
         <field name="view_id" ref="resource_booking_view_form_period" />
