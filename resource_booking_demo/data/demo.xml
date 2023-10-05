@@ -549,7 +549,7 @@
 
     <!-- PRODUCT: DEPRESSION -->
     <record id="depression_pt" model="product.template">
-        <field name="name">GET OUT OF DEPRESSION in 10 days</field>
+        <field name="name">Out of DEPRESSION in 10 days</field>
         <field name="categ_id" ref="product.product_category_all"/>
         <field name="list_price">2500.0</field>
         <field name="detailed_type">service</field>
@@ -670,9 +670,11 @@
 
     <!-- PRICELIST & CONTACT -->
 
+    <!-- The main pricelist has USD currency. -->
     <record id="discount_pricelist" model="product.pricelist">
         <field name="name">10% Discount</field>
         <field name="sequence">10</field>
+        <field name="currency_id" ref="base.USD" />
     </record>
     <record id="discount_pricelist_item" model="product.pricelist.item">
         <field name="pricelist_id" ref="discount_pricelist" />

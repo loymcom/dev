@@ -7,14 +7,14 @@
     "author": "Ows, Odoo Community Association (OCA)",
     "category": "Uncategorized",
     "data": [
-        "demo/demo.xml",
+        "data/demo.xml",
         "views/resource_booking_views.xml",
     ],
     "depends": [
         "contacts",  # optional
-        "payment_custom",  # optional
+        # "payment_custom",  # optional
         "sale_management",  # optional
-        "web_responsive",  # optional oca/web
+        # "web_responsive",  # optional oca/web
         "website_sale_resource_booking",  # oca/calendar, oca/sale-workflow, oca/e-commerce
         "partner_product_price",  # oca/product-attribute
         "resource_booking_timeline",

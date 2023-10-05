@@ -51,7 +51,7 @@ class ResourceBooking(models.Model):
             "res_model": "res.partner",
             "views": [
                 [
-                    self.env.ref("sale_resource_booking_period.view_partner_tree").id,
+                    self.env.ref("resource_booking_period.view_partner_tree").id,
                     "tree",
                 ],
                 [False, "form"],

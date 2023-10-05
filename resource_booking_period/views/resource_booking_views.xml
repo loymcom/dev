@@ -61,9 +61,6 @@
                     string="Contacts"
                 />
             </tree>
-            <field name="partner_id" position="after">
-                <field name="partner_ids" widget="many2many_tags" />
-            </field>
         </field>
     </record>
 
