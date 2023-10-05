@@ -16,7 +16,8 @@
     'demo': [],
 
     'summary': """
-        
+        USE MOUNTPOINT-S3
+        https://aws.amazon.com/s3/features/mountpoint/
     """,
 
     'description': """

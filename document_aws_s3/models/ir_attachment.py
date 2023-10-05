@@ -4,6 +4,7 @@ from odoo.tools.config import config
 from odoo.exceptions import UserError
 from boto3.session import Session
 import ast
+import codecs
 import os
 import logging
 _logger = logging.getLogger(__name__)
@@ -29,7 +30,12 @@ class ir_attachment(models.Model):
             return contents
 
     def _file_write(self, value, checksum):
-        bin_value = value.decode('base64')
+        # Adding image to user:
+        # bin_value = value.decode('base64')
+        # Error: not text, suggesting codecs.decode() for arbitrary values
+        bin_value = codecs.decode(value)
+        # UnicodeDecodeError: 'utf-8' codec can't decode byte 0x89 in position 0: invalid start byte
+        
         fname, full_path = self._get_path(bin_value, checksum)
         company_id = self.env.company.id
         fname = 'company/' + str(company_id) + '/' + fname
@@ -85,7 +91,10 @@ class ir_attachment(models.Model):
             for file in files:
                 s3_key = s3_key_path + '/' + file
                 try:
-                    error_if_not_exists = aws_session.resource('s3').Object(s3_bucket_name, s3_key).content_type
+                    # error_if_not_exists = aws_session.resource('s3').Object(s3_bucket_name, s3_key).content_type
+                    r = aws_session.resource('s3')
+                    o = r.Object(s3_bucket_name, s3_key)
+                    t = o.content_type
                     _logger.info('_file_write: file exists: ' + s3_key)
                 except:
                     bin_value = open(os.path.join(path, file), 'rb')
