@@ -8,9 +8,9 @@
             <field name="type_id" position="attributes">
                 <attribute name="domain">[("period_type", "!=", "period")]</attribute>
             </field>
-            <!-- <field name="type_id" position="after">
-                <field name="parent_id" />
-            </field> -->
+            <group name="booking" position="inside">
+                <field name="parent_id" readonly="1" />
+            </group>
         </field>
     </record>
     <record id="resource_booking_view_form_period" model="ir.ui.view">
