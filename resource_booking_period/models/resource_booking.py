@@ -25,6 +25,10 @@ class ResourceBooking(models.Model):
         "Contacts",
         compute="_compute_period",
     )
+    # parent_id = fields.Many2one(
+    #     "resource.booking",
+    #     string="Related Booking",
+    # )
 
     def _compute_period(self):
         for period in self:
