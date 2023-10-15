@@ -1,7 +1,8 @@
-t_manifest = """
+manifest = """
 {{
-    "name": "{module_desc}",
+    "name": "{shortdesc}",
     "data": [{data}
+        "views/menus.xml",
     ],
     "depends": [
         "base",
@@ -10,43 +11,86 @@ t_manifest = """
 }}
 """
 
+manifest_data = """\n        "views/{model}_views.xml","""
+
 # MODEL
 
-t_model = """
-from odoo import api, fields, models
+init = "from . import {model}\n"
 
-class App(models.Model):
-    _name = "app.app"
+model = """from odoo import api, fields, models
 
-    name = fields.Char()
+class {classname}(models.Model):
+    _name = "{modelname}"
+
+{fields_py}
 """
+
+model_field = """\n    {field} = fields.{ttype}({attrs}\n    )"""
+
+model_field_attr = "\n        {attr}={value},"
+model_field_attr_quote = """\n        {attr}="{value}","""
 
 # ACCESS
 
-t_access = """
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_hotel_session_group,hotel.session.user,model_hotel_session,hotel.group_hotel_user,1,1,1,1
-"""
+access_header = "id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink,perm_export"
+access_line = "access_{_model_},{model},model_{_model_},{group_extid},1,1,1,1,1"
 
 # XML
 
-t_view_form = """
-
+xml = """
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>{content}
+</odoo>
 """
 
-t_view_tree = """
-
+view = """
+    <record if="{_model_}_view_{view}" model="ir.ui.view">
+        <field name="name">{model}.view.form</field>
+        <field name="model">{model}</field>
+        <field name="arch" type="xml">
+            <{view}>{content}
+            </{view}>
+        </field>
+    </record>
 """
 
-t_view_search = """
-
+sheet = """
+                <sheet>{content}
+                </sheet>
 """
 
-t_action = """
-
+group = """
+                    <group>{content}
+                    </group>
 """
 
-t_menuitem = """
+field = """
+                        <field name="{field}" {extra}/>
+"""
 
+action = """
+    <record id="{_model_}_action" model="ir.actions.act_window">
+        <field name="name">{model} action</field>
+        <field name="res_model">{model}</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+"""
+
+menu_main = """
+    <menuitem
+        id="{_module_}_main_menu"
+        parent="{parent_menu_extid}"
+        string="{module_desc}"
+    />
+"""
+
+menu_item = """
+    <menuitem
+        id="{_model_}_menu"
+        action="{_model_}_action"
+        parent="{_module_}_main_menu"
+        string="{model_desc}"
+        sequence="{sequence}"
+    />
 """
 
