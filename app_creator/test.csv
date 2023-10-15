@@ -1,4 +1,4 @@
-module.desc;model.desc;field.desc;field.type;field.relation
+app.name;model.name;field.name;field.type;field.relation
 Custom Contacts;Contacts from A;First Name;char;
 ;;Last Name;char;
 ;;Street;char;
