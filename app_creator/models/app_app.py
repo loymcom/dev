@@ -9,7 +9,7 @@ class App(models.Model):
     csv = fields.Text()
 
     def action_create_app(self, get_from, how_to_apply):
-
+        pass
         # ext_ids
         # models = self.create_models()
         # fields = self.create_fields()
