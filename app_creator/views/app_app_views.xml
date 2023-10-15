@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="app_app_view_form">
+        <field name="name">app.app.view.form</field>
+        <field name="model">app.app</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="parent_menu_id" />
+                        <field name="views" />
+                        <field name="csv" />
+                        <button name="action_create_app" type="object" string="Create App" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="app_app_view_tree">
+        <field name="name">app.app.view.tree</field>
+        <field name="model">app.app</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="parent_menu_id" />
+                <field name="views" />
+                <field name="csv" />
+            </tree>
+        </field>
+    </record>
+    <record id="app_app_action" model="ir.actions.act_window">
+        <field name="name">Custom Apps</field>
+        <field name="res_model">app.app</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem
+        id="app_app_menu"
+        action="app_app_action"
+    />
+</odoo>
