@@ -5,12 +5,13 @@ from pprint import pprint
 import app_templates as t
 
 
-csv_file = "test.csv"
+csv_file = "my_app.csv"
 csv_delimiter = ";"
 app_parent_path = ".."
 
 # We say "app" instead of "module".
 
+# model_title = "Model Name"
 # model_dot = "model.name"
 # model_underscore = "model_name"
 
@@ -32,10 +33,10 @@ def csv2lists(csv_file):
         for counter, line in enumerate(lines):
             line = line_add_defaults(line)
 
-            if line.get("app.name"):
+            if line.get("app.underscore"):
                 app = line_filter(line, "app.", [])
 
-            if line.get("model.name"):
+            if line.get("model.dot"):
                 model_dot = line["model.dot"]
                 line["model.sequence"] = counter
                 models.append(
@@ -51,14 +52,21 @@ def csv2lists(csv_file):
 
 
 def line_add_defaults(line):
-    if_first_not_second = [
-        ("app.name", "app.underscore", " ", "_"),
-        ("model.name", "model.dot", " ", "."),
-        ("model.name", "model.underscore", " ", "_"),
-        ("field.name", "field.underscore", " ", "_"),
-        ("model.name", "model.group_extid", line["model.name"], "base.group_user"),
+    if_first_not_second_title = [
+        ("app.underscore", "app.title", "_", " "),
+        ("model.dot", "model.title", ".", " "),
     ]
-    for first, second, replace, with_value in if_first_not_second:
+    if_first_not_second_lower = [
+        ("app.title", "app.underscore", " ", "_"),
+        ("model.title", "model.dot", " ", "."),
+        ("model.dot", "model.underscore", ".", "_"),
+        ("field.title", "field.underscore", " ", "_"),
+        ("model.dot", "model.group_extid", line.get("model.dot"), "base.group_user"),
+    ]
+    for first, second, replace, with_value in if_first_not_second_title:
+        if line.get(first) and not line.get(second):
+            line[second] = line[first].replace(replace, with_value).title()
+    for first, second, replace, with_value in if_first_not_second_lower:
         if line.get(first) and not line.get(second):
             line[second] = line[first].replace(replace, with_value).lower()
     return line
@@ -89,7 +97,7 @@ def lists2app(app, models, fields):
         ) for model in models
     ]
     manifest = t.manifest.format(
-        app_name=app["app.name"],
+        app_title=app["app.title"],
         data="".join(data),
     )
     with open(app_path + "/__manifest__.py", "w") as f:
@@ -154,8 +162,22 @@ def get_fields_py(model, fields):
                         attr=attr, value=field[key])
                     )
             attrs_py = []
-            do_attr("string", "field.name", quote=True)
-            do_attr("comodel_name", "field.relation", quote=True)
+            # TODO: Define each data type with:
+            # - possible attributes:
+            # -- quote=True/False
+            # -- Regex validation?
+            # -- Some attributes apply to all fields or relational fields etc.
+            # -- Example (quote): {"char": {"string": True, "selection": False}}
+            # - possibly set default widget for each view (e.g. many2many_tags)
+            # - possibly set default attributes for each view (e.g. optional="hide")
+            # Possibly set default attributes for all data types (e.g. optional="show")
+            # Pass all attributes. Check if each attribute is valid with the field type.
+            # Replace field.title -> string. Other attrs should have the right name.
+            do_attr("string", "field.title", quote=True)
+            do_attr("comodel_name", "field.comodel_name", quote=True)
+            do_attr("relation", "field.relation", quote=True)
+            do_attr("inverse_name", "field.inverse_name", quote=True)
+            do_attr("selection", "field.selection", quote=False)
             do_attr("groups", "field.groups", quote=True)
 
             fields_py.append(t.model_field.format(
@@ -167,19 +189,22 @@ def get_fields_py(model, fields):
 
 
 def get_model_views_xml(model, fields):
-    model_name = model["model.name"]
+    model_title = model["model.title"]
     model_dot = model["model.dot"]
     model_underscore = model["model.underscore"]
     form_fields = []
     tree_fields = []
     search_fields = []
-    show = 'optional="show" '
 
     for field in fields:
         if field["model.dot"] == model_dot:
+            form = field.get("field.form", "")
+            tree = 'optional="show" '
+            if field["field.type"] in ("one2many", "many2many"):
+                tree += 'widget="many2many_tags" '
             fld_underscore = "field.underscore"
-            form_fields.append(t.field.format(field=field[fld_underscore], extra=""))
-            tree_fields.append(t.field.format(field=field[fld_underscore], extra=show))
+            form_fields.append(t.field.format(field=field[fld_underscore], extra=form))
+            tree_fields.append(t.field.format(field=field[fld_underscore], extra=tree))
             search_fields.append(t.field.format(field=field[fld_underscore], extra=""))
 
     form_group = t.group.format(content="".join(form_fields))
@@ -203,7 +228,7 @@ def get_model_views_xml(model, fields):
         content="".join(search_fields),
     )
     action = t.action.format(
-        model_name=model_name,
+        model_title=model_title,
         model=model_dot,
         _model_=model_underscore,
     )
@@ -217,7 +242,7 @@ def get_menus_xml(app, models):
     menus_xml = []
 
     menus_xml.append(t.menu_main.format(
-        app_name=app["app.name"],
+        app_title=app["app.title"],
         app=app["app.underscore"],
         parent_menu_extid=app.get("parent_menu_extid", ""),
     ))
@@ -226,7 +251,7 @@ def get_menus_xml(app, models):
         menus_xml.append(t.menu_item.format(
             app=app["app.underscore"],
             _model_=model["model.underscore"],
-            model_name=model["model.name"],
+            model_title=model["model.title"],
             sequence=model["model.sequence"],
         ))
 

@@ -1,6 +1,6 @@
 manifest = """
 {{
-    "name": "{app_name}",
+    "name": "{app_title}",
     "data": [{data}
         "views/menus.xml",
         "security/ir.model.access.csv",
@@ -44,7 +44,7 @@ xml = """<?xml version="1.0" encoding="utf-8" ?>
 
 view = """
     <record id="{_model_}_view_{view}" model="ir.ui.view">
-        <field name="name">{model}.view.form</field>
+        <field name="name">{model}.view.{view}</field>
         <field name="model">{model}</field>
         <field name="arch" type="xml">
             <{view}>{content}
@@ -65,7 +65,7 @@ field = """
 
 action = """
     <record id="{_model_}_action" model="ir.actions.act_window">
-        <field name="name">{model_name}</field>
+        <field name="name">{model_title}</field>
         <field name="res_model">{model}</field>
         <field name="view_mode">tree,form</field>
     </record>"""
@@ -74,7 +74,7 @@ menu_main = """
     <menuitem
         id="{app}_main_menu"
         parent="{parent_menu_extid}"
-        name="{app_name}"
+        name="{app_title}"
     />"""
 
 menu_item = """
@@ -82,6 +82,6 @@ menu_item = """
         id="{_model_}_menu"
         action="{_model_}_action"
         parent="{app}_main_menu"
-        name="{model_name}"
+        name="{model_title}"
         sequence="{sequence}"
     />"""

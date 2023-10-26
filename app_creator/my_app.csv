@@ -1,0 +1,30 @@
+app.underscore;model.dot;field.underscore;field.type;field.comodel_name;field.relation;field.inverse_name;field.selection;field.form
+my_app;session;name;char;;;;;
+;;start_date;date;;;;;"widget=""daterange"" options=""{'related_end_date': 'end_date'}"""
+;;end_date;date;;;;;"widget=""daterange"" options=""{'related_start_date': 'start_date'}"""
+;;available_program_ids;many2many;program;program_session_rel;;;
+;program;name;char;;;;;
+;;service_ids;many2many;service;program_service_rel;;;
+;;session_ids;many2many;session;program_session_rel;;;
+;;package_ids;one2many;package;;program_id;;
+;package;name;char;;;;;
+;;program_id;many2one;program;;;;
+;;room_type_id;many2one;room.type;;;;
+;service;name;char;;;;;
+;;description;text;;;;;
+;;currency_id;many2one;res.currency;;;;
+;;price;monetary;;;;;
+;;program_ids;many2many;program;program_service_rel;;;
+;room;name;char;;;;;
+;;number;integer;;;;;
+;;room_type_id;many2one;room.type;;;;
+;;floor;integer;;;;;
+;;unit_id;many2one;unit;;;;
+;;status;selection;;;;[('disabled', 'Disabled'), ('guest', 'Guest'), ('staff', 'Staff')];
+;;single_beds;integer;;;;;
+;;double_beds;integer;;;;;
+;room.type;name;char;;;;;
+;;room_ids;one2many;room;;room_type_id;;
+;;package_ids;one2many;package;;room_type_id;;
+;unit;name;char;;;;;
+;;room_ids;one2many;room;;unit_id;;
