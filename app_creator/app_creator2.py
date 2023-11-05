@@ -1,11 +1,12 @@
 import csv
 import os
 from pprint import pprint
+import sys
 
 import app_templates as t
 
 
-csv_file = "my_app.csv"
+csv_file = sys.argv[1]
 csv_delimiter = ";"
 app_parent_path = ".."
 
@@ -195,6 +196,7 @@ def get_model_views_xml(model, fields):
     form_fields = []
     tree_fields = []
     search_fields = []
+    search_group_by_fields = []
 
     for field in fields:
         if field["model.dot"] == model_dot:
@@ -206,6 +208,11 @@ def get_model_views_xml(model, fields):
             form_fields.append(t.field.format(field=field[fld_underscore], extra=form))
             tree_fields.append(t.field.format(field=field[fld_underscore], extra=tree))
             search_fields.append(t.field.format(field=field[fld_underscore], extra=""))
+            # for now, field.title is not set by default.
+            title = field.get("field.title") or field["field.underscore"].replace("_", " ").title()
+            search_group_by_fields.append(
+                t.group_by_field.format(field=field[fld_underscore], field_title=title)
+            )
 
     form_group = t.group.format(content="".join(form_fields))
     form_sheet = t.sheet.format(content=form_group)
@@ -221,11 +228,24 @@ def get_model_views_xml(model, fields):
         view="tree",
         content="".join(tree_fields),
     )
+    kanban_view = t.view.format(
+        model=model_dot,
+        _model_=model_underscore,
+        view="kanban",
+        content=t.kanban,
+    )
+    pivot_view = t.view.format(
+        model=model_dot,
+        _model_=model_underscore,
+        view="pivot",
+        content="",
+    )
+    search_group_by = t.group_by.format(content="".join(search_group_by_fields))
     search_view = t.view.format(
         model=model_dot,
         _model_=model_underscore,
         view="search",
-        content="".join(search_fields),
+        content="".join(search_fields) + search_group_by,
     )
     action = t.action.format(
         model_title=model_title,
@@ -233,7 +253,7 @@ def get_model_views_xml(model, fields):
         _model_=model_underscore,
     )
     xml = t.xml.format(
-        content=form_view + tree_view + search_view + action
+        content=form_view + tree_view + kanban_view + pivot_view + search_view + action
     )
     return xml
 

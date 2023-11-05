@@ -52,6 +52,26 @@ view = """
         </field>
     </record>"""
 
+kanban = """
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <field name="display_name" />
+                        </div>
+                    </t>
+                </templates>"""
+
+group_by_field = """
+                    <filter
+                        string="{field_title}"
+                        name="{field}"
+                        context="{{'group_by':'{field}'}}"
+                    />"""
+
+group_by = """
+                <group string="Group By">{content}
+                </group>"""
+
 sheet = """
                 <sheet>{content}
                 </sheet>"""
@@ -67,7 +87,7 @@ action = """
     <record id="{_model_}_action" model="ir.actions.act_window">
         <field name="name">{model_title}</field>
         <field name="res_model">{model}</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,kanban,pivot,form</field>
     </record>"""
 
 menu_main = """
