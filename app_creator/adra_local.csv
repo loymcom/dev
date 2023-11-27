@@ -1,0 +1,14 @@
+app.underscore;model.dot;field.underscore;field.type;field.comodel_name;field.relation;field.inverse_name;field.selection;field.form
+adra_local;adra.contact;name;char;;;;;
+;;mobile;char;;;;;
+;;email;char;;;;;
+;;mother_tongue;char;;;;;
+;;family_status;many2one;adra.family.status;;;;
+;;role;selection;;;;[('teach', 'Teach'), ('learn', 'Learn')];
+;;SDA;selection;;;;[('sda', 'SDA'), ('other', 'Other')];
+;;event;many2many;adra.event;adra_event_contact_rel;;;
+;adra.family.status;name;char;;;;;
+;;contact_ids;one2many;adra.contact;;family_status;;
+;adra.event;name;char;;;;;
+;;date;date;;;;;
+;;contact_ids;many2many;adra.contact;adra_event_contact_rel;;;
