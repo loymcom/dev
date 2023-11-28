@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 ACSONE SA/NV
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL). -->
+<odoo>
+  <!-- This is the user that will be used to run the generic app -->
+  <record
+        id="generic_fastapi_user"
+        model="res.users"
+        context="{'no_reset_password': True}"
+    >
+    <field name="name">Generic FastAPI Endpoint User</field>
+    <field name="login">generic_fastapi_user</field>
+    <field name="groups_id" eval="[(6, 0, [])]" />
+  </record>
+
+  <!-- This is the group that will be used to run the generic app
+  This group will only depend on the "group_fastapi_endpoint_runner" group
+  that provides the minimal access rights to retrieve the user running the
+  endpoint handlers and performs authentication.
+  -->
+  <record id="generic_fastapi_group" model="res.groups">
+    <field name="name">Generic FastAPI Endpoint Group</field>
+    <field name="users" eval="[(4, ref('generic_fastapi_user'))]" />
+    <field name="implied_ids" eval="[(4, ref('fastapi.group_fastapi_endpoint_runner'))]" />
+  </record>
+
+  <!-- This is the endpoint that will be used to run the generic app.
+  This endpoint will be registered on the "/fastapi" path.
+  -->
+
+  <record id="generic_fastapi_endpoint" model="fastapi.endpoint">
+    <field name="name">Generic FastAPI Endpoint</field>
+    <field
+            name="description"
+        ><![CDATA[
+# A Generic FastApi Endpoint
+
+The modules partner_fastapi and sale_fastapi depend on generic_fastapi.
+]]></field>
+    <field name="app">generic</field>
+    <field name="root_path">/fastapi</field>
+    <field name="generic_auth_method">http_basic</field>
+      <field name="user_id" ref="generic_fastapi_user" />
+  </record>
+</odoo>
