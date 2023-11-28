@@ -19,6 +19,12 @@ from odoo.addons.fastapi.dependencies import (
 from ..routers import generic_router, generic_router_doc
 
 
+class GenericFastAPI(models.AbstractModel):
+
+    _name = "generic.fastapi"
+    _description = "Generic Abstract FastAPI"
+
+
 class FastapiEndpoint(models.Model):
 
     _inherit = "fastapi.endpoint"
@@ -32,9 +38,9 @@ class FastapiEndpoint(models.Model):
     )
 
     def _get_fastapi_routers(self) -> List[APIRouter]:
-        if self.app == "generic":
-            return [generic_router]
-        return super()._get_fastapi_routers()
+        routers = super()._get_fastapi_routers()
+        routers.append(generic_router)
+        return routers
 
     @api.constrains("app", "generic_auth_method")
     def _valdiate_generic_auth_method(self):

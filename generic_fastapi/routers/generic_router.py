@@ -22,7 +22,7 @@ router = APIRouter(tags=["generic"])
 # DEMO #################################################################################
 
 @router.get("/demo")
-async def hello_word():
+async def hello_world():
     """Hello World!"""
     return {"Hello": "World"}
 
