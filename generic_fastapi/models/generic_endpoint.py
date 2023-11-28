@@ -27,7 +27,7 @@ class FastapiEndpoint(models.Model):
         selection_add=[("generic", "Generic Endpoint")], ondelete={"generic": "cascade"}
     )
     generic_auth_method = fields.Selection(
-        selection=[("api_key", "Api Key"), ("http_basic", "HTTP Basic")],
+        selection=[("http_basic", "HTTP Basic")],
         string="Authenciation method",
     )
 
@@ -63,9 +63,7 @@ class FastapiEndpoint(models.Model):
                     authenticated_partner_from_basic_auth_user
                 )
             else:
-                authenticated_partner_impl_override = (
-                    api_key_based_authenticated_partner_impl
-                )
+                pass
             app.dependency_overrides[
                 authenticated_partner_impl
             ] = authenticated_partner_impl_override
@@ -78,28 +76,3 @@ class FastapiEndpoint(models.Model):
             tags_metadata.append({"name": "generic", "description": generic_router_doc})
             params["openapi_tags"] = tags_metadata
         return params
-
-
-def api_key_based_authenticated_partner_impl(
-    api_key: Annotated[
-        str,
-        Depends(
-            APIKeyHeader(
-                name="api-key",
-                description="In this demo, you can use a user's login as api key.",
-            )
-        ),
-    ],
-    env: Annotated[Environment, Depends(odoo_env)],
-) -> Partner:
-    """A dummy implementation that look for a user with the same login
-    as the provided api key
-    """
-    partner = (
-        env["res.users"].sudo().search([("login", "=", api_key)], limit=1).partner_id
-    )
-    if not partner:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect API Key"
-        )
-    return partner

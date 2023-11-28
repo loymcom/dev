@@ -1,1 +1,1 @@
-from . import fastapi_endpoint
+from . import generic_endpoint

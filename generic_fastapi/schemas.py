@@ -16,7 +16,7 @@ class GenericEndpointAppInfo(BaseModel):
     id: int
     name: str
     app: str
-    auth_method: str = Field(alias="demo_auth_method")
+    auth_method: str = Field(alias="generic_auth_method")
     root_path: str
     model_config = ConfigDict(from_attributes=True)
 
