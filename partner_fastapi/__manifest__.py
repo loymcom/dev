@@ -7,7 +7,8 @@
     "author": "Ows, Odoo Community Association (OCA)",
     "category": "Uncategorized",
     "data": [
-        "security/ir_rule+acl.xml",
+        "security/ir_rule.xml",
+        "security/ir.model.access.csv",
     ],
     "depends": [
         "generic_fastapi",

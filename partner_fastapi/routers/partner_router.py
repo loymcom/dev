@@ -17,9 +17,12 @@ from odoo.addons.fastapi.dependencies import authenticated_partner, fastapi_endp
 from odoo.addons.fastapi.models import FastapiEndpoint
 from ..schemas import PartnerInfo
 
+import pprint
+
+pp = pprint.PrettyPrinter(indent=4)
 router = APIRouter(tags=["partner"])
 
 @router.get("/{version}/res.partner/{id}")
 async def read_partner(env: Annotated[Environment, Depends(odoo_env)], version: str, id: int):
     partner = env["res.partner"].browse(id)
-    return str(partner.name)
+    return partner.read()
