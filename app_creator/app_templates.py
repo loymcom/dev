@@ -22,6 +22,7 @@ model = """from odoo import api, fields, models
 
 class {Model}(models.Model):
     _name = "{model}"
+    _description = "{model}"
 {fields_py}
 """
 
