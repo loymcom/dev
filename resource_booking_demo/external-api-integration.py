@@ -68,11 +68,11 @@ VARIABLES = {
     },
     "DEV": {
         "url": "http://localhost:16069",
-        "db": "devel",
+        "db": "nodemo",
         "username": "admin",
         "password": "admin",
-        # WITH DEMO
-        "product_attribute_id": 4, # Room option
+        # WITHOUT DEMO
+        "product_attribute_id": 2, # Room option
         "product_category_id": 1, # Generic category
         "resource_calendar_id": 4, # Available 24/7
     },
@@ -332,13 +332,13 @@ class integrate():
 
     # PAYMENT LINK #########################################################################
 
-    def do_payment_link(self, sale_order_id):
+    # def do_payment_link(self, sale_order_id):
 
-        wizard_id = self.do("payment.link.wizard", "create", [{}], {'context': {'active_model': 'sale.order', 'active_id': sale_order_id}})
-        wizard = self.do("payment.link.wizard", "read", [ wizard_id ], {})
-        payment_link = wizard[0]["link"]
+    #     wizard_id = self.do("payment.link.wizard", "create", [{}], {'context': {'active_model': 'sale.order', 'active_id': sale_order_id}})
+    #     wizard = self.do("payment.link.wizard", "read", [ [wizard_id] ], {"fields": ["link"]})
+    #     payment_link = wizard[0]["link"]
 
-        return payment_link
+    #     return payment_link
 
 ############################################################################################
 # MAIN #####################################################################################
