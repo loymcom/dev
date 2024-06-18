@@ -303,7 +303,6 @@ class integrate():
             "product_uom_qty": 1, # will auto-create 1 booking if the product.product resource_booking_type_id is set.
             "price_unit": 10000,
         }
-        print(sale_order_line)
         [sale_order_line_id] = self.do("sale.order.line", "create", [ [sale_order_line] ], {})
 
         return sale_order_id, sale_order_line_id
@@ -332,13 +331,21 @@ class integrate():
 
     # PAYMENT LINK #########################################################################
 
-    # def do_payment_link(self, sale_order_id):
+    def do_payment_link(self, sale_order_id):
 
-    #     wizard_id = self.do("payment.link.wizard", "create", [{}], {'context': {'active_model': 'sale.order', 'active_id': sale_order_id}})
-    #     wizard = self.do("payment.link.wizard", "read", [ [wizard_id] ], {"fields": ["link"]})
-    #     payment_link = wizard[0]["link"]
+        wizard_id = self.do("payment.link.wizard", "create", [{}], {'context': {'active_model': 'sale.order', 'active_id': sale_order_id}})
+        print(wizard_id)
 
-    #     return payment_link
+        # testnow = self.do("payment.link.wizard", "read", [ [wizard_id] ], {})
+        # testnow = self.do("res.partner", "read", [ partner_ids ], {})
+
+        # wizard = self.do("payment.link.wizard", "read", [ [wizard_id] ], {})
+        # wizard = self.do("payment.link.wizard", "browse", [ [wizard_id] ], {})
+        wizard = self.do("payment.link.wizard", "read", [ [wizard_id] ], {"fields": ["link"]})
+        print(wizard)
+        payment_link = wizard[0]["link"]
+
+        return payment_link
 
 ############################################################################################
 # MAIN #####################################################################################
