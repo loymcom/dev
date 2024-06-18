@@ -1,5 +1,6 @@
 import csv
 import io
+from datetime import datetime
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
@@ -15,12 +16,15 @@ class TeamM(models.Model):
 
     name = fields.Char()
     csv = fields.Text()
+    year = fields.Integer(default=None)
+    model = fields.Char()
 
     active = fields.Boolean(default=True)
     state = fields.Selection([("new", "New"), ("done", "Done")], default="new")
 
     def action_team_m(self):
         Partner = self.env["res.partner"]
+        PartnerCategory = self.env["res.partner.category"]
         Country = self.env["res.country"]
 
         csv_file_like = io.StringIO(self.csv.strip())
@@ -30,12 +34,17 @@ class TeamM(models.Model):
         for values in csv_reader:
             if values["Country"] == "Norge":
                 values["Country"] = "NO"
+            birthdate = None
+            if values.get('Birth date') != "! Not entered":
+                birthdate = datetime.strptime(values['Birth date'], "%m/%d/%Y")
+            category_names = [category.strip() for category in values["Customer Category"].split(",")]
+            categories = PartnerCategory.search([('name', 'in', category_names)])
             odoo_values = {
                 'name': values['Name'],
-                # 'birthdate_date': values['Birth date'],
+                'birthdate_date': birthdate,
                 'ref': values['Record ID - Contact - Hubspot'],
-                # 'category_id': values['Customer Category'],
-                # 'x_new_guest_year': values['New guest year'],
+                'category_id': [(6, 0, categories.ids)],
+                'x_new_guest_year': values['New guest year'],
                 'firstname': values['First name'],
                 'gender': GENDER[values['Gender']],
                 'lastname': values['Last name'],
