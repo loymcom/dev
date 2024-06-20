@@ -12,6 +12,7 @@
     ],
     "depends": [
         "base",
+        "resource_booking_demo",
     ],
     "development_status": "Alpha",
     "license": "AGPL-3",

@@ -20,6 +20,12 @@
             <form>
                 <header>
                     <button
+                        name="action_import"
+                        class="oe_highlight"
+                        string="Import"
+                        type="object"
+                    />
+                    <!-- <button
                         name="action_import_contacts"
                         class="oe_highlight"
                         string="Import Contacts"
@@ -36,7 +42,7 @@
                         class="oe_highlight"
                         string="Import Sale Orders"
                         type="object"
-                    />
+                    /> -->
                     <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
@@ -64,7 +70,6 @@
                     </div>
                     <group name="main">
                         <field name="model" />
-                        <field name="year" widget="char" />
                         <field name="csv" />
                     </group>
                 </sheet>
