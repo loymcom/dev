@@ -20,9 +20,21 @@
             <form>
                 <header>
                     <button
-                        name="action_team_m"
+                        name="action_import_contacts"
                         class="oe_highlight"
-                        string="Teamm Button"
+                        string="Import Contacts"
+                        type="object"
+                    />
+                    <button
+                        name="action_import_products"
+                        class="oe_highlight"
+                        string="Import Products"
+                        type="object"
+                    />
+                    <button
+                        name="action_import_sale_orders"
+                        class="oe_highlight"
+                        string="Import Sale Orders"
                         type="object"
                     />
                     <field name="state" widget="statusbar" />
@@ -35,7 +47,7 @@
                         bg_color="bg-danger"
                         attrs="{'invisible': [('active', '=', True)]}"
                     />
-                    <div class="oe_button_box" name="button_box">
+                    <!-- <div class="oe_button_box" name="button_box">
                         <button
                             name="action_team_m"
                             type="object"
@@ -44,7 +56,7 @@
                         >
                             <span>Teamm Action</span>
                         </button>
-                    </div>
+                    </div> -->
                     <div class="oe_title">
                         <h1>
                             <field name="name" placeholder="Record Name" />
