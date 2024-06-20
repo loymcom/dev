@@ -10,17 +10,17 @@ GENDER = {
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    def _team_m_search(self, odoo_values):
+    @api.model
+    def _team_m_search(self, team_m_values):
         """ Return search domain """
-        values = odoo_values
-        contact_name = values["firstname"] + " " + values["lastname"]
-        return [("name", "=", contact_name)]
+        values = team_m_values
+        partner_name = values["First name"] + " " + values["Last name"]
+        return [("name", "=", partner_name)]
 
     @api.model
     def _team_m_to_odoo(self, team_m_values):
         """ Return odoo values """
         Country = self.env["res.country"]
-        Partner = self.env["res.partner"]
         PartnerCategory = self.env["res.partner.category"]
         TeamM = self.env["team.m"]
 

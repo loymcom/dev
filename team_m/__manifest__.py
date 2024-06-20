@@ -8,6 +8,7 @@
     "category": "Uncategorized",
     "data": [
         "security/ir.model.access.csv",
+        "views/res_partner_views.xml",
         "views/team_m_views.xml",
     ],
     "depends": [
