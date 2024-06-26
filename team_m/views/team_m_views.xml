@@ -70,6 +70,14 @@
                     </div>
                     <group name="main">
                         <field name="model" />
+                        <field name="url" />
+                        <field name="param_ids">
+                            <tree editable="bottom">
+                                <field name="team_m_id" invisible="1" />
+                                <field name="key" />
+                                <field name="value" />
+                            </tree>
+                        </field>
                         <field name="csv" />
                     </group>
                 </sheet>

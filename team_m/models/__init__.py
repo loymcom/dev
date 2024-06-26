@@ -8,3 +8,4 @@ from . import resource_resource
 from . import sale_order
 from . import sale_order_line
 from . import team_m
+from . import team_m_param
