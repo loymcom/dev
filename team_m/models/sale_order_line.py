@@ -5,7 +5,6 @@ class SaleOrder(models.Model):
 
     @api.model
     def _team_m_to_odoo_search(self, team_m_values):
-        """ Return search domain """
         values = team_m_values
         # return [("name", "=", values["name"])]
         domain = []
@@ -13,8 +12,6 @@ class SaleOrder(models.Model):
 
     @api.model
     def _team_m_to_odoo_values(self, team_m_values):
-        """ Return odoo values """
-
         Order = self.env["sale.order"]
         OrderLine = self.env["sale.order.line"]
         Partner = self.env["res.partner"]

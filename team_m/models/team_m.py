@@ -56,11 +56,12 @@ class TeamM(models.Model):
                 odoo_values = Model._team_m_to_odoo_values(values)
                 record = Model._team_m_to_odoo_search(values)
                 if record:
-                    record.write(odoo_values)
+                    if len(record) == 1:
+                        record.write(odoo_values)
                 else:
                     record = Model.create(odoo_values)
                     Model._team_m_to_odoo_after_create(record)
-                record_ids.append(record.id)
+                record_ids.extend(record.ids)
 
         if len(model_names) == 1:
             return {

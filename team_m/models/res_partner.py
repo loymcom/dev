@@ -12,7 +12,6 @@ class ResPartner(models.Model):
 
     @api.model
     def _team_m_to_odoo_search(self, team_m_values):
-        """ Return search domain """
         values = team_m_values
         url = self.env.context["team_m_url"]
         if url[-12:] == "/orders/list":
@@ -24,7 +23,6 @@ class ResPartner(models.Model):
 
     @api.model
     def _team_m_to_odoo_values(self, team_m_values):
-        """ Return odoo values """
         Country = self.env["res.country"]
         PartnerCategory = self.env["res.partner.category"]
         TeamM = self.env["team.m"]
