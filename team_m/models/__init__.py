@@ -1,3 +1,4 @@
+from . import base
 from . import product_product
 from . import product_template
 from . import res_partner
@@ -8,4 +9,7 @@ from . import resource_resource
 from . import sale_order
 from . import sale_order_line
 from . import team_m
+from . import team_m_model
 from . import team_m_param
+from . import resource_calendar
+from . import resource_calendar_attendance

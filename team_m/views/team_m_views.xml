@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name" />
-                <field name="model" />
+                <field name="model_ids" widget="many2many_tags" />
                 <field name="state" optional="show" />
                 <field name="active" optional="hide" />
             </tree>
@@ -20,29 +20,17 @@
             <form>
                 <header>
                     <button
-                        name="action_import"
+                        name="action_import_api"
                         class="oe_highlight"
-                        string="Import"
-                        type="object"
-                    />
-                    <!-- <button
-                        name="action_import_contacts"
-                        class="oe_highlight"
-                        string="Import Contacts"
+                        string="API Import"
                         type="object"
                     />
                     <button
-                        name="action_import_products"
+                        name="action_import_csv"
                         class="oe_highlight"
-                        string="Import Products"
+                        string="CSV Import"
                         type="object"
                     />
-                    <button
-                        name="action_import_sale_orders"
-                        class="oe_highlight"
-                        string="Import Sale Orders"
-                        type="object"
-                    /> -->
                     <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
@@ -69,7 +57,14 @@
                         </h1>
                     </div>
                     <group name="main">
-                        <field name="model" />
+                        <field name="model_ids">
+                            <tree editable="bottom">
+                                <field name="team_m_id" invisible="1" />
+                                <field name="sequence" />
+                                <field name="is_active" />
+                                <field name="name" />
+                            </tree>
+                        </field>
                         <field name="url" />
                         <field name="param_ids">
                             <tree editable="bottom">

@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="base.view_partner_tree" />
         <field name="arch" type="xml">
             <tree position="inside">
-                <field name="ref" />
+                <field name="ref" string="Hubspot ID" />
             </tree>
         </field>
     </record>
