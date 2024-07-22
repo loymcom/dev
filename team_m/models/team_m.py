@@ -27,34 +27,6 @@ class TeamM(models.Model):
     active = fields.Boolean(default=True)
     state = fields.Selection([("new", "New"), ("done", "Done")], default="new")
 
-    # def action_import_works(self):
-    #     Param = self.env["ir.config_parameter"].sudo()
-    #     app_id = Param.get_param("X-API-APP-ID")
-    #     public_key = Param.get_param("X-API-PUBLIC-KEY")
-    #     secret_key = Param.get_param("X-API-SECRET-KEY")
-
-    #     url = "https://dev.api.teamm.work/orders/list"
-    #     headers = {
-    #         "X-API-SECRET-KEY": secret_key,
-    #         "X-API-PUBLIC-KEY": public_key,
-    #         "X-API-APP-ID": app_id,
-    #     }
-    #     # raise UserError(str(headers))
-
-    #     # Define the parameters
-    #     params = {
-    #         "startDate": "2024-01-20",
-    #         "endDate": "2024-06-03"
-    #     }
-
-    #     # Make the GET request
-    #     response = requests.get(url, headers=headers, params=params)
-    #     if response.status_code == 200:
-    #         response_list = response.json()
-    #         raise UserError(str(response_list[0])) # each object is a dictionary. str() will return a visible result.
-    #     else:
-    #         raise UserError(response.text)
-
     def action_import_api(self):
         self.ensure_one()
         Param = self.env["ir.config_parameter"].sudo()
@@ -64,11 +36,9 @@ class TeamM(models.Model):
             "X-API-APP-ID": Param.get_param("X-API-APP-ID"),
         }
         params = {p.key: p.value for p in self.param_ids}
-
         response = requests.get(self.url, headers=headers, params=params)
         if response.status_code != 200:
             raise UserError(response.text)
-        
         return self._action_import(response.json())
 
     def action_import_csv(self):
@@ -82,16 +52,14 @@ class TeamM(models.Model):
         for model_name in model_names:
             record_ids = []
             for values in values_list:
-                Model = self.env[model_name]
-                odoo_values = Model._team_m_to_odoo(values)
-                _logger.warning(odoo_values)
-                record = Model._team_m_search(values)
+                Model = self.env[model_name].with_context(team_m_url=self.url)
+                odoo_values = Model._team_m_to_odoo_values(values)
+                record = Model._team_m_to_odoo_search(values)
                 if record:
-                    _logger.warning(record)
                     record.write(odoo_values)
                 else:
                     record = Model.create(odoo_values)
-                    Model._team_m_after_create(record)
+                    Model._team_m_to_odoo_after_create(record)
                 record_ids.append(record.id)
 
         if len(model_names) == 1:
