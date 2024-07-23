@@ -6,20 +6,24 @@ class ProductTemplate(models.Model):
     @api.model
     def _teamm2odoo_search(self, teamm_values):
         values = teamm_values
-        domain = [("name", "=", values["Program"].split()[0])]
+        domain = [("name", "=", values["program"].split()[0])]
         return self.search(domain)
 
     @api.model
     def _teamm2odoo_values(self, teamm_values):
-        Order = self.env["sale.order"]
-        OrderLine = self.env["sale.order.line"]
-        Partner = self.env["res.partner"]
-        TeamM = self.env["teamm"]
-
-        values = teamm_values
-        odoo_order_values = {
-            "name": values['Ordre nr. '],
-            "partner_id": Partner.search([('ref', "=", values['Record ID - Contact - Hubspot'])]).id,
-            "date_order": TeamM._mdy_date(values['Booked at'])
+        attribute_line_ids = []
+        attributes = self.env["product.attribute"]._teamm2odoo_search(teamm_values)
+        for attribute in attributes:
+            attribute_line_ids.append(
+                fields.Command.create(
+                    {
+                        "attribute_id": attribute.id,
+                        "value_ids": [fields.Command.set(attribute.value_ids.ids)],
+                    }
+                )
+            )
+        odoo_values = {
+            "name": teamm_values["program"],
+            "attribute_line_ids": attribute_line_ids,
         }
-        return odoo_order_values
+        return odoo_values

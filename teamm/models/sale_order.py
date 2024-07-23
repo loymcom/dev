@@ -17,9 +17,9 @@ class SaleOrder(models.Model):
         TeamM = self.env["teamm"]
 
         values = teamm_values
-        odoo_order_values = {
+        odoo_values = {
             "name": values['Ordre nr. '],
             "partner_id": Partner.search([('ref', "=", values['Record ID - Contact - Hubspot'])]).id,
             "date_order": TeamM._mdy_date(values['Booked at'])
         }
-        return odoo_order_values
+        return odoo_values
