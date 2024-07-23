@@ -4,11 +4,11 @@ class Base(models.AbstractModel):
     _inherit = "base"
 
     @api.model
-    def _teamm2odoo_search(self, team_m_values):
+    def _teamm2odoo_search(self, teamm_values):
         return self.search([])
 
     @api.model
-    def _teamm2odoo_values(self, team_m_values):
+    def _teamm2odoo_values(self, teamm_values):
         return {}
 
     @api.model

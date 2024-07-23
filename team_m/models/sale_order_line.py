@@ -4,20 +4,20 @@ class SaleOrder(models.Model):
     _inherit = "sale.order.line"
 
     @api.model
-    def _teamm2odoo_search(self, team_m_values):
-        values = team_m_values
+    def _teamm2odoo_search(self, teamm_values):
+        values = teamm_values
         # return [("name", "=", values["name"])]
         domain = []
         return self.search(domain)
 
     @api.model
-    def _teamm2odoo_values(self, team_m_values):
+    def _teamm2odoo_values(self, teamm_values):
         Order = self.env["sale.order"]
         OrderLine = self.env["sale.order.line"]
         Partner = self.env["res.partner"]
         TeamM = self.env["team.m"]
 
-        values = team_m_values
+        values = teamm_values
         odoo_order_line_values = {
             "order_id": Order._teamm2odoo_search(values).id,
             "product_id": 1,

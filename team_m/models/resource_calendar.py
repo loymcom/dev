@@ -4,14 +4,14 @@ class ResourceCalendar(models.Model):
     _inherit = "resource.calendar"
 
     @api.model
-    def _teamm2odoo_search(self, team_m_values):
-        values = team_m_values
+    def _teamm2odoo_search(self, teamm_values):
+        values = teamm_values
         domain = [("name", "=", values["calendar"])]
         return self.search(domain)
 
     @api.model
-    def _teamm2odoo_values(self, team_m_values):
-        values = team_m_values
+    def _teamm2odoo_values(self, teamm_values):
+        values = teamm_values
         odoo_values = {
             "name": values["calendar"],
         }
