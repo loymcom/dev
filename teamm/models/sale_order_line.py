@@ -15,7 +15,7 @@ class SaleOrder(models.Model):
         Order = self.env["sale.order"]
         OrderLine = self.env["sale.order.line"]
         Partner = self.env["res.partner"]
-        TeamM = self.env["team.m"]
+        TeamM = self.env["teamm"]
 
         values = teamm_values
         odoo_order_line_values = {

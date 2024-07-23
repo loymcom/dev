@@ -9,7 +9,7 @@
     "data": [
         "security/ir.model.access.csv",
         "views/res_partner_views.xml",
-        "views/team_m_views.xml",
+        "views/teamm_views.xml",
     ],
     "depends": [
         "base",

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <data>
     <!-- Views -->
-    <record id="team_m_view_tree" model="ir.ui.view">
-        <field name="name">team.m</field>
-        <field name="model">team.m</field>
+    <record id="teamm_view_tree" model="ir.ui.view">
+        <field name="name">teamm</field>
+        <field name="model">teamm</field>
         <field name="arch" type="xml">
             <tree>
                 <field name="name" />
@@ -13,9 +13,9 @@
             </tree>
         </field>
     </record>
-    <record id="team_m_view_form" model="ir.ui.view">
-        <field name="name">team.m form</field>
-        <field name="model">team.m</field>
+    <record id="teamm_view_form" model="ir.ui.view">
+        <field name="name">teamm form</field>
+        <field name="model">teamm</field>
         <field name="arch" type="xml">
             <form>
                 <header>
@@ -43,7 +43,7 @@
                     />
                     <!-- <div class="oe_button_box" name="button_box">
                         <button
-                            name="action_team_m"
+                            name="action_teamm"
                             type="object"
                             class="oe_stat_button"
                             icon="fa-globe"
@@ -59,7 +59,7 @@
                     <group name="main">
                         <field name="model_ids">
                             <tree editable="bottom">
-                                <field name="team_m_id" invisible="1" />
+                                <field name="teamm_id" invisible="1" />
                                 <field name="sequence" />
                                 <field name="is_active" />
                                 <field name="name" />
@@ -68,7 +68,7 @@
                         <field name="url" />
                         <field name="param_ids">
                             <tree editable="bottom">
-                                <field name="team_m_id" invisible="1" />
+                                <field name="teamm_id" invisible="1" />
                                 <field name="key" />
                                 <field name="value" />
                             </tree>
@@ -79,9 +79,9 @@
             </form>
         </field>
     </record>
-    <record id="team_m_view_search" model="ir.ui.view">
-        <field name="name">team.m.view.search</field>
-        <field name="model">team.m</field>
+    <record id="teamm_view_search" model="ir.ui.view">
+        <field name="name">teamm.view.search</field>
+        <field name="model">teamm</field>
         <field name="arch" type="xml">
             <search>
                 <field name="name" />
@@ -94,17 +94,17 @@
         </field>
     </record>
     <!-- Actions -->
-    <record id="team_m_action" model="ir.actions.act_window">
+    <record id="teamm_action" model="ir.actions.act_window">
         <field name="name">Team M</field>
-        <field name="res_model">team.m</field>
+        <field name="res_model">teamm</field>
         <field name="view_mode">tree,form</field>
         <!-- <field name="domain">[]</field> -->
         <!-- <field name="context">{}</field> -->
     </record>
     <menuitem
-        id="team_m_menu"
+        id="teamm_menu"
         name="Team M"
-        action="team_m_action"
+        action="teamm_action"
         sequence="10"
     />
 </data>

@@ -10,6 +10,6 @@ from . import resource_calendar_attendance
 from . import resource_resource
 from . import sale_order
 from . import sale_order_line
-from . import team_m
-from . import team_m_model
-from . import team_m_param
+from . import teamm
+from . import teamm_model
+from . import teamm_param

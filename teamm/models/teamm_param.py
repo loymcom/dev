@@ -3,8 +3,8 @@ from odoo.exceptions import UserError
 
 
 class TeamMParam(models.Model):
-    _name = "team.m.param"
+    _name = "teamm.param"
 
     key = fields.Char()
     value = fields.Char()
-    team_m_id = fields.Many2one("team.m")
+    teamm_id = fields.Many2one("teamm")

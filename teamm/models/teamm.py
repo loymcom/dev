@@ -13,15 +13,15 @@ _logger = logging.getLogger(__name__)
 
 
 class TeamM(models.Model):
-    _name = "team.m"
+    _name = "teamm"
 
     def _mdy_date(self, mdy):
         return datetime.strptime(mdy, "%m/%d/%Y")
 
     name = fields.Char()
-    model_ids = fields.One2many("team.m.model", "team_m_id", string="Models")
+    model_ids = fields.One2many("teamm.model", "teamm_id", string="Models")
     url = fields.Char()
-    param_ids = fields.One2many("team.m.param", "team_m_id", string="Params")
+    param_ids = fields.One2many("teamm.param", "teamm_id", string="Params")
     csv = fields.Text()
 
     active = fields.Boolean(default=True)
@@ -52,7 +52,7 @@ class TeamM(models.Model):
         for model_name in model_names:
             record_ids = []
             for values in values_list:
-                Model = self.env[model_name].with_context(team_m_url=self.url)
+                Model = self.env[model_name].with_context(teamm_url=self.url)
                 odoo_values = Model._teamm2odoo_values(values)
                 record = Model._teamm2odoo_search(values)
                 if record:
