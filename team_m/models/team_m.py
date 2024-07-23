@@ -53,14 +53,14 @@ class TeamM(models.Model):
             record_ids = []
             for values in values_list:
                 Model = self.env[model_name].with_context(team_m_url=self.url)
-                odoo_values = Model._team_m_to_odoo_values(values)
-                record = Model._team_m_to_odoo_search(values)
+                odoo_values = Model._teamm2odoo_values(values)
+                record = Model._teamm2odoo_search(values)
                 if record:
                     if len(record) == 1:
                         record.write(odoo_values)
                 else:
                     record = Model.create(odoo_values)
-                    Model._team_m_to_odoo_after_create(record)
+                    Model._teamm2odoo_after_create(record)
                 record_ids.extend(record.ids)
 
         if len(model_names) == 1:

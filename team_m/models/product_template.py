@@ -4,13 +4,13 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     @api.model
-    def _team_m_to_odoo_search(self, team_m_values):
+    def _teamm2odoo_search(self, team_m_values):
         values = team_m_values
         domain = [("name", "=", values["Program"].split()[0])]
         return self.search(domain)
 
     @api.model
-    def _team_m_to_odoo_values(self, team_m_values):
+    def _teamm2odoo_values(self, team_m_values):
         Order = self.env["sale.order"]
         OrderLine = self.env["sale.order.line"]
         Partner = self.env["res.partner"]

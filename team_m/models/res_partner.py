@@ -11,7 +11,7 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     @api.model
-    def _team_m_to_odoo_search(self, team_m_values):
+    def _teamm2odoo_search(self, team_m_values):
         values = team_m_values
         url = self.env.context["team_m_url"]
         if url[-12:] == "/orders/list":
@@ -22,7 +22,7 @@ class ResPartner(models.Model):
         return self.search(domain)
 
     @api.model
-    def _team_m_to_odoo_values(self, team_m_values):
+    def _teamm2odoo_values(self, team_m_values):
         Country = self.env["res.country"]
         PartnerCategory = self.env["res.partner.category"]
         TeamM = self.env["team.m"]

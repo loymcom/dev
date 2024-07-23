@@ -18,9 +18,10 @@ DEMO.XML
 
 resource.calendar
 resource.calendar.attendance
+
 resource.resource (sessions and rooms)
-res.users
-resource.resource (users)
+# res.users
+# resource.resource (users)
 # hr.employee
 resource.booking.combination
 resource.booking.type

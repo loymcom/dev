@@ -1,37 +1,34 @@
 from odoo import _, api, fields, models
 
+def room_name(team_m_values):
+    return "Room {standard} {number}".format(
+        standard=team_m_values["standard"].split()[0],
+        number=team_m_values["room"],
+    )
+
 class ResourceResource(models.Model):
     _inherit = "resource.resource"
 
     @api.model
-    def _team_m_to_odoo_search(self, team_m_values):
+    def _teamm2odoo_search(self, team_m_values):
         values = team_m_values
-        domain = [("name", "=like", values["room"] + "%")]
+        domain = [("name", "=like", room_name(team_m_values) + "%")]
         return self.search(domain)
 
     @api.model
-    def _team_m_to_odoo_values(self, team_m_values):
+    def _teamm2odoo_values(self, team_m_values):
         Calendar = self.env["resource.calendar"]
 
-        values = team_m_values
+        odoo_values = {
+            "name": room_name(team_m_values),
+            "resource_type": "material",
+            "calendar_id": Calendar._teamm2odoo_search(team_m_values).id,
+        }
 
-        if values["type"] == "Dobbelt":
+        if team_m_values["type"] == "Dobbelt":
             odoo_values = [
-                {
-                    "name": values["room"] + " A",
-                    "resource_type": "material",
-                    "calendar_id": Calendar._team_m_to_odoo_search(team_m_values).id,
-                },
-                {
-                    "name": values["room"] + " B",
-                    "resource_type": "material",
-                    "calendar_id": Calendar._team_m_to_odoo_search(team_m_values).id,
-                },
+                odoo_values | {"name": odoo_values["name"] + " " + letter}
+                for letter in ["A", "B"]
             ]
-        else:
-            odoo_values = {
-                "name": values["room"],
-                "resource_type": "material",
-                "calendar_id": Calendar._team_m_to_odoo_search(team_m_values).id,
-            },
+
         return odoo_values
