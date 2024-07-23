@@ -44,7 +44,7 @@ class TeamM(models.Model):
     def action_import_csv(self):
         csv_file_like = io.StringIO(self.csv.strip())
         csv_reader = csv.DictReader(csv_file_like)
-        return self._action_import(csv_reader)
+        return self._action_import([line for line in csv_reader])
 
     def _action_import(self, values_list):
         record_ids = []
@@ -54,14 +54,15 @@ class TeamM(models.Model):
             for values in values_list:
                 Model = self.env[model_name].with_context(teamm_url=self.url)
                 odoo_values = Model._teamm2odoo_values(values)
-                record = Model._teamm2odoo_search(values)
-                if record:
-                    if len(record) == 1:
-                        record.write(odoo_values)
+                records = Model._teamm2odoo_search(values)
+                if records:
+                    if type(odoo_values) is dict:
+                        records.write(odoo_values)
                 else:
                     record = Model.create(odoo_values)
                     Model._teamm2odoo_after_create(record)
-                record_ids.extend(record.ids)
+                    records = record
+                record_ids.extend(records.ids)
 
         if len(model_names) == 1:
             return {
