@@ -19,7 +19,7 @@ class ResourceBookingTypeCombinationRel(models.Model):
         for combination in comb:
             type_name = teamm_values["resource.booking.type"]
             if teamm_values.get("room size"):            
-                if len(combination.resource_ids) < int(teamm_values.get("room size")):
+                if len(combination.resource_ids) < int(teamm_values["room size"]):
                     type_name += " (shared)"
             odoo_values.append(
                 {

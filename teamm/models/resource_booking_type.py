@@ -6,9 +6,21 @@ class ResourceBookingType(models.Model):
 
     @api.model
     def _teamm2odoo_search(self, teamm_values):
-        if teamm_values["resource.booking.type"]:
-            domain = [("name", "=like", teamm_values["resource.booking.type"] + "%")]
+        TeamM = self.env["teamm"]
+        room_sharing = teamm_values.get("room sharing")
+        room_size = teamm_values.get("room size")
+        room_standard = teamm_values.get("room standard")
+        if room_sharing and room_size and room_standard:
+            share_operator, share_value = TeamM.room_sharing(teamm_values)
+            domain = [
+                ("name", "ilike", room_standard),
+                ("name", "ilike", TeamM.ROOM[room_size]),
+                ("name", share_operator, share_value)
+            ]
             return self.search(domain)
+        # elif teamm_values.get("resource.booking.type"):
+        #     domain = [("name", "=like", teamm_values["resource.booking.type"] + "%")]
+        #     return self.search(domain)
         else:
             return super()._teamm2odoo_search(teamm_values)
 

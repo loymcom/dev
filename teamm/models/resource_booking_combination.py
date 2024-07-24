@@ -7,6 +7,9 @@ class ResourceBookingCombination(models.Model):
     @api.model
     def _teamm2odoo_search(self, teamm_values):
         resources = self.env["resource.resource"]._teamm2odoo_search(teamm_values)
+        # room_standard = teamm_values.get("room standard")
+        # if room_standard.lower() == "share room":
+        #     # How to know if A is taken?
         domain = [("resource_ids", "in", resources.ids)]
         return self.search(domain)
 

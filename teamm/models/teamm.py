@@ -110,3 +110,13 @@ class TeamM(models.Model):
             standard=teamm_values["resource.booking.type"].split()[0],
             number=teamm_values["resource.resource"],
         )
+
+    # product.product, resource.booking.type
+    def room_sharing(self, teamm_values):
+        # Search for product with / without "shared"
+        share_value = " (shared)"
+        if teamm_values["room sharing"].lower() == "share room":
+            share_operator = "ilike"
+        else:
+            share_operator = "not ilike"
+        return share_operator, share_value

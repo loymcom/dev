@@ -25,8 +25,10 @@ class SaleOrderLine(models.Model):
         order = self.env["sale.order"]._teamm2odoo_search(teamm_values)
         product = self.env["product.product"]._teamm2odoo_search(teamm_values)
         partner = self.env["res.partner"]._teamm2odoo_search(teamm_values)
-        start_date = datetime.strptime(teamm_values["from"], "%m/%d/%Y").date()
-        end_date = datetime.strptime(teamm_values["to"], "%m/%d/%Y").date()
+        # start_date = datetime.strptime(teamm_values["from"], "%m/%d/%Y").date()
+        # end_date = datetime.strptime(teamm_values["to"], "%m/%d/%Y").date()
+        start_date = self.env["teamm"]._get_date(teamm_values["from"]).date()
+        end_date = self.env["teamm"]._get_date(teamm_values["to"]).date()
         return order, product, partner, start_date, end_date
 
     @api.model
@@ -37,7 +39,7 @@ class SaleOrderLine(models.Model):
         odoo_values = {
             "order_id": order.id,
             "product_id": product.id,
-            "name": product.name,
+            "name": product.display_name,
             "partner_id": partner.id,
             "start_date": start_date,
             "end_date": end_date,

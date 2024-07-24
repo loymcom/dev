@@ -26,4 +26,5 @@ class ProductTemplate(models.Model):
             "name": teamm_values["product.template"],
             "attribute_line_ids": attribute_line_ids,
         }
-        return odoo_values
+        # Return a list to avoid duplicate attribute lines; CREATE only
+        return [odoo_values]
