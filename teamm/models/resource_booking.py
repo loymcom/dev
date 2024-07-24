@@ -46,19 +46,21 @@ class ResourceBooking(models.Model):
             lambda c: val.get("room") or val.get("resource.resource") in c.display_name
         )
         session = teamm_values.get("session number")
-        _logger.warning(session)
         if session:
             session = self.search(
                 [("name", "=", session), ("period_type", "=", "period")]
             )
-            _logger.warning(session)
         # There may be 2 possible combinations. Select the first which is available.
         for combination in combinations:
             booking = self._teamm2odoo_search(teamm_values, combination)
             if not booking or booking.partner_id == partner:
+                order = self.env["sale.order"]._teamm2odoo_search(teamm_values)
+                orderline = self.env["sale.order.line"]._teamm2odoo_search(teamm_values)
                 odoo_values = {
                     "name": partner.name if session else teamm_values["name"],
                     "parent_id": session.id if session else False,
+                    "sale_order_id": order.id if order else False,
+                    "sale_order_line_id": orderline.id if orderline else False,
                     "product_id": product.id,
                     "partner_id": partner.id,
                     "start": start,
@@ -68,3 +70,7 @@ class ResourceBooking(models.Model):
                     "combination_auto_assign": False,
                 }
                 return odoo_values
+
+    @api.model
+    def _teamm2odoo_after_create(self, record):
+        record.sale_order_line_id.resource_booking_id = record.id
