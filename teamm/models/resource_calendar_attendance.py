@@ -1,18 +1,17 @@
 from odoo import _, api, fields, models
 
-class ResourceCalendar(models.Model):
+
+class ResourceCalendarAttendance(models.Model):
     _inherit = "resource.calendar.attendance"
 
     @api.model
     def _teamm2odoo_search(self, teamm_values):
-        values = teamm_values
-        return self.search(
-            [
-                ("calendar_id.name", "=", values["calendar"]),
-                ("dayofweek", "=", values["dayofweek"]),
-                ("day_period", "=", values["day_period"]),
-            ]
-        )
+        domain = [
+            ("calendar_id.name", "=", teamm_values["resource.calendar"]),
+            ("dayofweek", "=", teamm_values["dayofweek"]),
+            ("day_period", "=", teamm_values["day_period"]),
+        ]
+        return self.search(domain)
 
     @api.model
     def _teamm2odoo_values(self, teamm_values):

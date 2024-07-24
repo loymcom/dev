@@ -11,18 +11,22 @@ from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
+RENAME = {
+    "record id - contact - hubspot": "hubspot contact",
+    "ordre nr. ": "sale.order",
+}
 
 class TeamM(models.Model):
     _name = "teamm"
+    _order = "sequence"
 
-    def _mdy_date(self, mdy):
-        return datetime.strptime(mdy, "%m/%d/%Y")
-
+    sequence = fields.Integer()
     name = fields.Char()
     model_ids = fields.One2many("teamm.model", "teamm_id", string="Models")
     url = fields.Char()
     param_ids = fields.One2many("teamm.param", "teamm_id", string="Params")
     csv = fields.Text()
+    date_format = fields.Char()
 
     active = fields.Boolean(default=True)
     state = fields.Selection([("new", "New"), ("done", "Done")], default="new")
@@ -52,7 +56,14 @@ class TeamM(models.Model):
         for model_name in model_names:
             record_ids = []
             for values in values_list:
-                Model = self.env[model_name].with_context(teamm_url=self.url)
+                values = {
+                    RENAME.get(key.lower(), key.lower()): value
+                    for key, value in values.items()
+                }
+                Model = self.env[model_name].with_context(
+                    teamm_url=self.url,
+                    teamm_date_format=self.date_format,
+                )
                 odoo_values = Model._teamm2odoo_values(values)
                 records = Model._teamm2odoo_search(values)
                 if records:
@@ -72,3 +83,30 @@ class TeamM(models.Model):
                 "views": [[False, "tree"]],
                 "domain": [("id", "in", record_ids)],
             }
+
+    #
+    # Used by other models
+    #
+    
+    def _get_date(self, datestring):
+        return datetime.strptime(datestring, self.env.context["teamm_date_format"])
+
+    # res.partner
+    GENDER = {
+        "F": "female",
+        "M": "male",
+        "": ""
+    }
+
+    # product.product
+    ROOM = {
+        "1": "Single",
+        "2": "Double",
+    }
+
+    # resource.resource
+    def room_name(self, teamm_values):
+        return "Room {standard} {number}".format(
+            standard=teamm_values["resource.booking.type"].split()[0],
+            number=teamm_values["resource.resource"],
+        )

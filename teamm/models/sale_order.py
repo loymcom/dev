@@ -1,13 +1,12 @@
 from odoo import _, api, fields, models
 
+
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    @api.model
-    def _teamm2odoo_search(self, teamm_values):
-        values = teamm_values
-        domain = [("name", "=", values["Ordre nr. "])]
-        return self.search(domain)
+    # @api.model
+    # def _teamm2odoo_search(self, teamm_values):
+    #     return super()._teamm2odoo_search(teamm_values)
 
     @api.model
     def _teamm2odoo_values(self, teamm_values):
@@ -18,8 +17,8 @@ class SaleOrder(models.Model):
 
         values = teamm_values
         odoo_values = {
-            "name": values['Ordre nr. '],
-            "partner_id": Partner.search([('ref', "=", values['Record ID - Contact - Hubspot'])]).id,
-            "date_order": TeamM._mdy_date(values['Booked at'])
+            "name": values["sale.order"],
+            "partner_id": Partner.search([("ref", "=", values["hubspot contact"])]).id,
+            "date_order": TeamM._get_date(values["booked at"])
         }
         return odoo_values

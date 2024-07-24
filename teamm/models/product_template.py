@@ -1,16 +1,16 @@
 from odoo import _, api, fields, models
 
+
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    @api.model
-    def _teamm2odoo_search(self, teamm_values):
-        values = teamm_values
-        domain = [("name", "=", values["program"].split()[0])]
-        return self.search(domain)
+    # @api.model
+    # def _teamm2odoo_search(self, teamm_values):
+    #     return super()._teamm2odoo_search(teamm_values)
 
     @api.model
     def _teamm2odoo_values(self, teamm_values):
+        assert len(teamm_values["product.template"].split(",")) == 1
         attribute_line_ids = []
         attributes = self.env["product.attribute"]._teamm2odoo_search(teamm_values)
         for attribute in attributes:
@@ -23,7 +23,7 @@ class ProductTemplate(models.Model):
                 )
             )
         odoo_values = {
-            "name": teamm_values["program"],
+            "name": teamm_values["product.template"],
             "attribute_line_ids": attribute_line_ids,
         }
         return odoo_values

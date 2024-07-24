@@ -1,3 +1,23 @@
+TEAMM RECORDS
+
+resource.calendar
+resource.calendar.attendance
+
+resource.resource
+resource.booking.combination
+resource.booking.type
+resource.booking.type.combination.rel
+
+product.attribute
+product.attribute.value
+
+product.template
+
+sale.order
+sale.order.line
+resource.booking
+
+
 EXTERNAL API INTEGRATION
 
 res.partner
@@ -10,7 +30,7 @@ product.template
 product.template.attribute.line
 product.product
 sale.order
-sale.order.lin
+sale.order.line
 resource.booking
 payment.link.wizard
 

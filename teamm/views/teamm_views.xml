@@ -6,10 +6,12 @@
         <field name="model">teamm</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="sequence" widget="handle" />
                 <field name="name" />
                 <field name="model_ids" widget="many2many_tags" />
                 <field name="state" optional="show" />
                 <field name="active" optional="hide" />
+                <field name="date_format" />
             </tree>
         </field>
     </record>
@@ -60,7 +62,7 @@
                         <field name="model_ids">
                             <tree editable="bottom">
                                 <field name="teamm_id" invisible="1" />
-                                <field name="sequence" />
+                                <field name="sequence" widget="handle" />
                                 <field name="is_active" />
                                 <field name="name" />
                             </tree>
@@ -73,6 +75,7 @@
                                 <field name="value" />
                             </tree>
                         </field>
+                        <field name="date_format" />
                         <field name="csv" />
                     </group>
                 </sheet>

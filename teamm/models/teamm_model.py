@@ -4,6 +4,7 @@ from odoo.exceptions import UserError
 
 class TeamMModel(models.Model):
     _name = "teamm.model"
+    _order = "sequence"
 
     sequence = fields.Integer()
     is_active = fields.Boolean()
