@@ -17,5 +17,5 @@ class ResourceCalendar(models.Model):
         return odoo_values
 
     @api.model
-    def _teamm2odoo_after_create(self, record):
-        record.attendance_ids.unlink()
+    def _teamm2odoo_after_create(self, records):
+        records.attendance_ids.unlink()

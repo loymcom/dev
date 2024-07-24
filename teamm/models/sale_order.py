@@ -10,15 +10,13 @@ class SaleOrder(models.Model):
 
     @api.model
     def _teamm2odoo_values(self, teamm_values):
-        Order = self.env["sale.order"]
-        OrderLine = self.env["sale.order.line"]
         Partner = self.env["res.partner"]
         TeamM = self.env["teamm"]
-
-        values = teamm_values
-        odoo_values = {
-            "name": values["sale.order"],
-            "partner_id": Partner.search([("ref", "=", values["hubspot contact"])]).id,
-            "date_order": TeamM._get_date(values["booked at"])
-        }
-        return odoo_values
+        val = teamm_values
+        if val["main guest"] == "Yes":
+            odoo_values = {
+                "name": val["sale.order"],
+                "partner_id": Partner.search([("ref", "=", val["hubspot contact"])]).id,
+                "date_order": TeamM._get_date(val["booked at"])
+            }
+            return odoo_values

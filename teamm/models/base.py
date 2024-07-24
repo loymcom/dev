@@ -17,5 +17,5 @@ class Base(models.AbstractModel):
         return self.search([("name", "in", self._teamm2odoo_names(teamm_values))])
 
     @api.model
-    def _teamm2odoo_after_create(self, record):
+    def _teamm2odoo_after_create(self, records):
         pass

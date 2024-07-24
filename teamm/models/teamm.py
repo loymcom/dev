@@ -70,9 +70,8 @@ class TeamM(models.Model):
                     if type(odoo_values) is dict:
                         records.write(odoo_values)
                 else:
-                    record = Model.create(odoo_values)
-                    Model._teamm2odoo_after_create(record)
-                    records = record
+                    records = Model.create(odoo_values)
+                    Model._teamm2odoo_after_create(records)
                 record_ids.extend(records.ids)
 
         if len(model_names) == 1:

@@ -2,6 +2,9 @@ from datetime import datetime
 
 from odoo import _, api, fields, models
 
+import logging
+_logger = logging.getLogger(__name__)
+
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
@@ -36,6 +39,7 @@ class SaleOrderLine(models.Model):
         order, product, partner, start_date, end_date = self._teamm2odoo_search_fields(
             teamm_values
         )
+        booking = self.env["resource.booking"]._teamm2odoo_search(teamm_values)
         odoo_values = {
             "order_id": order.id,
             "product_id": product.id,
@@ -45,5 +49,12 @@ class SaleOrderLine(models.Model):
             "end_date": end_date,
             "product_uom_qty": 1,
             "price_unit": teamm_values["subtotal"],
+            "resource_booking_id": booking.id,
         }
         return odoo_values
+
+    @api.model
+    def _teamm2odoo_after_create(self, records):
+        record = records.filtered("product_id.resource_booking_type_id")
+        record.resource_booking_id.sale_order_line_id = record.id
+        record.resource_booking_id.sale_order_id = record.order_id.id
