@@ -26,6 +26,7 @@ class ResourceBooking(models.Model):
                 ("start", "=", start),
                 ("stop", "=", stop),
             ]
+            _logger.warning(domain)
         return self.search(domain)
     
     @api.model

@@ -1,8 +1,8 @@
 import csv
 import logging
 import io
-import json
 import requests
+import pytz
 
 from datetime import datetime
 
@@ -89,6 +89,20 @@ class TeamM(models.Model):
     
     def _get_date(self, datestring):
         return datetime.strptime(datestring, self.env.context["teamm_date_format"])
+    
+    """ datetime will be useful to customize booking datetimes (start & stop) """
+    # def _get_datetime(self, datestring):
+    #     dt = self._get_date(datestring)
+    #     tz = pytz.utc
+    #     astz = pytz.timezone(self.env.user.tz)
+    #     tz_datetime = (
+    #         tz
+    #         .localize(dt)
+    #         .astimezone(astz)
+    #         .replace(tzinfo=None)
+    #     )
+    #     _logger.warning(tz_datetime)
+    #     return tz_datetime
 
     # res.partner
     GENDER = {

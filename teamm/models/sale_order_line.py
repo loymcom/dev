@@ -5,6 +5,21 @@ from odoo import _, api, fields, models
 import logging
 _logger = logging.getLogger(__name__)
 
+def _parse_discounts(teamm_values):
+    # Return {"discount1": amount1, "discount2": amount2}
+    output = {}
+    discounts = teamm_values["discounts"].split(", ")
+    for discount in discounts:
+        elements = discount.split(": ")
+        key = ': '.join(elements[:-1])
+        value = elements[-1]
+        if value[-1] == "%":
+            value = int(teamm_values["subtotal"]) * int(value[:-1]) / 100
+        else:
+            value = int(value)
+        output[key] = value
+    return output
+
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
@@ -28,8 +43,6 @@ class SaleOrderLine(models.Model):
         order = self.env["sale.order"]._teamm2odoo_search(teamm_values)
         product = self.env["product.product"]._teamm2odoo_search(teamm_values)
         partner = self.env["res.partner"]._teamm2odoo_search(teamm_values)
-        # start_date = datetime.strptime(teamm_values["from"], "%m/%d/%Y").date()
-        # end_date = datetime.strptime(teamm_values["to"], "%m/%d/%Y").date()
         start_date = self.env["teamm"]._get_date(teamm_values["from"]).date()
         end_date = self.env["teamm"]._get_date(teamm_values["to"]).date()
         return order, product, partner, start_date, end_date
@@ -40,6 +53,7 @@ class SaleOrderLine(models.Model):
             teamm_values
         )
         booking = self.env["resource.booking"]._teamm2odoo_search(teamm_values)
+        _logger.warning(booking)
         odoo_values = {
             "order_id": order.id,
             "product_id": product.id,
@@ -51,6 +65,21 @@ class SaleOrderLine(models.Model):
             "price_unit": teamm_values["subtotal"],
             "resource_booking_id": booking.id,
         }
+        discounts = _parse_discounts(teamm_values)
+        if discounts:
+            odoo_values = [odoo_values]
+            for disc_name, disc_amount in discounts.items():
+                Product = self.env["product.product"]
+                disc_product = Product._teamm2odoo_search(teamm_values, disc_name)
+                disc_values = odoo_values[0].copy()
+                disc_values.update(
+                    {
+                        "product_id": disc_product.id,
+                        "name": disc_product.display_name,
+                        "price_unit": -disc_amount,
+                    }
+                )
+                odoo_values.append(disc_values)
         return odoo_values
 
     @api.model
