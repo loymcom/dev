@@ -5,6 +5,7 @@ from datetime import timedelta
 from odoo import api, fields, models, tools
 from odoo.exceptions import ValidationError
 from odoo.addons.resource.models.resource import Intervals
+from odoo.addons.resource_booking.models.resource_booking import _availability_is_fitting
 
 
 class ResourceBookingAvailability(models.Model):
@@ -57,7 +58,7 @@ class ResourceBookingAvailability(models.Model):
                 available_intervals = Booking._get_intervals(
                     start, stop, combination, rec.booking_type_id
                 )
-                if Booking._availability_is_fitting(available_intervals, start, stop):
+                if _availability_is_fitting(available_intervals, start, stop):
                     ids.append(combination.id)
             rec.available_ids = ids
 
