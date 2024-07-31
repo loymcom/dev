@@ -7,7 +7,9 @@
     "author": "Ows, Odoo Community Association (OCA)",
     "category": "Appointments",
     "data": [
+        "security/ir.model.access.csv",
         "views/product_template_views.xml",
+        "views/resource_booking_availability_views.xml",
         "views/resource_booking_views.xml",
     ],
     "depends": [
