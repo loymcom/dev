@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fh_location,fh.location,model_fh_location,base.group_user,1,1,1,1
+access_fh_program,fh.program,model_fh_program,base.group_user,1,1,1,1
+access_fh_session,fh.session,model_fh_session,base.group_user,1,1,1,1
+access_fh_room_type,fh.room.type,model_fh_room_type,base.group_user,1,1,1,1
+access_fh_room_type_option,fh.room.type.option,model_fh_room_type_option,base.group_user,1,1,1,1
+access_fh_room,fh.room,model_fh_room,base.group_user,1,1,1,1
+access_fh_bed_space,fh.bed.space,model_fh_bed_space,base.group_user,1,1,1,1

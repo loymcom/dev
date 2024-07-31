@@ -1,5 +1,11 @@
 from odoo import api, fields, models
 
+"""
+SEE app_creator2.py AND app_templates.py IN THE MAIN DIRECTORY.
+
+TODO: inherit from view
+"""
+
 class App(models.Model):
     _name = "app.app"
 

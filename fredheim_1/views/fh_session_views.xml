@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="fh_session_view_form" model="ir.ui.view">
+        <field name="name">fh.session.view.form</field>
+        <field name="model">fh.session</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="date_start" widget="daterange" options="{'related_end_date': 'date_end'}"/>
+                        <field name="date_end" widget="daterange" options="{'related_start_date': 'date_start'}"/>
+                        <field name="program_ids" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="fh_session_view_tree" model="ir.ui.view">
+        <field name="name">fh.session.view.tree</field>
+        <field name="model">fh.session</field>
+        <field name="arch" type="xml">
+            <tree>
+                        <field name="date_start" optional="show" />
+                        <field name="date_end" optional="show" />
+                        <field name="program_ids" optional="show" widget="many2many_tags" />
+            </tree>
+        </field>
+    </record>
+    <record id="fh_session_view_kanban" model="ir.ui.view">
+        <field name="name">fh.session.view.kanban</field>
+        <field name="model">fh.session</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <field name="display_name" />
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="fh_session_view_pivot" model="ir.ui.view">
+        <field name="name">fh.session.view.pivot</field>
+        <field name="model">fh.session</field>
+        <field name="arch" type="xml">
+            <pivot>
+            </pivot>
+        </field>
+    </record>
+    <record id="fh_session_view_search" model="ir.ui.view">
+        <field name="name">fh.session.view.search</field>
+        <field name="model">fh.session</field>
+        <field name="arch" type="xml">
+            <search>
+                        <field name="date_start" />
+                        <field name="date_end" />
+                        <field name="program_ids" />
+                <group string="Group By">
+                    <filter
+                        string="Date Start"
+                        name="date_start"
+                        context="{'group_by':'date_start'}"
+                    />
+                    <filter
+                        string="Date End"
+                        name="date_end"
+                        context="{'group_by':'date_end'}"
+                    />
+                    <filter
+                        string="Program Ids"
+                        name="program_ids"
+                        context="{'group_by':'program_ids'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="fh_session_action" model="ir.actions.act_window">
+        <field name="name">Fh Session</field>
+        <field name="res_model">fh.session</field>
+        <field name="view_mode">tree,kanban,pivot,form</field>
+    </record>
+</odoo>

@@ -22,15 +22,14 @@
             <form>
                 <header>
                     <button
-                        name="action_import_api"
+                        name="action_import"
                         class="oe_highlight"
-                        string="API Import"
+                        string="Import"
                         type="object"
                     />
                     <button
-                        name="action_import_csv"
-                        class="oe_highlight"
-                        string="CSV Import"
+                        name="action_clear_csv"
+                        string="Clear CSV"
                         type="object"
                     />
                     <field name="state" widget="statusbar" />
@@ -59,6 +58,9 @@
                         </h1>
                     </div>
                     <group name="main">
+                        <field name="src" />
+                        <field name="src_begin" />
+                        <field name="src_end" />
                         <field name="model_ids">
                             <tree editable="bottom">
                                 <field name="teamm_id" invisible="1" />
@@ -67,16 +69,17 @@
                                 <field name="name" />
                             </tree>
                         </field>
-                        <field name="url" />
-                        <field name="param_ids">
+                        <field name="url" attrs="{'invisible': [('src', '!=', 'api')]}" />
+                        <field name="param_ids" attrs="{'invisible': [('src', '!=', 'api')]}">
                             <tree editable="bottom">
                                 <field name="teamm_id" invisible="1" />
                                 <field name="key" />
                                 <field name="value" />
                             </tree>
                         </field>
-                        <field name="date_format" />
-                        <field name="csv" />
+                        <field name="date_format" attrs="{'invisible': [('src', '=', 'api')]}" />
+                        <field name="csv_file" filename="csv_file_name" attrs="{'invisible': [('src', '!=', 'csv_file')]}" />
+                        <field name="csv" attrs="{'invisible': [('src', '!=', 'csv_field')]}" />
                     </group>
                 </sheet>
             </form>

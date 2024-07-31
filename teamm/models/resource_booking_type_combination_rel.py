@@ -17,10 +17,10 @@ class ResourceBookingTypeCombinationRel(models.Model):
         comb = self.env["resource.booking.combination"]._teamm2odoo_search(teamm_values)
         odoo_values = []
         for combination in comb:
-            type_name = teamm_values["resource.booking.type"]
+            type_name = teamm_values["resource.category"]
             if teamm_values.get("room size"):            
                 if len(combination.resource_ids) < int(teamm_values["room size"]):
-                    type_name += " (shared)"
+                    type_name += self.env["teamm"].SHARED_ROOM
             odoo_values.append(
                 {
                     "type_id": types.filtered(lambda t: t.name == type_name).id,

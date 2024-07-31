@@ -1,0 +1,4 @@
+app.underscore;model.dot;field.underscore;field.type;field.comodel_name;field.relation
+resource_category;resource.category;name;char;;
+;resource.resource;category_id;many2one;resource.category;
+;;category_ids;many2many;resource.category;resource_resource_category_rel

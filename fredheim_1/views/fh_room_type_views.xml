@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="fh_room_type_view_form" model="ir.ui.view">
+        <field name="name">fh.room.type.view.form</field>
+        <field name="model">fh.room.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="price" />
+                        <field name="no_of_beds" />
+                        <field name="has_sink" />
+                        <field name="has_toilet" />
+                        <field name="has_shower" />
+                        <field name="has_bathtub" />
+                        <field name="option_ids" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="fh_room_type_view_tree" model="ir.ui.view">
+        <field name="name">fh.room.type.view.tree</field>
+        <field name="model">fh.room.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                        <field name="name" optional="show" />
+                        <field name="price" optional="show" />
+                        <field name="no_of_beds" optional="show" />
+                        <field name="has_sink" optional="show" />
+                        <field name="has_toilet" optional="show" />
+                        <field name="has_shower" optional="show" />
+                        <field name="has_bathtub" optional="show" />
+                        <field name="option_ids" optional="show" widget="many2many_tags" />
+            </tree>
+        </field>
+    </record>
+    <record id="fh_room_type_view_kanban" model="ir.ui.view">
+        <field name="name">fh.room.type.view.kanban</field>
+        <field name="model">fh.room.type</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <field name="display_name" />
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="fh_room_type_view_pivot" model="ir.ui.view">
+        <field name="name">fh.room.type.view.pivot</field>
+        <field name="model">fh.room.type</field>
+        <field name="arch" type="xml">
+            <pivot>
+            </pivot>
+        </field>
+    </record>
+    <record id="fh_room_type_view_search" model="ir.ui.view">
+        <field name="name">fh.room.type.view.search</field>
+        <field name="model">fh.room.type</field>
+        <field name="arch" type="xml">
+            <search>
+                        <field name="name" />
+                        <field name="price" />
+                        <field name="no_of_beds" />
+                        <field name="has_sink" />
+                        <field name="has_toilet" />
+                        <field name="has_shower" />
+                        <field name="has_bathtub" />
+                        <field name="option_ids" />
+                <group string="Group By">
+                    <filter
+                        string="Name"
+                        name="name"
+                        context="{'group_by':'name'}"
+                    />
+                    <filter
+                        string="Price"
+                        name="price"
+                        context="{'group_by':'price'}"
+                    />
+                    <filter
+                        string="No Of Beds"
+                        name="no_of_beds"
+                        context="{'group_by':'no_of_beds'}"
+                    />
+                    <filter
+                        string="Has Sink"
+                        name="has_sink"
+                        context="{'group_by':'has_sink'}"
+                    />
+                    <filter
+                        string="Has Toilet"
+                        name="has_toilet"
+                        context="{'group_by':'has_toilet'}"
+                    />
+                    <filter
+                        string="Has Shower"
+                        name="has_shower"
+                        context="{'group_by':'has_shower'}"
+                    />
+                    <filter
+                        string="Has Bathtub"
+                        name="has_bathtub"
+                        context="{'group_by':'has_bathtub'}"
+                    />
+                    <filter
+                        string="Option Ids"
+                        name="option_ids"
+                        context="{'group_by':'option_ids'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="fh_room_type_action" model="ir.actions.act_window">
+        <field name="name">Fh Room Type</field>
+        <field name="res_model">fh.room.type</field>
+        <field name="view_mode">tree,kanban,pivot,form</field>
+    </record>
+</odoo>

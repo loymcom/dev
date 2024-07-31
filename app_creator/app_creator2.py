@@ -7,7 +7,8 @@ import app_templates as t
 
 
 csv_file = sys.argv[1]
-csv_delimiter = ";"
+csv_delimiter = ","
+# csv_delimiter = sys.argv.get(2) or ","
 app_parent_path = ".."
 
 # We say "app" instead of "module".

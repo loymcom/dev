@@ -1,6 +1,10 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
+import logging
+_logger = logging.getLogger(__name__)
+
+
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
@@ -12,14 +16,19 @@ class ProductProduct(models.Model):
         if discount:
             domain = [(attr_val, "=", discount)]
             return self.search(domain)
-        elif teamm_values.get("room sharing").lower() in ("private", "share room"):
-            share_operator, share_value = TeamM.room_sharing(teamm_values)
-            domain = [
-                ("name", "ilike", teamm_values["program"]),
-                (attr_val, "ilike", teamm_values["room standard"]),
-                (attr_val, "ilike", TeamM.ROOM[teamm_values["room size"]]),
-                (attr_val, share_operator, share_value),
-            ]
+        elif teamm_values.get("room sharing") in ("Private", "Share room"):
+            domain = TeamM.room_booking_type_domain(teamm_values, attr_val)
+            name = "NEWSTART Gold"
+            _logger.warning(name)
+            domain.append(
+                ("name", "=", teamm_values.get("program") or TeamM.DEFAULT_PROGRAM)
+                # (('name', '->>', 'en_US'), "=", name)
+                # ('name', '::jsonb', '{"en_US": "NEWSTART Gold"}')
+                # ("name", "ilike", name)
+            )
+            _logger.warning(domain)
+            # _logger.warning(teamm_values.get("program"))
+            # _logger.warning("ø")
             return self.search(domain)
         else:
             return super()._teamm2odoo_search(teamm_values)

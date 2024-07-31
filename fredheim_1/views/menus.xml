@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+        id="fredheim_1_main_menu"
+        parent=""
+        name="Fredheim 1"
+    />
+    <menuitem
+        id="fh_location_menu"
+        action="fh_location_action"
+        parent="fredheim_1_main_menu"
+        name="Fh Location"
+        sequence="0"
+    />
+    <menuitem
+        id="fh_program_menu"
+        action="fh_program_action"
+        parent="fredheim_1_main_menu"
+        name="Fh Program"
+        sequence="1"
+    />
+    <menuitem
+        id="fh_session_menu"
+        action="fh_session_action"
+        parent="fredheim_1_main_menu"
+        name="Fh Session"
+        sequence="5"
+    />
+    <menuitem
+        id="fh_room_type_menu"
+        action="fh_room_type_action"
+        parent="fredheim_1_main_menu"
+        name="Fh Room Type"
+        sequence="8"
+    />
+    <menuitem
+        id="fh_room_type_option_menu"
+        action="fh_room_type_option_action"
+        parent="fredheim_1_main_menu"
+        name="Fh Room Type Option"
+        sequence="16"
+    />
+    <menuitem
+        id="fh_room_menu"
+        action="fh_room_action"
+        parent="fredheim_1_main_menu"
+        name="Fh Room"
+        sequence="19"
+    />
+    <menuitem
+        id="fh_bed_space_menu"
+        action="fh_bed_space_action"
+        parent="fredheim_1_main_menu"
+        name="Fh Bed Space"
+        sequence="27"
+    />
+</odoo>

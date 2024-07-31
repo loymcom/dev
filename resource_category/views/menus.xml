@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+        id="resource_category_menu"
+        action="resource_category_action"
+        parent="resource.menu_resource_config"
+        name="Resource Category"
+        sequence="20"
+    />
+</odoo>

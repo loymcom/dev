@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="fh_room_view_form" model="ir.ui.view">
+        <field name="name">fh.room.view.form</field>
+        <field name="model">fh.room</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="code" />
+                        <field name="name" />
+                        <field name="floor" />
+                        <field name="view" />
+                        <field name="wing" />
+                        <field name="location_id" />
+                        <field name="room_type_id" />
+                        <field name="bed_space_ids" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="fh_room_view_tree" model="ir.ui.view">
+        <field name="name">fh.room.view.tree</field>
+        <field name="model">fh.room</field>
+        <field name="arch" type="xml">
+            <tree>
+                        <field name="code" optional="show" />
+                        <field name="name" optional="show" />
+                        <field name="floor" optional="show" />
+                        <field name="view" optional="show" />
+                        <field name="wing" optional="show" />
+                        <field name="location_id" optional="show" />
+                        <field name="room_type_id" optional="show" />
+                        <field name="bed_space_ids" optional="show" widget="many2many_tags" />
+            </tree>
+        </field>
+    </record>
+    <record id="fh_room_view_kanban" model="ir.ui.view">
+        <field name="name">fh.room.view.kanban</field>
+        <field name="model">fh.room</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <field name="display_name" />
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="fh_room_view_pivot" model="ir.ui.view">
+        <field name="name">fh.room.view.pivot</field>
+        <field name="model">fh.room</field>
+        <field name="arch" type="xml">
+            <pivot>
+            </pivot>
+        </field>
+    </record>
+    <record id="fh_room_view_search" model="ir.ui.view">
+        <field name="name">fh.room.view.search</field>
+        <field name="model">fh.room</field>
+        <field name="arch" type="xml">
+            <search>
+                        <field name="code" />
+                        <field name="name" />
+                        <field name="floor" />
+                        <field name="view" />
+                        <field name="wing" />
+                        <field name="location_id" />
+                        <field name="room_type_id" />
+                        <field name="bed_space_ids" />
+                <group string="Group By">
+                    <filter
+                        string="Code"
+                        name="code"
+                        context="{'group_by':'code'}"
+                    />
+                    <filter
+                        string="Name"
+                        name="name"
+                        context="{'group_by':'name'}"
+                    />
+                    <filter
+                        string="Floor"
+                        name="floor"
+                        context="{'group_by':'floor'}"
+                    />
+                    <filter
+                        string="View"
+                        name="view"
+                        context="{'group_by':'view'}"
+                    />
+                    <filter
+                        string="Wing"
+                        name="wing"
+                        context="{'group_by':'wing'}"
+                    />
+                    <filter
+                        string="Location Id"
+                        name="location_id"
+                        context="{'group_by':'location_id'}"
+                    />
+                    <filter
+                        string="Room Type Id"
+                        name="room_type_id"
+                        context="{'group_by':'room_type_id'}"
+                    />
+                    <filter
+                        string="Bed Space Ids"
+                        name="bed_space_ids"
+                        context="{'group_by':'bed_space_ids'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="fh_room_action" model="ir.actions.act_window">
+        <field name="name">Fh Room</field>
+        <field name="res_model">fh.room</field>
+        <field name="view_mode">tree,kanban,pivot,form</field>
+    </record>
+</odoo>
