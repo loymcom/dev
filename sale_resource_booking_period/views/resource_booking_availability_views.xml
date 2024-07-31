@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    <!-- FORM DOESN'T WORK WITH ID OF TYPE STRING
     <record id="resource_booking_availability_view_form" model="ir.ui.view">
         <field name="name">Resource booking availability form</field>
         <field name="model">resource.booking.availability</field>
@@ -9,11 +10,12 @@
                     <field name="period_id" />
                     <field name="product_tmpl_id" />
                     <field name="booking_type_id" />
-                    <field name="product_attr_value_id" />
+                    <field name="pav_ids" widget="many2many_tags" />
+                    <field name="pav_tag_ids" widget="many2many_tags" />
                 </group>
             </form>
         </field>
-    </record>
+    </record> -->
     <record id="resource_booking_availability_view_tree" model="ir.ui.view">
         <field name="name">Resource booking availability tree</field>
         <field name="model">resource.booking.availability</field>
@@ -22,7 +24,11 @@
                 <field name="period_id" />
                 <field name="product_tmpl_id" />
                 <field name="booking_type_id" />
-                <field name="product_attr_value_id" />
+                <field name="pav_ids" widget="many2many_tags" />
+                <field name="pav_tag_ids" widget="many2many_tags" />
+                <field name="combination_rel_ids" widget="many2many_tags" />
+                <!-- <field name="combination_ids" widget="many2many_tags" /> -->
+                <field name="available_ids" widget="many2many_tags" />
             </tree>
         </field>
     </record>

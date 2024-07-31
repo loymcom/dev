@@ -13,6 +13,7 @@
         "views/resource_booking_views.xml",
     ],
     "depends": [
+        "product_attribute_value_tag",
         "resource_booking_period",
         "sale_resource_booking",  # with booking.product_id
     ],
