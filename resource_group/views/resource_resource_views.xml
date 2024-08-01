@@ -6,8 +6,8 @@
         <field name="inherit_id" ref="resource.resource_resource_form" />
         <field name="arch" type="xml">
             <field name="resource_type" position="after">
-                <field name="category_id" />
-                <field name="category_ids" widget="many2many_tags" />
+                <field name="group_id" />
+                <field name="group_tag_ids" widget="many2many_tags" />
             </field>
         </field>
     </record>
@@ -17,8 +17,8 @@
         <field name="inherit_id" ref="resource.resource_resource_tree" />
         <field name="arch" type="xml">
             <tree position="inside">
-                <field name="category_id" optional="hide" />
-                <field name="category_ids" optional="hide" widget="many2many_tags" />
+                <field name="group_id" optional="hide" />
+                <field name="group_tag_ids" optional="hide" widget="many2many_tags" />
             </tree>
         </field>
     </record>
