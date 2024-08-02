@@ -33,6 +33,6 @@ class WebsiteSaleBooking(WebsiteSaleProductVariant):
 
     def _tmpl_ids(self, search_product, website):
         if website.shop_model == "shop.product":
-            return search_product.ids
+            return search_product.product_tmpl_id.ids
 
         return super()._tmpl_ids(search_product, website)

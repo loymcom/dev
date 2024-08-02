@@ -5,6 +5,7 @@ import logging
 
 from odoo import api, fields, models, tools
 from odoo.exceptions import ValidationError
+from odoo.tools import Query
 from odoo.addons.resource.models.resource import Intervals
 from odoo.addons.resource_booking.models.resource_booking import _availability_is_fitting
 
@@ -18,45 +19,34 @@ class ShopProduct(models.Model):
     _table = "product_product"
     _auto = False
 
-    product_template_attribute_value_id = fields.Many2many(
-        comodel_name="product.template.attribute.value",
-        relation="product_variant_combination",
-        column1="product_product_id",
-        column2="product_template_attribute_value_id",
-    )
+    # product_template_attribute_value_id = fields.Many2many(
+    #     comodel_name="product.template.attribute.value",
+    #     relation="product_variant_combination",
+    #     column2="product_product_id",
+    #     column1="product_template_attribute_value_id",
+    # )
 
     def init(self):
         tools.drop_view_if_exists(self._cr, "shop_product")
 
-        Product = self.env["product.product"]
-        column_fields = [
-            field for name, field in Product._fields.items()
-            if field.base_field.store and field.base_field.column_type and name != "id"
-        ]
-        query = Product._search([])
+        pp = self.env["product.product"]
+        pt = self.env["product.template"]
+        models = [("pp", pp), ("pt", pt)] # Get all fields of the first model
 
-        context = self.env.context
-        ShopProduct = self
-        self = Product
-        ################################################################################
-        # COPIED FROM def _read(self, field_names):
-        # the query may involve several tables: we need fully-qualified names
-        def qualify(field):
-            qname = self._inherits_join_calc(self._table, field.name, query)
-            if field.type == 'binary' and (
-                    context.get('bin_size') or context.get('bin_size_' + field.name)):
-                # PG 9.2 introduces conflicting pg_size_pretty(numeric) -> need ::cast
-                qname = f'pg_size_pretty(length({qname})::bigint)'
-            return f'{qname} AS "{field.name}"'
+        col_names = set("id")
+        columns = ["pp.id"]
 
-        # selected fields are: 'id' followed by column_fields
-        qual_names = [qualify(field) for field in [self._fields['id']] + column_fields]
-        ################################################################################
-        self = ShopProduct
+        for code, Model in models:
+            for name, field in Model._fields.items():
+                if field.store and field.column_type and name not in {"id"} | col_names:
+                    col_names.add(name)
+                    columns.append(code + "." + name)
 
-        query_str, params = query.select(*qual_names)
-        _logger.warning(query_str)
-        _logger.warning(params)
         self._cr.execute(
-            f"CREATE OR REPLACE VIEW shop_product AS {query_str}", params
+            f"""
+            CREATE OR REPLACE VIEW shop_product AS
+            SELECT {", ".join(columns)}
+            FROM product_template pt
+            JOIN product_product pp ON pp.product_tmpl_id = pt.id
+            """
         )
