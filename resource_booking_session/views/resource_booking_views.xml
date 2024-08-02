@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="resource_booking_view_form" model="ir.ui.view">
+        <field name="name">Resource.booking.form.inherit</field>
+        <field name="model">resource.booking</field>
+        <field name="inherit_id" ref="resource_booking.resource_booking_view_form" />
+        <field name="arch" type="xml">
+            <group name="booking" position="inside">
+                <field name="session_id" readonly="1" />
+            </group>
+        </field>
+    </record>
+</odoo>

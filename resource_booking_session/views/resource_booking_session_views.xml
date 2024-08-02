@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="resource_booking_session_view_form" model="ir.ui.view">
+        <field name="name">resource.booking.session.view.form</field>
+        <field name="model">resource.booking.session</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="resource_booking.resource_booking_view_form" />
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <button name="%(portal.portal_share_action)d" position="before">
+                <button
+                    name="action_bookings_this_session"
+                    class="oe_highlight"
+                    string="Bookings"
+                    type="object"
+                />
+                <button
+                    name="action_contacts_this_session"
+                    class="oe_highlight"
+                    string="Contacts"
+                    type="object"
+                />
+            </button>
+        </field>
+    </record>
+    <record id="resource_booking_session_view_tree" model="ir.ui.view">
+        <field name="name">resource.booking.session.view.tree</field>
+        <field name="model">resource.booking.session</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="resource_booking.resource_booking_view_tree" />
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <tree position="inside">
+                <field
+                    name="session_booking_count"
+                />
+                <button
+                    class="btn btn-primary"
+                    type="object"
+                    name="action_bookings_this_session"
+                    string="Bookings"
+                />
+                <field
+                    name="session_partner_count"
+                />
+                <button
+                    class="btn btn-primary"
+                    type="object"
+                    name="action_contacts_this_session"
+                    string="Contacts"
+                />
+            </tree>
+        </field>
+    </record>
+    <record id="resource_booking_session_action" model="ir.actions.act_window">
+        <field name="name">Sessions</field>
+        <field name="res_model">resource.booking.session</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem
+        id="resource_booking_session_menu"
+        action="resource_booking_session_action"
+        parent="resource_booking.resource_booking_main_menu"
+    />
+</odoo>

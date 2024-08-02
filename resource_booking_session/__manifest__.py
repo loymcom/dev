@@ -1,14 +1,14 @@
-# Copyright 2023 Ows - Henrik Norlin
+# Copyright 2023 Henrik Norlin
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Resource Booking Period",
+    "name": "Resource Booking Session",
     "summary": "",
-    "author": "Ows, Odoo Community Association (OCA)",
+    "author": "Henrik Norlin, Odoo Community Association (OCA)",
     "category": "Uncategorized",
     "data": [
         "views/res_partner_views.xml",
-        "views/resource_booking_type_views.xml",
+        "views/resource_booking_session_views.xml",
         "views/resource_booking_views.xml",
     ],
     "depends": [
@@ -16,7 +16,7 @@
     ],
     "development_status": "Alpha",
     "license": "AGPL-3",
-    "maintainers": ["ows-cloud"],
+    "maintainers": ["norlinhenrik"],
     "version": "16.0.1.0.0",
     "website": "https://github.com/OCA/",
 }

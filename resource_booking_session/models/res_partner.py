@@ -7,11 +7,11 @@ class Partner(models.Model):
     _inherit = "res.partner"
 
     def _compute_resource_booking_combination_ids(self):
-        # Period -> Contacts -> Combinations in this period
-        period_id = self.env.context.get("resource_booking_period_id")
-        if period_id:
-            period = self.env["resource.booking"].browse(period_id)
-            bookings = period._get_bookings_this_period()
+        # Session -> Contacts -> Combinations in this session
+        session_id = self.env.context.get("resource_booking_session_id")
+        if session_id:
+            session = self.env["resource.booking"].browse(session_id)
+            bookings = session._get_bookings_this_session()
             combinations = defaultdict(list)
             for booking in bookings:
                 for partner in booking.partner_ids:
