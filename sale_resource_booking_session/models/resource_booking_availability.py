@@ -1,10 +1,4 @@
-import pytz
-from collections import defaultdict
-from datetime import timedelta
-
 from odoo import api, fields, models, tools
-from odoo.exceptions import ValidationError
-from odoo.addons.resource.models.resource import Intervals
 from odoo.addons.resource_booking.models.resource_booking import _availability_is_fitting
 
 
@@ -14,7 +8,7 @@ class ResourceBookingAvailability(models.Model):
     _auto = False
 
     # Stored fields
-    period_id = fields.Many2one("resource.booking", help="period_type='period'")
+    session_id = fields.Many2one("resource.booking.session")
     product_tmpl_id = fields.Many2one("product.template")
     product_id = fields.Many2one("product.product")
     booking_type_id = fields.Many2one("resource.booking.type")
@@ -26,18 +20,8 @@ class ResourceBookingAvailability(models.Model):
     )
     pav_tag_ids = fields.Many2many(
         "product.attribute.value.tag",
-        # relation="product_attribute_value_tag_rel",
-        # related="booking_type_id.product_attribute_value_ids.tag_ids",
         compute="_compute_pav_tag_ids",
     )
-    combination_rel_ids = fields.One2many(
-        "resource.booking.type.combination.rel",
-        related="booking_type_id.combination_rel_ids",
-    )
-    # combination_ids = fields.Many2one(
-    #     "resource.booking.combination",
-    #     related="booking_type_id.combination_rel_ids.combination_id",
-    # )
     available_ids = fields.Many2many(
         "resource.booking.combination",
         compute="_compute_available_ids",
@@ -54,8 +38,8 @@ class ResourceBookingAvailability(models.Model):
             ids = []
             for combination in rec.booking_type_id.combination_rel_ids.combination_id:
                 Booking = self.env["resource.booking"]
-                start = fields.Datetime.context_timestamp(self, rec.period_id.start)
-                stop = fields.Datetime.context_timestamp(self, rec.period_id.stop)
+                start = fields.Datetime.context_timestamp(self, rec.session_id.start)
+                stop = fields.Datetime.context_timestamp(self, rec.session_id.stop)
                 available_intervals = Booking._get_intervals(
                     start, stop, combination, rec.booking_type_id
                 )
@@ -71,14 +55,14 @@ class ResourceBookingAvailability(models.Model):
             """
             CREATE OR REPLACE VIEW resource_booking_availability AS
             SELECT DISTINCT
-                rbp.id::text || '_' || pp.id::text AS id,
-                rbp.id AS period_id,
+                rbs.id::text || '_' || pp.id::text AS id,
+                rbs.id AS session_id,
                 pt.id AS product_tmpl_id,
                 pp.id AS product_id,
                 rbt.id AS booking_type_id
-            FROM resource_booking_period_for_product_template_rel rbp_pt
-            JOIN resource_booking rbp ON rbp_pt.resource_booking_id = rbp.id
-            JOIN product_template pt ON rbp_pt.product_template_id = pt.id
+            FROM resource_booking_session_for_product_template_rel rbs_pt
+            JOIN resource_booking_session rbs ON rbs_pt.resource_booking_session_id = rbs.id
+            JOIN product_template pt ON rbs_pt.product_template_id = pt.id
             JOIN product_product pp ON pp.product_tmpl_id = pt.id
             JOIN resource_booking_type rbt ON pp.resource_booking_type_id = rbt.id
             """

@@ -9,14 +9,14 @@ class ProductProduct(models.Model):
         # Bookings to show:
         # 1. Bookings of this product
         # Timeline view must also show these bookings:
-        # 2. Periods related to this product
+        # 2. Sessions related to this product
         # 3. Combinations related to this product
         combination_ids = self._get_resource_booking_combination_ids()
         action["domain"] = [
             "|",
             "|",
             ("product_id", "=", self.id),
-            ("period_product_tmpl_ids", "in", self.product_tmpl_id.id),
+            ("session_product_tmpl_ids", "in", self.product_tmpl_id.id),
             ("combination_id", "in", combination_ids),
         ]
         return action

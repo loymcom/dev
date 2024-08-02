@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Sell Resource Booking Periods",
+    "name": "Sell Resource Booking Sessions",
     "summary": "",
     "author": "Ows, Odoo Community Association (OCA)",
     "category": "Appointments",
@@ -10,11 +10,11 @@
         "security/ir.model.access.csv",
         "views/product_template_views.xml",
         "views/resource_booking_availability_views.xml",
-        "views/resource_booking_views.xml",
+        "views/resource_booking_session_views.xml",
     ],
     "depends": [
         "product_attribute_value_tag",
-        "resource_booking_period",
+        "resource_booking_session",
         "sale_resource_booking",  # with booking.product_id
     ],
     "license": "AGPL-3",
