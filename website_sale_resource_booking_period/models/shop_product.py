@@ -15,9 +15,14 @@ _logger = logging.getLogger(__name__)
 class ShopProduct(models.Model):
     _name = "shop.product"
     _description = "shop.product"
-    _inherit = "product.product"
-    _table = "product_product"
     _auto = False
+    _inherits = {"product.product": "product_id"}
+    _inherit = [
+        "website.sale.product.mixin",
+        "website.searchable.mixin",
+    ]
+
+    product_id = fields.Many2one("product.product")
 
     # product_template_attribute_value_id = fields.Many2many(
     #     comodel_name="product.template.attribute.value",
@@ -31,10 +36,12 @@ class ShopProduct(models.Model):
 
         pp = self.env["product.product"]
         pt = self.env["product.template"]
-        models = [("pp", pp), ("pt", pt)] # Get all fields of the first model
+        rbp = self.env["resource.booking"] # period
+        # Get all stored columns of the first model, add columns of the next models.
+        models = [("pp", pp), ("pt", pt), ("rbp", rbp)]
 
-        col_names = set("id")
-        columns = ["pp.id"]
+        col_names = {"id", "product_id"}
+        columns = ["rbp.id::text || '_' || pp.id::text AS id", "pp.id AS product_id"]
 
         for code, Model in models:
             for name, field in Model._fields.items():
@@ -46,7 +53,9 @@ class ShopProduct(models.Model):
             f"""
             CREATE OR REPLACE VIEW shop_product AS
             SELECT {", ".join(columns)}
-            FROM product_template pt
+            FROM resource_booking_period_for_product_template_rel rbp_pt
+            JOIN resource_booking rbp ON rbp_pt.resource_booking_id = rbp.id
+            JOIN product_template pt ON rbp_pt.product_template_id = pt.id
             JOIN product_product pp ON pp.product_tmpl_id = pt.id
             """
         )
