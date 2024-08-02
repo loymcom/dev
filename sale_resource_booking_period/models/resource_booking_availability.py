@@ -16,6 +16,7 @@ class ResourceBookingAvailability(models.Model):
     # Stored fields
     period_id = fields.Many2one("resource.booking", help="period_type='period'")
     product_tmpl_id = fields.Many2one("product.template")
+    product_id = fields.Many2one("product.product")
     booking_type_id = fields.Many2one("resource.booking.type")
     # Computed fields
     pav_ids = fields.Many2many(
@@ -68,19 +69,17 @@ class ResourceBookingAvailability(models.Model):
         # add "location" field to product_template & resource_booking_type and JOIN them
         self._cr.execute(
             """
-        CREATE OR REPLACE VIEW resource_booking_availability AS
-        SELECT DISTINCT
-        rbp.id::text || '_' || pt.id::text || '_' || rbt.id::text AS id,
-        rbp.id AS period_id,
-        pt.id AS product_tmpl_id,
-        rbt.id AS booking_type_id
-        FROM resource_booking_period_for_product_template_rel rbp_pt
-        JOIN resource_booking rbp ON rbp_pt.resource_booking_id = rbp.id
-        JOIN product_template pt ON rbp_pt.product_template_id = pt.id
-            JOIN product_template_attribute_value ptav ON ptav.product_tmpl_id = pt.id
-            JOIN product_attribute_value pav ON ptav.product_attribute_value_id = pav.id
-            JOIN resource_booking_type_product_attribute_value_rel rbt_pav
-                ON rbt_pav.product_attribute_value_id = pav.id
-        JOIN resource_booking_type rbt ON rbt_pav.resource_booking_type_id = rbt.id
+            CREATE OR REPLACE VIEW resource_booking_availability AS
+            SELECT DISTINCT
+                rbp.id::text || '_' || pp.id::text AS id,
+                rbp.id AS period_id,
+                pt.id AS product_tmpl_id,
+                pp.id AS product_id,
+                rbt.id AS booking_type_id
+            FROM resource_booking_period_for_product_template_rel rbp_pt
+            JOIN resource_booking rbp ON rbp_pt.resource_booking_id = rbp.id
+            JOIN product_template pt ON rbp_pt.product_template_id = pt.id
+            JOIN product_product pp ON pp.product_tmpl_id = pt.id
+            JOIN resource_booking_type rbt ON pp.resource_booking_type_id = rbt.id
             """
         )
