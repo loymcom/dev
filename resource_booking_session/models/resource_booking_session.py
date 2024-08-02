@@ -4,6 +4,7 @@ from odoo import api, fields, models
 class ResourceBookingSession(models.Model):
     _name = "resource.booking.session"
     _inherits = {"resource.booking": "booking_id"}
+    _inherit = ["mail.thread", "mail.activity.mixin", "portal.mixin"]
 
     booking_id = fields.Many2one("resource.booking")
 

@@ -7,6 +7,7 @@
     "author": "Henrik Norlin, Odoo Community Association (OCA)",
     "category": "Uncategorized",
     "data": [
+        "security/ir.model.access.csv",
         "views/res_partner_views.xml",
         "views/resource_booking_session_views.xml",
         "views/resource_booking_views.xml",

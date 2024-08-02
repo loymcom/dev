@@ -1,48 +1,25 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <record id="resource_booking_session_view_form" model="ir.ui.view">
-        <field name="name">resource.booking.session.view.form</field>
-        <field name="model">resource.booking.session</field>
-        <field name="mode">primary</field>
-        <field name="inherit_id" ref="resource_booking.resource_booking_view_form" />
-        <field name="mode">primary</field>
-        <field name="arch" type="xml">
-            <button name="%(portal.portal_share_action)d" position="before">
-                <button
-                    name="action_bookings_this_session"
-                    class="oe_highlight"
-                    string="Bookings"
-                    type="object"
-                />
-                <button
-                    name="action_contacts_this_session"
-                    class="oe_highlight"
-                    string="Contacts"
-                    type="object"
-                />
-            </button>
-        </field>
-    </record>
     <record id="resource_booking_session_view_tree" model="ir.ui.view">
         <field name="name">resource.booking.session.view.tree</field>
         <field name="model">resource.booking.session</field>
-        <field name="mode">primary</field>
-        <field name="inherit_id" ref="resource_booking.resource_booking_view_tree" />
-        <field name="mode">primary</field>
         <field name="arch" type="xml">
-            <tree position="inside">
-                <field
-                    name="session_booking_count"
-                />
+            <tree>
+                <field name="name" />
+                <field name="partner_ids" widget="many2many_tags" optional="hide" />
+                <field name="type_id" />
+                <field name="combination_id" />
+                <field name="state" />
+                <field name="start" />
+                <field name="stop" />
+                <field name="session_booking_count"/>
                 <button
                     class="btn btn-primary"
                     type="object"
                     name="action_bookings_this_session"
                     string="Bookings"
                 />
-                <field
-                    name="session_partner_count"
-                />
+                <field name="session_partner_count"/>
                 <button
                     class="btn btn-primary"
                     type="object"
@@ -50,6 +27,105 @@
                     string="Contacts"
                 />
             </tree>
+        </field>
+    </record>
+    <!-- The header is different. The sheet is copied from resource.booking. -->
+    <record id="resource_booking_session_view_form" model="ir.ui.view">
+        <field name="name">resource.booking.session.view.form</field>
+        <field name="model">resource.booking.session</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button
+                        name="action_bookings_this_session"
+                        class="oe_highlight"
+                        string="Bookings"
+                        type="object"
+                    />
+                    <button
+                        name="action_contacts_this_session"
+                        class="oe_highlight"
+                        string="Contacts"
+                        type="object"
+                    />
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+                    <field name="active" invisible="1" />
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        attrs="{'invisible': [('active', '=', True)]}"
+                    />
+                    <div class="oe_button_box" name="button_box">
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Resource Booking Name" />
+                        </h1>
+                    </div>
+                    <group name="main">
+                        <group name="booking">
+                            <field name="partner_ids" widget="many2many_tags" />
+                            <field name="type_id" />
+                            <label for="combination_id" />
+                            <div>
+                                <field name="combination_auto_assign" />
+                                <label
+                                    for="combination_auto_assign"
+                                    attrs="{'invisible': [('combination_auto_assign', '=', False)]}"
+                                    string="Auto-assigned:"
+                                />
+                                <label
+                                    for="combination_auto_assign"
+                                    attrs="{'invisible': [('combination_auto_assign', '=', True)]}"
+                                    string="Manually assigned:"
+                                />
+                                <field
+                                    name="combination_id"
+                                    class="oe_inline"
+                                    attrs="{'required': [('combination_auto_assign', '=', False)], 'readonly': [('combination_auto_assign', '=', True)]}"
+                                />
+                            </div>
+                            <field name="categ_ids" widget="many2many_tags" />
+                        </group>
+                        <group name="meeting" string="Meeting">
+                            <field name="meeting_id" readonly="1" />
+                            <field name="user_id" />
+                            <field name="is_overdue" invisible="1" />
+                            <field name="is_modifiable" invisible="1" />
+                            <div
+                                colspan="2"
+                                role="alert"
+                                class="alert alert-warning"
+                                attrs="{'invisible': [('is_overdue', '=', False)]}"
+                            >
+                                This booking exceeded its modifications deadline.
+                            </div>
+                            <field name="start" />
+                            <field
+                                name="duration"
+                                widget="float_time"
+                                class="oe_inline"
+                            />
+                            <field name="stop" />
+                            <field name="location" />
+                            <field name="videocall_location" />
+                        </group>
+                        <field name="description" colspan="4" />
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field
+                        name="message_follower_ids"
+                        widget="mail_followers"
+                        groups="base.group_user"
+                    />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
+            </form>
         </field>
     </record>
     <record id="resource_booking_session_action" model="ir.actions.act_window">

@@ -10,7 +10,7 @@
         "security/ir.model.access.csv",
     ],
     "depends": [
-        "sale_resource_booking_period",
+        # "sale_resource_booking_session",
         "website_sale_product_variant",
         # "website_sale_resource_booking",
     ],

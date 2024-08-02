@@ -1,13 +1,6 @@
-import pytz
-from collections import defaultdict
-from datetime import timedelta
 import logging
 
 from odoo import api, fields, models, tools
-from odoo.exceptions import ValidationError
-from odoo.tools import Query
-from odoo.addons.resource.models.resource import Intervals
-from odoo.addons.resource_booking.models.resource_booking import _availability_is_fitting
 
 _logger = logging.getLogger(__name__)
 
@@ -36,12 +29,12 @@ class ShopProduct(models.Model):
 
         pp = self.env["product.product"]
         pt = self.env["product.template"]
-        rbp = self.env["resource.booking"] # period
+        rbs = self.env["resource.booking.session"]
         # Get all stored columns of the first model, add columns of the next models.
-        models = [("pp", pp), ("pt", pt), ("rbp", rbp)]
+        models = [("pp", pp), ("pt", pt), ("rbs", rbs)]
 
         col_names = {"id", "product_id"}
-        columns = ["rbp.id::text || '_' || pp.id::text AS id", "pp.id AS product_id"]
+        columns = ["rbs.id::text || '_' || pp.id::text AS id", "pp.id AS product_id"]
 
         for code, Model in models:
             for name, field in Model._fields.items():
@@ -53,9 +46,9 @@ class ShopProduct(models.Model):
             f"""
             CREATE OR REPLACE VIEW shop_product AS
             SELECT {", ".join(columns)}
-            FROM resource_booking_period_for_product_template_rel rbp_pt
-            JOIN resource_booking rbp ON rbp_pt.resource_booking_id = rbp.id
-            JOIN product_template pt ON rbp_pt.product_template_id = pt.id
+            FROM resource_booking_session_for_product_template_rel rbs_pt
+            JOIN resource_booking_session rbs ON rbs_pt.resource_booking_session_id = rbs.id
+            JOIN product_template pt ON rbs_pt.product_template_id = pt.id
             JOIN product_product pp ON pp.product_tmpl_id = pt.id
             """
         )
