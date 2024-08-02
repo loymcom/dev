@@ -34,3 +34,6 @@ class Product(models.Model):
             product.id: template_prices[product.product_tmpl_id.id] for product in self
         }
         return variant_prices
+
+    def _get_suitable_image_size(self, columns, x_size, y_size):
+        return self.product_tmpl_id._get_suitable_image_size(columns, x_size, y_size)

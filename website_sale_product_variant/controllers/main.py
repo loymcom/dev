@@ -28,18 +28,17 @@ _logger = logging.getLogger(__name__)
 from odoo.addons.website_sale.controllers.main import WebsiteSale, TableCompute
 
 
-def _get_product_tmpl_ids(search_product, website):
-    if website.shop_model == "product.template":
-        return search_product.ids
-    
-    elif website.shop_model == "product.product":
-        return search_product.product_tmpl_id.ids
-
-    else:
-        raise ValidationError("{} has no _product2pav().".format(website.shop_model))
-
-
 class WebsiteSaleProductVariant(WebsiteSale):
+
+    def _tmpl_ids(self, search_product, website):
+        if website.shop_model == "product.template":
+            return search_product.ids
+
+        elif website.shop_model == "product.product":
+            return search_product.product_tmpl_id.ids
+
+        raise ValidationError("{} has no _product2pav()".format(website.shop_model))
+
 
     def _shop_lookup_products(self, attrib_set, options, post, search, website):
         model = website.shop_model
@@ -58,7 +57,7 @@ class WebsiteSaleProductVariant(WebsiteSale):
     @http.route()
     def shop(self, page=0, category=None, search='', min_price=0.0, max_price=0.0, ppg=False, **post):
 
-        # THE CODE BELOW IS COPIED FROM website_sale and  # MODIFIED #  2 places ("_get_product_tmpl_ids(search_product, website)").
+        # THE CODE BELOW IS COPIED FROM website_sale and  # MODIFIED #  2 places ("self._tmpl_ids(search_product, website)").
 
         add_qty = int(post.get('add_qty', 1))
         try:
@@ -167,7 +166,7 @@ class WebsiteSaleProductVariant(WebsiteSale):
         categs_domain = [('parent_id', '=', False)] + website_domain
         if search:
             search_categories = Category.search(
-                [('product_tmpl_ids', 'in', _get_product_tmpl_ids(search_product, website))] + website_domain  # MODIFIED #
+                [('product_tmpl_ids', 'in', self._tmpl_ids(search_product, website))] + website_domain  # MODIFIED #
             ).parents_and_self
             categs_domain.append(('id', 'in', search_categories.ids))
         else:
@@ -185,11 +184,11 @@ class WebsiteSaleProductVariant(WebsiteSale):
         if products:
             # get all products without limit
             attributes = ProductAttribute.search([
-                ('product_tmpl_ids', 'in', _get_product_tmpl_ids(search_product, website)),  # MODIFIED #
+                ('product_tmpl_ids', 'in', self._tmpl_ids(search_product, website)),  # MODIFIED #
                 ('visibility', '=', 'visible'),
             ])
             # attributes = lazy(lambda: ProductAttribute.search([
-            #     ('product_tmpl_ids', 'in', self._get_product_tmpl_ids(search_product)),  # MODIFIED #
+            #     ('product_tmpl_ids', 'in', self._tmpl_ids(search_product)),  # MODIFIED #
             #     ('visibility', '=', 'visible'),
             # ]))
         else:

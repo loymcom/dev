@@ -23,5 +23,4 @@ class Website(models.Model):
         elif self.shop_model == "product.product":
             return "product_template_attribute_value_ids.product_attribute_value_id"
 
-        else:
-            raise ValidationError("{} has no _product2pav().".format(self.shop_model))
+        raise ValidationError("{} has no _product2pav().".format(self.shop_model))
