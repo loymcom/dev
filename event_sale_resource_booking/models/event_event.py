@@ -5,11 +5,11 @@ from datetime import timedelta
 from odoo import api, fields, models
 
 
-class ResourceBookingSession(models.Model):
-    _inherit = "resource.booking.session"
+class EventEvent(models.Model):
+    _inherit = "event.event"
 
     product_tmpl_ids = fields.Many2many(
         comodel_name="product.template",
-        relation="resource_booking_session_for_product_template_rel",
-        string="Session Products",
+        relation="product_template_event_rel",
+        string="Booking Options",
     )

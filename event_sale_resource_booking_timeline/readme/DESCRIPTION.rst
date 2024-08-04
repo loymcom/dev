@@ -1,3 +1,5 @@
+This module shows events in the resource booking timeline view.
+
 The timeline view shows bookings, placed in the timeline of their resource combinations.
 To show a resource combination, there must be at least one booking with this combination.
 
