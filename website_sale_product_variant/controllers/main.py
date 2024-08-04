@@ -37,7 +37,11 @@ class WebsiteSaleProductVariant(WebsiteSale):
         elif website.shop_model == "product.product":
             return search_product.product_tmpl_id.ids
 
-        raise ValidationError("website.shop_model is empty or {} has no _tmpl_ids()".format(website.shop_model))
+        raise ValidationError(
+            "Website {} shop_model {} has no _tmpl_ids().".format(
+                website.name, website.shop_model
+            )
+        )
 
 
     def _shop_lookup_products(self, attrib_set, options, post, search, website):

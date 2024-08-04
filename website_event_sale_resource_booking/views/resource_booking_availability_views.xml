@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- FORM DOESN'T WORK WHEN id IS A STRING -->
+
+    <record id="resource_booking_availability_view_tree" model="ir.ui.view">
+        <field name="name">Resource booking availability tree</field>
+        <field name="model">resource.booking.availability</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="session_id" />
+                <field name="product_tmpl_id" />
+                <field name="booking_type_id" />
+                <field name="pav_ids" widget="many2many_tags" />
+                <field name="pav_tag_ids" widget="many2many_tags" />
+                <field name="available_ids" widget="many2many_tags" />
+            </tree>
+        </field>
+    </record>
+    <record id="resource_booking_availability_action" model="ir.actions.act_window">
+        <field name="name">Availability</field>
+        <field name="res_model">resource.booking.availability</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem
+        id="resource_booking_availability_menu"
+        action="resource_booking_availability_action"
+        parent="resource_booking.resource_booking_main_menu"
+        name="Availability"
+        sequence="15"
+    />
+</odoo>

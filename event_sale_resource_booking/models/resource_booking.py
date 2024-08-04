@@ -1,7 +1,3 @@
-import pytz
-from collections import defaultdict
-from datetime import timedelta
-
 from odoo import api, fields, models
 
 
