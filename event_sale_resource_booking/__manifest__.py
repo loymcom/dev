@@ -9,9 +9,11 @@
     "data": [
         "data/data.xml",
         "views/event_event_views.xml",
+        "views/event_registration_views.xml",
         "views/product_template_views.xml",
     ],
     "depends": [
+        "event",
         "sale_resource_booking",
     ],
     "license": "AGPL-3",
