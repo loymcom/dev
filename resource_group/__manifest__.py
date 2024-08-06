@@ -10,6 +10,7 @@
     ],
     "depends": [
         "resource",
+        "resource_booking", # compute resource.booking.combination name
     ],
     "version": "1.0",
     "license": "AGPL-3",

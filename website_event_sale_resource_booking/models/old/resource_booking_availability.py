@@ -11,7 +11,7 @@ class ResourceBookingAvailability(models.Model):
     session_id = fields.Many2one("resource.booking.session")
     product_tmpl_id = fields.Many2one("product.template")
     product_id = fields.Many2one("product.product")
-    booking_type_id = fields.Many2one("resource.booking.type")
+    resource_booking_type_id = fields.Many2one("resource.booking.type")
     # Computed fields
     pav_ids = fields.Many2many(
         "product.attribute.value",
@@ -36,7 +36,7 @@ class ResourceBookingAvailability(models.Model):
     def _compute_available_ids(self):
         for rec in self:
             ids = []
-            for combination in rec.booking_type_id.combination_rel_ids.combination_id:
+            for combination in rec.resource_booking_type_id.combination_rel_ids.combination_id:
                 Booking = self.env["resource.booking"]
                 start = fields.Datetime.context_timestamp(self, rec.session_id.start)
                 stop = fields.Datetime.context_timestamp(self, rec.session_id.stop)
