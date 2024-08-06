@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="website_sale_filter_event_booking_combination"
+        inherit_id="website_sale.products_attributes"
+        name="Event and Booking Combination Filter"
+        active="True"
+        customize_show="True"
+        priority="999"
+    >
+        <xpath expr="//form[hasclass('js_attributes')]" position="inside">
+            <ul t-if="len(events)" class="nav nav-pills flex-column mt16">
+                <li class="nav-item">
+                    <div>
+                        <strong>Event</strong>
+                    </div>
+                    <ul class="nav nav-pills d-block">
+                        <t t-foreach="events" t-as="event">
+                            <li t-attf-class="nav-item">
+                                <label
+                                    style="margin: 0; padding: 0.2rem 0;"
+                                    t-attf-class="nav-link #{'active' if event.id in selected_event_ids else ''}"
+                                >
+                                    <input
+                                        type="checkbox"
+                                        name="event"
+                                        t-att-value="event.id"
+                                        t-att-checked="'checked' if event.id in selected_event_ids else None"
+                                    />
+                                    <span
+                                        style="font-weight: normal"
+                                        t-field="event.name"
+                                    />
+                                </label>
+                            </li>
+                        </t>
+                    </ul>
+                </li>
+            </ul>
+        </xpath>
+    </template>
+    <template id="search_events" name="Search Box" inherit_id="website_sale.search">
+        <xpath expr="//t[contains(@t-if, 'attrib_values')]" position="after">
+            <t t-if="event_ids">
+                <t t-foreach="event_ids" t-as="event">
+                    <input type="hidden" name="event" t-att-value="event" />
+                </t>
+            </t>
+        </xpath>
+    </template>
+</odoo>

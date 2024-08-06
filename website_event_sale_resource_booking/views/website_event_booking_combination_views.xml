@@ -2,9 +2,9 @@
 <odoo>
     <!-- FORM VIEW DOESN'T WORK WHEN id IS A STRING -->
 
-    <record id="event_booking_combination_view_tree" model="ir.ui.view">
-        <field name="name">event.booking.combination.view.tree</field>
-        <field name="model">event.booking.combination</field>
+    <record id="website_event_booking_combination_view_tree" model="ir.ui.view">
+        <field name="name">website.event.booking.combination.view.tree</field>
+        <field name="model">website.event.booking.combination</field>
         <field name="arch" type="xml">
             <tree>
                 <field name="event_id" />
@@ -18,9 +18,9 @@
             </tree>
         </field>
     </record>
-    <record id="event_booking_combination_view_search" model="ir.ui.view">
-        <field name="name">event.booking.combination.view.search</field>
-        <field name="model">event.booking.combination</field>
+    <record id="website_event_booking_combination_view_search" model="ir.ui.view">
+        <field name="name">website.event.booking.combination.view.search</field>
+        <field name="model">website.event.booking.combination</field>
         <field name="arch" type="xml">
             <search>
                 <field name="event_id" />
@@ -43,16 +43,16 @@
             </search>
         </field>
     </record>
-    <record id="event_booking_combination_action_available" model="ir.actions.act_window">
+    <record id="website_event_booking_combination_action_available" model="ir.actions.act_window">
         <field name="name">Available</field>
         <field name="context">{'search_default_available': True}</field>
-        <field name="res_model">event.booking.combination</field>
+        <field name="res_model">website.event.booking.combination</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <record id="event_booking_combination_action_booked" model="ir.actions.act_window">
+    <record id="website_event_booking_combination_action_booked" model="ir.actions.act_window">
         <field name="name">Booked</field>
         <field name="context">{'search_default_booked': True}</field>
-        <field name="res_model">event.booking.combination</field>
+        <field name="res_model">website.event.booking.combination</field>
         <field name="view_mode">tree,form</field>
     </record>
     <menuitem
@@ -69,15 +69,15 @@
         sequence="10"
     />
     <menuitem
-        id="event_booking_combination_available_menu"
-        action="event_booking_combination_action_available"
+        id="website_event_booking_combination_available_menu"
+        action="website_event_booking_combination_action_available"
         parent="event_menu"
         name="Available"
         sequence="20"
     />
     <menuitem
-        id="event_booking_combination_booked_menu"
-        action="event_booking_combination_action_booked"
+        id="website_event_booking_combination_booked_menu"
+        action="website_event_booking_combination_action_booked"
         parent="event_menu"
         name="Booked"
         sequence="30"

@@ -61,7 +61,9 @@ class WebsiteSaleProductVariant(WebsiteSale):
     @http.route()
     def shop(self, page=0, category=None, search='', min_price=0.0, max_price=0.0, ppg=False, **post):
 
-        # THE CODE BELOW IS COPIED FROM website_sale and  # MODIFIED #  2 places ("self._tmpl_ids(search_product, website)").
+        # THE CODE BELOW IS COPIED FROM website_sale and  # MODIFIED #
+        # 2 places ("self._tmpl_ids(search_product, website)").
+        # attributes
 
         add_qty = int(post.get('add_qty', 1))
         try:
@@ -94,7 +96,7 @@ class WebsiteSaleProductVariant(WebsiteSale):
         ppr = website.shop_ppr or 4
 
         attrib_list = request.httprequest.args.getlist('attrib')
-        attrib_values = [[int(x) for x in v.split("-")] for v in attrib_list if v]
+        attrib_values = [[int(x) if x.isdigit() else x for x in v.split("-")] for v in attrib_list if v]  # MODIFIED #
         attributes_ids = {v[0] for v in attrib_values}
         attrib_set = {v[1] for v in attrib_values}
 
@@ -184,7 +186,7 @@ class WebsiteSaleProductVariant(WebsiteSale):
         offset = pager['offset']
         products = search_product[offset:offset + ppg]
 
-        ProductAttribute = request.env['product.attribute']
+        ProductAttribute = request.env['product.attribute'].with_context(shop_model=website.shop_model)  # MODIFIED #
         if products:
             # get all products without limit
             attributes = ProductAttribute.search([

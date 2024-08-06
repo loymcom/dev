@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_event_booking_combination,event_booking_combination,model_event_booking_combination,base.group_user,1,1,1,1
+access_website_event_booking_combination,website_event_booking_combination,model_website_event_booking_combination,base.group_user,1,1,1,1

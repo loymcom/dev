@@ -8,8 +8,9 @@
     "category": "Appointments",
     "data": [
         "security/ir.model.access.csv",
-        "views/event_booking_combination_views.xml",
-        "views/templates.xml",
+        "views/website_event_booking_combination_views.xml",
+        "views/website_event.xml",
+        # "views/website_sale.xml",
     ],
     "depends": [
         # "base_set_record_values_mixin",

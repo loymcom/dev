@@ -10,8 +10,8 @@ _logger = logging.getLogger(__name__)
 
 
 class EventBookingCombination(models.Model):
-    _name = "event.booking.combination"
-    _description = "event.booking.combination"
+    _name = "website.event.booking.combination"
+    _description = "website.event.booking.combination"
     _auto = False
     _inherits = {"product.product": "product_id"}
     _inherit = [
@@ -47,7 +47,7 @@ class EventBookingCombination(models.Model):
 
     def _compute_available(self):
         # records_per_event = self.grouped("event_id") # 17.0
-        records_per_event = defaultdict(lambda: self.env["event.booking.combination"])
+        records_per_event = defaultdict(lambda: self.env["website.event.booking.combination"])
         for record in self:
             records_per_event[record.event_id] |= record
 
@@ -79,7 +79,7 @@ class EventBookingCombination(models.Model):
         return [('id', compare[operator], filtered.ids)]
 
     def init(self):
-        tools.drop_view_if_exists(self._cr, "event_booking_combination")
+        tools.drop_view_if_exists(self._cr, "website_event_booking_combination")
 
         pp = self.env["product.product"]
         pt = self.env["product.template"]
@@ -131,7 +131,7 @@ class EventBookingCombination(models.Model):
 
         self._cr.execute(
             f"""
-            CREATE OR REPLACE VIEW event_booking_combination AS
+            CREATE OR REPLACE VIEW website_event_booking_combination AS
             SELECT {", ".join(select)}
             FROM product_template_event_rel pt_ee
             JOIN event_event ee ON pt_ee.event_event_id = ee.id
