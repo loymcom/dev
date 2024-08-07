@@ -17,7 +17,8 @@
         # "product_attribute_value_tag",
         "event_sale_resource_booking",
         "website_event_sale",
-        "website_sale_product_variant",
+        "website_sale_filter",  # depends on website_sale_product_variant
+        # "website_sale_product_variant",
         # "website_sale_resource_booking",
     ],
     "license": "AGPL-3",

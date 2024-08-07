@@ -1,15 +1,18 @@
 import json
 
+from datetime import datetime
+
 from odoo import http
-from odoo.http import request, Controller
-from odoo.addons.website_event.controllers.main import WebsiteEventController
-from odoo.addons.website_sale_product_variant.controllers.main import WebsiteSaleProductVariant
+from odoo.http import request
+
+from odoo.addons.website_sale_filter.controllers.main import WebsiteSaleFilter
 
 import logging
 _logger = logging.getLogger(__name__)
 
     
 class EventRegistration(http.Controller):
+
     @http.route('/event/get_available_combinations', type='http', auth='public')
     def get_combinations(self, event_id, product_id):
         combinations = request.env["website.event.booking.combination"].search(
@@ -27,17 +30,19 @@ class EventRegistration(http.Controller):
         return json.dumps(combi_list)
 
 
-class WebsiteSaleBooking(WebsiteSaleProductVariant):
+class WebsiteSaleBooking(WebsiteSaleFilter):
 
     def _tmpl_ids(self, search_product, website):
         if website.shop_model == "website.event.booking.combination":
             return search_product.product_tmpl_id.ids
 
         return super()._tmpl_ids(search_product, website)
+    
 
-
-    # def _shop_get_query_url_kwargs(self, category, search, min_price, max_price, attrib=None, order=None, **post):
-    #     result = super()._shop_get_query_url_kwargs(category, search, min_price, max_price, attrib=None, order=None, **post)
-    #     # if post.get("events"):
-    #     #     result["events"] = post["events"]
-    #     return result
+    def _get_filters(self, filters=[]):
+        # List of (plural_name, model_name, domain, priority)
+        filters.append(
+            ["events", "event.event", [("date_end", ">", datetime.now())], 5]
+        )
+        filters.append(["items", "resource.booking.combination", [], 50])
+        return super()._get_filters(filters)
