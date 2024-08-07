@@ -96,7 +96,7 @@ class WebsiteSaleProductVariant(WebsiteSale):
         ppr = website.shop_ppr or 4
 
         attrib_list = request.httprequest.args.getlist('attrib')
-        attrib_values = [[int(x) if x.isdigit() else x for x in v.split("-")] for v in attrib_list if v]  # MODIFIED #
+        attrib_values = [[int(x) for x in v.split("-")] for v in attrib_list if v]
         attributes_ids = {v[0] for v in attrib_values}
         attrib_set = {v[1] for v in attrib_values}
 
