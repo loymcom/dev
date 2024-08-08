@@ -1,6 +1,10 @@
+from datetime import datetime
+
 from odoo.http import request
 
-from odoo import api, fields, models
+from odoo import _, fields, models
+
+from odoo.addons.website_sale_filter.controllers.main import WebsiteSaleFilter
 
 
 class Website(models.Model):
@@ -14,28 +18,20 @@ class Website(models.Model):
         """ From product model, get the relation to product attribute values"""        
         if self.shop_model == "website.event.booking.combination":
             return "product_template_attribute_value_ids.product_attribute_value_id"
-
         return super()._product2pav()
 
-
-    def sale_product_domain(self):
-        domain = super(Website, self).sale_product_domain()
-
+    def _tmpl_ids(self, search_product):
         if self.shop_model == "website.event.booking.combination":
-            def ids(string):
-                return [int(num) for num in string.split(",")]
-
-            # event.event
-            events = request.httprequest.args.get("event.event")
-            if events:
-                domain = ["&"] + domain + [("event_id", "in", ids(events))]
-            # resource.booking.type
-            types = request.httprequest.args.get("resource.booking.type")
-            if types:
-                domain = ["&"] + domain + [("resource_booking_type_id", "in", ids(types))]
-            # resource.booking.combination
-            items = request.httprequest.args.get("resource.booking.combination")
-            if items:
-                domain = ["&"] + domain + [("combination_id", "in", ids(items))]
-        
-        return domain
+            return search_product.product_tmpl_id.ids
+        return super()._tmpl_ids(search_product)
+    
+    def _website_sale_filters(self):
+        filters = super()._website_sale_filters()
+        add = [
+            (5, "select", "event_id", "event.event", _("Event"), [("date_end", ">", datetime.now())]),
+            (40, "select", "resource_booking_type_id", "resource.booking.type", _("Booking Type")),
+            (50, "select", "combination_id", "resource.booking.combination", _("Booking")),
+        ]
+        for values in add:
+            filters.append(WebsiteSaleFilter(*values))
+        return filters

@@ -30,20 +30,6 @@ from odoo.addons.website_sale.controllers.main import WebsiteSale, TableCompute
 
 class WebsiteSaleProductVariant(WebsiteSale):
 
-    def _tmpl_ids(self, search_product, website):
-        if website.shop_model == "product.template":
-            return search_product.ids
-
-        elif website.shop_model == "product.product":
-            return search_product.product_tmpl_id.ids
-
-        raise ValidationError(
-            "Website {} shop_model {} has no _tmpl_ids().".format(
-                website.name, website.shop_model
-            )
-        )
-
-
     def _shop_lookup_products(self, attrib_set, options, post, search, website):
         model = website.shop_model
 
@@ -62,7 +48,7 @@ class WebsiteSaleProductVariant(WebsiteSale):
     def shop(self, page=0, category=None, search='', min_price=0.0, max_price=0.0, ppg=False, **post):
 
         # THE CODE BELOW IS COPIED FROM website_sale and  # MODIFIED #
-        # 2 places ("self._tmpl_ids(search_product, website)").
+        # 2 places ("website._tmpl_ids(search_product)").
         # attributes
 
         add_qty = int(post.get('add_qty', 1))
@@ -172,7 +158,7 @@ class WebsiteSaleProductVariant(WebsiteSale):
         categs_domain = [('parent_id', '=', False)] + website_domain
         if search:
             search_categories = Category.search(
-                [('product_tmpl_ids', 'in', self._tmpl_ids(search_product, website))] + website_domain  # MODIFIED #
+                [('product_tmpl_ids', 'in', website._tmpl_ids(search_product))] + website_domain  # MODIFIED #
             ).parents_and_self
             categs_domain.append(('id', 'in', search_categories.ids))
         else:
@@ -186,17 +172,13 @@ class WebsiteSaleProductVariant(WebsiteSale):
         offset = pager['offset']
         products = search_product[offset:offset + ppg]
 
-        ProductAttribute = request.env['product.attribute'].with_context(shop_model=website.shop_model)  # MODIFIED #
+        ProductAttribute = request.env['product.attribute']
         if products:
             # get all products without limit
-            attributes = ProductAttribute.search([
-                ('product_tmpl_ids', 'in', self._tmpl_ids(search_product, website)),  # MODIFIED #
+            attributes = lazy(lambda: ProductAttribute.search([
+                ('product_tmpl_ids', 'in', website._tmpl_ids(search_product)),  # MODIFIED #
                 ('visibility', '=', 'visible'),
-            ])
-            # attributes = lazy(lambda: ProductAttribute.search([
-            #     ('product_tmpl_ids', 'in', self._tmpl_ids(search_product)),  # MODIFIED #
-            #     ('visibility', '=', 'visible'),
-            # ]))
+            ]))
         else:
             attributes = lazy(lambda: ProductAttribute.browse(attributes_ids))
 

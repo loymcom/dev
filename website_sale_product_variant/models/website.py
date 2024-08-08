@@ -28,3 +28,17 @@ class Website(models.Model):
                 self.name, self.shop_model
             )
         )
+
+    def _tmpl_ids(self, search_product):
+        self.ensure_one()
+        if self.shop_model == "product.template":
+            return search_product.ids
+
+        elif self.shop_model == "product.product":
+            return search_product.product_tmpl_id.ids
+
+        raise ValidationError(
+            "Website {} shop_model {} has no _tmpl_ids().".format(
+                self.name, self.shop_model
+            )
+        )

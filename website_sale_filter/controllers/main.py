@@ -5,35 +5,54 @@ from odoo.addons.website.controllers.main import QueryURL
 from odoo.addons.website_sale_product_variant.controllers.main import WebsiteSaleProductVariant
 
 
-class WebsiteSaleFilter(WebsiteSaleProductVariant):
+class WebsiteSaleFilter(object):
 
-    def _get_filters(self, filters=[]):
-        # Get filters to show on the left side of /shop.
-        # filters = list of (visible_name, model_name, display_type, domain, priority)
-        # Display type: 'select' or 'radio'
-        filters.sort(key=lambda x: x[3]) # Sort by priority
-        return filters
+    def __init__(self, priority, display_type, related_field, model_name, visible_name=None, domain=[]):
+        assert display_type in ("radio", "select")
+        self.priority = priority
+        self.display_type = display_type
+        self.records = request.env[model_name]
+        self.visible_name = visible_name or self.records._name
+        self.domain = domain
+        self.related_field = related_field
+        self.selected_ids = []
+
+        selected_ids = request.httprequest.args.get(self.records._name)
+        if selected_ids:
+            self.selected_ids = [int(num) for num in selected_ids.split(",") if num]
+
+
+class WebsiteSaleFilterController(WebsiteSaleProductVariant):
 
     @http.route()
     def shop(self, page=0, category=None, brand=None, ppg=False, search="", **post):
         res = super().shop(
             page=page, category=category, search=search, brand=brand, ppg=ppg, **post
         )
-        # Include filters and url arguments to keep
+        # Filters
+        website = request.env['website'].get_current_website()
+        website_sale_filters = website._website_sale_filters()
+        website_sale_filters.sort(key=lambda f: f.priority)
+        # URL arguments to keep
         keep = res.qcontext["keep"].args
-        filters = []
-        
-        for visible_name, model_name, display_type, _, domain in self._get_filters([]):
-            keep[model_name] = request.httprequest.args.getlist(model_name)
-            records = request.env[model_name].search(domain or [])
-            selected_ids = [int(i) for i in keep[model_name] if i]
-            filters.append([visible_name, records, selected_ids, display_type])
+        for filter in website_sale_filters:
+            if filter.selected_ids:
+                keep[filter.records._name] = filter.selected_ids
+        # Filtered products
+        domain = website.sale_product_domain()
+        for filter in website_sale_filters:
+            if filter.selected_ids:
+                domain += [(filter.related_field, "in", filter.selected_ids)]
+                # domain = ["&"] + domain + [(f.related_field, "in", f.selected_ids)]
+        products = request.env[website.shop_model].search(domain)
+        # The filter options will be the products' related records.
+        for filter in website_sale_filters:
+            filter.records = getattr(products, filter.related_field)
 
-        keep = QueryURL('/shop', **keep)
         res.qcontext.update(
             {
-                "keep": keep,
-                "filters": filters,
+                "keep": QueryURL('/shop', **keep),
+                "filters": website_sale_filters,
             }
         )
         return res
