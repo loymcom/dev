@@ -5,33 +5,33 @@ class ResourceResource(models.Model):
     _inherit = "resource.resource"
 
     @api.model
-    def _teamm2odoo(self, teamm_values):
+    def _teamm2odoo(self):
         TeamM = self.env["teamm"]
         records = self
 
         # A record for each bed
-        beds = teamm_values.get("room size")
+        beds = self._teamm2odoo_get_value("room size")
         if beds and int(beds) > 1:
             for i in range(int(beds)):
-                name = TeamM.bed_name(teamm_values, i + 1)
-                record = self._teamm2odoo_search(teamm_values, max_1=True)
-                odoo_values = self._teamm2odoo_values(teamm_values, name)
-                records |= TeamM._create_or_write(record, odoo_values)
+                name = TeamM.bed_name(i + 1)
+                record = self._teamm2odoo_search(max_1=True)
+                odoo_values = self._teamm2odoo_values(name)
+                records |= record._teamm2odoo_set_record(odoo_values)
         else:
-            records = super()._teamm2odoo(teamm_values)
+            records = super()._teamm2odoo()
 
         return records
 
     @api.model
-    def _teamm2odoo_values(self, teamm_values, name=None):
+    def _teamm2odoo_values(self, name=None):
         if not name:
-            name = self._teamm2odoo_names(teamm_values)[0]
+            name = self._teamm2odoo_names()[0]
 
-        calendar = self.env["resource.calendar"]._teamm2odoo_search(teamm_values, True)
+        calendar = self.env["resource.calendar"]._teamm2odoo_search(max_1=True)
         if not len(calendar) == 1:
             calendar = self.env.ref("event_sale_resource_booking.resource_calendar")
 
-        group = self.env["resource.group"]._teamm2odoo_search(teamm_values, max_1=True)
+        group = self.env["resource.group"]._teamm2odoo_search(max_1=True)
 
         odoo_values = {
             "name": name,

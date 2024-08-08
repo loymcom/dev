@@ -111,7 +111,7 @@ class TeamM(models.Model):
                     teamm_aliases=teamm_aliases,
                     teamm_values=teamm_values,
                 )
-                records = Model._teamm2odoo(teamm_values)
+                records = Model._teamm2odoo()
                 record_ids.extend(records.ids)
 
         if len(model_names) == 1:
@@ -126,14 +126,6 @@ class TeamM(models.Model):
     #
     # Used by other models
     #
-
-    def _create_or_write(self, record, odoo_values):
-        if record:
-            record.write(odoo_values)
-        else:
-            record = record.create(odoo_values)
-            record._teamm2odoo_after_create()
-        return record
     
     def _get_date(self, datestring):
         return datetime.strptime(datestring, self.env.context["teamm_date_format"])
@@ -174,7 +166,7 @@ class TeamM(models.Model):
         return [(field, "=", name)]
 
     # resource.resource
-    def bed_name(self, teamm_values, num):
+    def bed_name(self, num):
         # return "Room {standard} {number}".format(
         #     standard=teamm_values["resource.booking.type"].split()[0],
         #     number=teamm_values["resource.resource"],
@@ -183,6 +175,7 @@ class TeamM(models.Model):
         # Booking has "room" (number) and master data has "resource.resource"
         # TODO: Include "room name" when this becomes available?
         # name = self._teamm2odoo_get(teamm_values, "room")
+        teamm_values = self.env.context["teamm_values"]
         name = (
             teamm_values.get("room") or 
             teamm_values.get("resource.group") or
