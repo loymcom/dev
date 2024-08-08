@@ -8,6 +8,8 @@ from odoo import api, fields, models
 class ResourceBooking(models.Model):
     _inherit = "resource.booking"
 
+    event_registration_id = fields.Many2one("event.registration")
+
     def _get_available_slots(self, start_dt, end_dt):
         result = super()._get_available_slots(start_dt, end_dt)
         # If the product has booking events,

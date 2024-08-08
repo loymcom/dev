@@ -11,6 +11,7 @@
         "views/event_event_views.xml",
         "views/event_registration_views.xml",
         "views/product_template_views.xml",
+        "views/resource_booking_views.xml",
     ],
     "depends": [
         "event",
