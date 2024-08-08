@@ -8,23 +8,23 @@ class Base(models.AbstractModel):
 
     @api.model
     def _teamm2odoo(self):
-        TeamM = self.env["teamm"]
-        record = self._teamm2odoo_search(max_1=True)
+        record = self._teamm2odoo_search({})
         odoo_values = self._teamm2odoo_values()
         record = record._teamm2odoo_set_record(odoo_values)
         return record
 
     @api.model
-    def _teamm2odoo_search(self, max_1):
-        domain = self._teamm2odoo_domain()
-        records = self.search(domain)
-        if max_1:
-            assert len(records) in (0, 1)
-        return records
+    def _teamm2odoo_search(self, kwargs):
+        domain = self._teamm2odoo_domain(kwargs)
+        record = self.search(domain)
+        assert len(record) in (0, 1)
+        return record
     
     @api.model
-    def _teamm2odoo_domain(self):
-        domain = [("name", "in", self._teamm2odoo_names())]
+    def _teamm2odoo_domain(self, kwargs):
+        name = kwargs.get("name")
+        names = [name] if name else self._teamm2odoo_names()
+        domain = [("name", "in", names)]
         return domain
 
     @api.model

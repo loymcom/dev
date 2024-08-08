@@ -1,14 +1,28 @@
-IMPORT ROOMS - resource.resource,room size,resource.booking.type
+IMPORT ROOMS
+models:
+    resource.group (optional)
+    resource.resource
+    resource.booking.combination
+    resource.booking.type
+    resource.booking.type.combination.rel
+aliases:
+    resource.resource: resource.group
+columns:
+    resource.group
+    room size
+    resource.booking.type
 
-resource.resource
-resource.booking.combination
-resource.booking.type
-resource.booking.type.combination.rel
 
-IMPORT 
-
-product.attribute
-product.attribute.value
+IMPORT PRODUCT ATTRIBUTES
+models:
+    product.attribute
+    product.attribute.value
+aliases:
+    product.attribute.value: resource.booking.type
+columns:
+    product.attribute
+    create variant (optional)
+    product.attribute.value
 
 product.template
 

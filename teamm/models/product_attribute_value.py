@@ -5,23 +5,29 @@ class ProductAttributeValue(models.Model):
     _inherit = "product.attribute.value"
 
     @api.model
-    def _teamm2odoo_search(self, teamm_values):
-        attribute = self.env["product.attribute"]._teamm2odoo_search(teamm_values)
-        domain = [
-            ("name", "=", teamm_values["product.attribute.value"]),
-            ("attribute_id", "=", attribute.id),
-        ]
-        return self.search(domain)
-
+    def _teamm2odoo(self):
+        TeamM = self.env["teamm"]
+        names = self._teamm2odoo_names()
+        for name in names:
+            record = self._teamm2odoo_search({"name": name})
+            odoo_values = self._teamm2odoo_values(name)
+            record = record._teamm2odoo_set_record(odoo_values)
+        return record
+    
     @api.model
-    def _teamm2odoo_values(self, teamm_values):
-        attribute = self.env["product.attribute"]._teamm2odoo_search(teamm_values)
-        booking_type = self.env["resource.booking.type"].search(
-            [("name", "=", teamm_values["product.attribute.value"])]
-        )
+    def _teamm2odoo_domain(self, kwargs):
+        domain = super()._teamm2odoo_domain(kwargs)
+        attribute = self.env["product.attribute"]._teamm2odoo_search({})
+        domain += [("attribute_id", "=", attribute.id)]
+        return domain
+    
+    @api.model
+    def _teamm2odoo_values(self, name):
+        attribute = self.env["product.attribute"]._teamm2odoo_search({})
+        booking_type = self.env["resource.booking.type"]._teamm2odoo_search({})
         odoo_values = {
-            "name": teamm_values["product.attribute.value"],
+            "name": name,
             "attribute_id": attribute.id,
-            "resource_booking_type_id": booking_type.id or False,
+            "resource_booking_type_id": booking_type.id,
         }
         return odoo_values

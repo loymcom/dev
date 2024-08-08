@@ -14,7 +14,7 @@ class ResourceResource(models.Model):
         if beds and int(beds) > 1:
             for i in range(int(beds)):
                 name = TeamM.bed_name(i + 1)
-                record = self._teamm2odoo_search(max_1=True)
+                record = self._teamm2odoo_search({"name": name})
                 odoo_values = self._teamm2odoo_values(name)
                 records |= record._teamm2odoo_set_record(odoo_values)
         else:
@@ -27,11 +27,11 @@ class ResourceResource(models.Model):
         if not name:
             name = self._teamm2odoo_names()[0]
 
-        calendar = self.env["resource.calendar"]._teamm2odoo_search(max_1=True)
+        calendar = self.env["resource.calendar"]._teamm2odoo_search({})
         if not len(calendar) == 1:
             calendar = self.env.ref("event_sale_resource_booking.resource_calendar")
 
-        group = self.env["resource.group"]._teamm2odoo_search(max_1=True)
+        group = self.env["resource.group"]._teamm2odoo_search({})
 
         odoo_values = {
             "name": name,
