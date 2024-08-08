@@ -28,7 +28,6 @@ class TeamM(models.Model):
 
     sequence = fields.Integer()
     name = fields.Char()
-    model_ids = fields.One2many("teamm.model", "teamm_id", string="Models")
     src = fields.Selection(
         [
             ('api', 'API'),
@@ -39,6 +38,8 @@ class TeamM(models.Model):
     )
     src_begin = fields.Integer(string="Begin With")
     src_end = fields.Integer(string="End With")
+    model_ids = fields.One2many("teamm.model", "teamm_id", string="Models")
+    alias_ids = fields.One2many("teamm.alias", "teamm_id", string="Aliases")
     url = fields.Char()
     param_ids = fields.One2many("teamm.param", "teamm_id", string="Params")
     csv_file = fields.Binary(string='CSV File')
@@ -83,36 +84,34 @@ class TeamM(models.Model):
     def action_clear_csv(self):
         self.csv = ""
 
-    def _action_import(self, values_list):
+    def _action_import(self, teamm_values_list):
         record_ids = []
         begin, end = self.src_begin, self.src_end
         model_names = self.model_ids.filtered("is_active").mapped("name")
+        teamm_aliases = {
+            alias.name: [alias.name] + alias.aliases.split(",")
+            for alias in self.alias_ids
+        }
         for model_name in model_names:
             record_ids = []
-            values = {}
-            for i, values in enumerate(values_list, start=1):
+            # values = {}
+            for i, teamm_values in enumerate(teamm_values_list, start=1):
                 if (begin and begin > i) or (end and end < i):
                     continue
                 # Keys: rename KEY-words, strip first/last spaces, lowercase
                 # Values: rename VALUE-words, strip first/last spaces
-                values = {
+                teamm_values = {
                     # Mismatch between CSV header and rows may cause error here
                     KEY.get(key, key).strip().lower(): VALUE.get(val, val).strip()
-                    for key, val in values.items()
+                    for key, val in teamm_values.items()
                 }
                 Model = self.env[model_name].with_context(
                     teamm_url=self.url,
                     teamm_date_format=self.date_format,
+                    teamm_aliases=teamm_aliases,
+                    teamm_values=teamm_values,
                 )
-                odoo_values = Model._teamm2odoo_values(values)
-                records = Model._teamm2odoo_search(values)
-                _logger.warning("XXXXXXXXXXXXXX" + str(odoo_values))
-                if records:
-                    if type(odoo_values) is dict:
-                        records.write(odoo_values)
-                else:
-                    records = Model.create(odoo_values)
-                    Model._teamm2odoo_after_create(records)
+                records = Model._teamm2odoo(teamm_values)
                 record_ids.extend(records.ids)
 
         if len(model_names) == 1:
@@ -127,6 +126,14 @@ class TeamM(models.Model):
     #
     # Used by other models
     #
+
+    def _create_or_write(self, record, odoo_values):
+        if record:
+            record.write(odoo_values)
+        else:
+            record = record.create(odoo_values)
+            record._teamm2odoo_after_create()
+        return record
     
     def _get_date(self, datestring):
         return datetime.strptime(datestring, self.env.context["teamm_date_format"])
@@ -175,6 +182,12 @@ class TeamM(models.Model):
 
         # Booking has "room" (number) and master data has "resource.resource"
         # TODO: Include "room name" when this becomes available?
-        name = teamm_values.get("room") or teamm_values["resource.resource"]
+        # name = self._teamm2odoo_get(teamm_values, "room")
+        name = (
+            teamm_values.get("room") or 
+            teamm_values.get("resource.group") or
+            teamm_values.get("resource.resource")
+        )
+        assert name
         name = "{name} {letter}".format(name=name, letter=chr(num + 64))
         return name

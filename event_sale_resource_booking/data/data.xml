@@ -3,10 +3,14 @@
 
     <!-- EVENT BOOKING CALENDAR - AVAILABLE 24/7 -->
 
-    <record id="resource_calendar" model="resource.calendar">
+    <!-- <record id="resource_calendar" model="resource.calendar">
         <field name="name">Event Booking Calendar</field>
     </record>
     <record id="resource_calendar" model="resource.calendar">
+        <field name="attendance_ids" eval="[(6, 0, [])]" />
+    </record> -->
+    <record id="resource_calendar" model="resource.calendar">
+        <field name="name">Event Booking Calendar</field>
         <field name="attendance_ids" eval="[(6, 0, [])]" />
     </record>
     <record id="resource_calendar_monday" model="resource.calendar.attendance">

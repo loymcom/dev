@@ -14,5 +14,6 @@ from . import resource_resource
 from . import sale_order
 from . import sale_order_line
 from . import teamm
+from . import teamm_alias
 from . import teamm_model
 from . import teamm_param
