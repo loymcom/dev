@@ -7,7 +7,7 @@ class Website(models.Model):
     _inherit = "website"
 
     shop_model = fields.Selection(
-        selection_add=[("website.event.booking.combination", "Shop Variant")]
+        selection_add=[("website.event.booking.combination", "Event Booking Variant")]
     )
 
     def _product2pav(self):
@@ -23,19 +23,19 @@ class Website(models.Model):
 
         if self.shop_model == "website.event.booking.combination":
             def ids(string):
-                return [int(num) for num in string.split(',')]
+                return [int(num) for num in string.split(",")]
 
             # event.event
-            events = request.httprequest.args.get('events')
+            events = request.httprequest.args.get("event.event")
             if events:
-                domain = ['&'] + domain + [('event_id', 'in', ids(events))]
+                domain = ["&"] + domain + [("event_id", "in", ids(events))]
             # resource.booking.type
-            types = request.httprequest.args.get('types')
+            types = request.httprequest.args.get("resource.booking.type")
             if types:
-                domain = ['&'] + domain + [('resource_booking_type_id', 'in', ids(types))]
+                domain = ["&"] + domain + [("resource_booking_type_id", "in", ids(types))]
             # resource.booking.combination
-            items = request.httprequest.args.get('items')
+            items = request.httprequest.args.get("resource.booking.combination")
             if items:
-                domain = ['&'] + domain + [('combination_id', 'in', ids(items))]
+                domain = ["&"] + domain + [("combination_id", "in", ids(items))]
         
         return domain

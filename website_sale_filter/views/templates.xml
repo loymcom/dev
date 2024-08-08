@@ -10,17 +10,17 @@
     >
     <xpath expr="//form[hasclass('js_attributes')]" position="inside" t-if="len(filters)">
         <t t-foreach="filters" t-as="f">
-            <t t-set="plural_name" t-value="f[0]"/>
+            <t t-set="visible_name" t-value="f[0]"/>
             <t t-set="records" t-value="f[1]"/>
             <t t-set="selected_ids" t-value="f[2]"/>
             <t t-set="display_type" t-value="f[3]"/>
             <div class="accordion-item nav-item mb-1" t-if="records and len(records) &gt; 1">
                 <h6 class="mb-3">
-                    <b class="o_products_attributes_title d-none d-lg-block" t-esc="plural_name.capitalize()" onclick="console.log(typeof records)"/>
+                    <b class="o_products_attributes_title d-none d-lg-block" t-esc="visible_name"/>
                 </h6>
-                <div t-attf-id="o_products_filters_{{plural_name}}" class="">
+                <div t-attf-id="o_products_filters_{{records._name}}" class="">
                     <t t-if="display_type == 'select'">
-                        <select class="form-select css_attribute_select mb-2" t-att-name="plural_name">
+                        <select class="form-select css_attribute_select mb-2" t-att-name="records._name">
                             <option value="" selected="true">-</option>
                             <t t-foreach="records" t-as="r">
                                 <option t-att-value="r.id" t-esc="r.name" t-att-selected="r.id in selected_ids"/>
@@ -31,7 +31,7 @@
                         <div class="flex-column mb-3">
                             <t t-foreach="records" t-as="r">
                                 <div class="form-check mb-1">
-                                    <input type="checkbox" t-att-name="plural_name" class="form-check-input" t-att-id="r.id" t-att-value="r.id" t-att-checked="'checked' if r.id in selected_ids else None"/>
+                                    <input type="checkbox" t-att-name="visible_name" class="form-check-input" t-att-id="r.id" t-att-value="r.id" t-att-checked="'checked' if r.id in selected_ids else None"/>
                                     <label class="form-check-label fw-normal" t-att-for="r.id" t-field="r.name"/>
                                 </div>
                             </t>

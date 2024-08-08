@@ -8,10 +8,9 @@ from odoo.addons.website_sale_product_variant.controllers.main import WebsiteSal
 class WebsiteSaleFilter(WebsiteSaleProductVariant):
 
     def _get_filters(self, filters=[]):
-        # List of filters to show on the left side of /shop.
+        # Get filters to show on the left side of /shop.
+        # filters = list of (visible_name, model_name, display_type, domain, priority)
         # Display type: 'select' or 'radio'
-        # [(plural_name, model_name, domain, priority, display_type)]
-        # e.g. [("brands", "product.brand", [], 10, "radio")]
         filters.sort(key=lambda x: x[3]) # Sort by priority
         return filters
 
@@ -24,11 +23,11 @@ class WebsiteSaleFilter(WebsiteSaleProductVariant):
         keep = res.qcontext["keep"].args
         filters = []
         
-        for plural_name, model, domain, priority, display_type in self._get_filters([]):
-            keep[plural_name] = request.httprequest.args.getlist(plural_name)
-            records = request.env[model].search(domain or [])
-            selected_ids = [int(i) for i in keep[plural_name] if i]
-            filters.append([plural_name, records, selected_ids, display_type])
+        for visible_name, model_name, display_type, _, domain in self._get_filters([]):
+            keep[model_name] = request.httprequest.args.getlist(model_name)
+            records = request.env[model_name].search(domain or [])
+            selected_ids = [int(i) for i in keep[model_name] if i]
+            filters.append([visible_name, records, selected_ids, display_type])
 
         keep = QueryURL('/shop', **keep)
         res.qcontext.update(

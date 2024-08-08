@@ -40,10 +40,10 @@ class WebsiteSaleBooking(WebsiteSaleFilter):
     
 
     def _get_filters(self, filters=[]):
-        # List of (plural_name, model_name, domain, priority)
+        # filters = list of (visible_name, model_name, display_type, domain, priority)
         filters.append(
-            ["events", "event.event", [("date_end", ">", datetime.now())], 5, "select"]
+            ("Event", "event.event", "select", 5, [("date_end", ">", datetime.now())])
         )
-        filters.append(["types", "resource.booking.type", [], 40, "select"])
-        filters.append(["items", "resource.booking.combination", [], 50, "select"])
+        filters.append(("Booking Type", "resource.booking.type", "select", 40, []))
+        filters.append(("Booking", "resource.booking.combination", "select", 50, []))
         return super()._get_filters(filters)
