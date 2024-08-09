@@ -164,6 +164,11 @@ class TeamM(models.Model):
         if beds > 2 or (beds == 2 and teamm_values["room sharing"] == "Share room"):
             name += self.SHARED_ROOM
         return [(field, "=", name)]
+    
+    def booking_type_shared(self):
+        BookingType = self.env["resource.booking.type"]
+        name = BookingType._teamm2odoo_names()[0] + self.SHARED_ROOM
+        return name
 
     # resource.resource
     def bed_name(self, num):
