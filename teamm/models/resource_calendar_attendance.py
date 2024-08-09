@@ -5,24 +5,22 @@ class ResourceCalendarAttendance(models.Model):
     _inherit = "resource.calendar.attendance"
 
     @api.model
-    def _teamm2odoo_search(self, teamm_values):
-        domain = [
-            ("calendar_id.name", "=", teamm_values["resource.calendar"]),
-            ("dayofweek", "=", teamm_values["dayofweek"]),
-            ("day_period", "=", teamm_values["day_period"]),
-        ]
-        return self.search(domain)
+    def _teamm2odoo(self):
+        Calendar = self.env["resource.calendar"]
+        kwargs = {
+            "calendar_id": Calendar._teamm2odoo_search().id,
+            "dayofweek": self._teamm2odoo_get_value("day of week"),
+            "day_period": self._teamm2odoo_get_value("day period"),
+        }
+        domain = self._teamm2odoo_set_record(kwargs)
+        return domain
 
     @api.model
-    def _teamm2odoo_values(self, teamm_values):
-        Calendar = self.env["resource.calendar"]
-        values = teamm_values
-        odoo_values = {
-            "calendar_id": Calendar._teamm2odoo_search(teamm_values).id,
-            "name": values["name"],
-            "dayofweek": values["dayofweek"],
-            "day_period": values["day_period"],
-            "hour_from": values["hour_from"],
-            "hour_to": values["hour_to"],
+    def _teamm2odoo_values(self, kwargs):
+        odoo_values = super()._teamm2odoo_values(kwargs)
+        odoo_values |= {
+            "name": self._teamm2odoo_name(),
+            "hour_from": self._teamm2odoo_get_value("hour from"),
+            "hour_to": self._teamm2odoo_get_value("hour to"),
         }
         return odoo_values

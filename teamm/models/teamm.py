@@ -13,13 +13,14 @@ from odoo.exceptions import UserError
 _logger = logging.getLogger(__name__)
 
 KEY = {
-    "Record ID - Contact - Hubspot": "hubspot contact",
+    "Record ID - Contact - Hubspot": "hubspot contact id",
     "Ordre nr. ": "sale.order",
 }
 VALUE = {
     "NEWSTART Smal": "NEWSTART Sølv",
     "Unlocx Pain Relife": "Unlocx Pain Relief",
     "Stressmestrings seminar": "Stressmestring",
+    "! Not entered": "",
 }
 
 class TeamM(models.Model):
@@ -127,8 +128,10 @@ class TeamM(models.Model):
     # Used by other models
     #
     
-    def _get_date(self, datestring):
-        return datetime.strptime(datestring, self.env.context["teamm_date_format"])
+    def _get_date(self, key):
+        datestring = self._teamm2odoo_get_value(key)
+        if datestring:
+            return datetime.strptime(datestring, self.env.context["teamm_date_format"])
     
     """ datetime will be useful to customize booking datetimes (start & stop) """
     # def _get_datetime(self, datestring):
@@ -155,19 +158,72 @@ class TeamM(models.Model):
     # resource.booking.type(.combination.rel)
     SHARED_ROOM = " (shared)"
 
-    # product.product (for product.attribute.value)
-    # resoure.booking.type
-    def room_booking_type_domain(self, teamm_values, field):
-        rooms = self.env["resource.resource"]._teamm2odoo_search(teamm_values)
-        name = rooms.category_id.name
-        beds = int(teamm_values["room size"])
-        if beds > 2 or (beds == 2 and teamm_values["room sharing"] == "Share room"):
-            name += self.SHARED_ROOM
-        return [(field, "=", name)]
+    # # product.product (for product.attribute.value)
+    # # resoure.booking.type
+    # def room_booking_type_domain(self, teamm_values, field):
+    #     rooms = self.env["resource.resource"]._teamm2odoo_search(teamm_values)
+    #     name = rooms.category_id.name
+    #     beds = int(teamm_values["room size"])
+    #     if beds > 2 or (beds == 2 and teamm_values["room sharing"] == "Share room"):
+    #         name += self.SHARED_ROOM
+    #     return [(field, "=", name)]
+
+    def get_booking_combination(self):
+        """ Get a booking combination for the booking. """
+        room = self.env["resource.group"]._teamm2odoo_search()
+        combinations = self.env["resource.booking.combination"].search(
+            [("resource_ids", "in", room.resource_ids.ids)]
+        )
+        room_size = self._teamm2odoo_get_value("room size")
+        if room_size and int(room_size) > 1:
+            privacy = self._teamm2odoo_get_value("Room sharing")
+            if privacy == "Share room":
+                combinations = combination.filtered(lambda c: len(c.resource_ids) == 1)
+                start = TeamM._get_date("from")
+                stop = TeamM._get_date("to")
+                bookings = self.env["resource.booking"].search(
+                    [
+                        ("combination_id", "in", combinations.ids),
+                        "|"
+                        "&", ("start", ">=", start), ("start", "<", stop),
+                        "&", ("stop", ">", start), ("stop", "<=", stop),
+                    ]
+                )
+                available_combinations = combinations.filtered(
+                    lambda c: c.id not in bookings.combination_id.id
+                )
+                combination = available_combinations.sorted(key=lambda c: c.name)[0]
+            else:
+                combination = combinations.filtered(lambda c: len(c.resource_ids) > 1)
+        else:
+            combination = combinations
+        assert len(combination) == 1
+        return combination
+
+    def get_booking_type(self):
+        event_name = self._teamm2odoo_get_value("event.event")
+        if event_name:
+            type = self.env.ref("event_sale_resource_booking_timeline.resource_booking_type_event")
+            return type
+
+        room = self.env["resource.group"]._teamm2odoo_search()
+        combinations = self.env["resource.booking.combination"].search(
+            [("resource_ids", "in", room.resource_ids.ids)]
+        )
+        type = combinations.type_rel_ids.mapped("type_id")
+        room_size = self._teamm2odoo_get_value("room size")
+        if room_size and int(room_size) > 1:
+            privacy = self._teamm2odoo_get_value("Room sharing")
+            if privacy == "Share room":
+                type = type.filtered(lambda t: TeamM.SHARED_ROOM in t.name)
+            else:
+                type = type.filtered(lambda t: TeamM.SHARED_ROOM not in t.name)
+        assert len(type) == 1
+        return type
     
     def booking_type_shared(self):
         BookingType = self.env["resource.booking.type"]
-        name = BookingType._teamm2odoo_names()[0] + self.SHARED_ROOM
+        name = BookingType._teamm2odoo_name() + self.SHARED_ROOM
         return name
 
     # resource.resource

@@ -6,7 +6,10 @@
     "summary": "",
     "author": "Henrik Norlin, Odoo Community Association (OCA)",
     "category": "Appointments",
-    "data": ["data/data.xml"],
+    "data": [
+        "data/data.xml",
+        "views/event_event_views.xml",
+    ],
     "depends": [
         "event_sale_resource_booking",
         "resource_booking_timeline",

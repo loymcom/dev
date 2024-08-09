@@ -12,6 +12,16 @@ class Base(models.AbstractModel):
         return record
     
     def _teamm2odoo_set_record(self, kwargs={}):
+        """
+        kwargs are used both to search for and to create/update a record.
+        kwargs format:
+        {
+            "simple_field": "value",
+            "many2one_field": id,
+            "one2many_field": [ids],
+            "many2many_field": [ids],
+        }
+        """
         record = self._teamm2odoo_search(kwargs)
         odoo_values = self._teamm2odoo_values(kwargs)
         if len(record) == 1:
@@ -20,6 +30,13 @@ class Base(models.AbstractModel):
             record = record.create(odoo_values)
             record._teamm2odoo_after_create()
         return record
+    
+    @api.model
+    def _teamm2odoo_values(self, kwargs={}):
+        odoo_values = kwargs or self._teamm2odoo_default_kwargs()
+        for x2many_field, ids in self._teamm2odoo_x2many(odoo_values).items():
+            odoo_values[x2many_field] = [fields.Command.set(ids)]
+        return odoo_values
 
     @api.model
     def _teamm2odoo_search(self, kwargs={}):
@@ -55,18 +72,16 @@ class Base(models.AbstractModel):
             if self._fields[key].type in ("one2many", "many2many")
         }
         return x2many_kwargs
-
-    @api.model
-    def _teamm2odoo_values(self, kwargs={}):
-        values = kwargs or self._teamm2odoo_default_kwargs()
-        for x2many_field, ids in self._teamm2odoo_x2many(values).items():
-            values[x2many_field] = [fields.Command.set(ids)]
-        return values
     
     @api.model
     def _teamm2odoo_default_kwargs(self):
+        name = self._teamm2odoo_name()
+        return {"name": name} if name else {}
+
+    @api.model
+    def _teamm2odoo_name(self):
         names = self._teamm2odoo_names()
-        return {"name": names[0]} if names else {}
+        return names[0] if names else None
 
     @api.model
     def _teamm2odoo_names(self):

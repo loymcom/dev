@@ -6,84 +6,57 @@ from odoo.exceptions import UserError
 import logging
 _logger = logging.getLogger(__name__)
 
-""" This handles both regular BOOKINGS and booking PERIODS. """
-def _is_period(teamm_values):
-    if teamm_values.get("resource.booking.type"):
-        return True
-    else:
-        return False
-
-
 class ResourceBooking(models.Model):
     _inherit = "resource.booking"
 
     @api.model
-    def _teamm2odoo_search(self, teamm_values, combination=None):
-        combinations, partner, product, session, start, stop, type = self._teamm2odoo_search_fields(teamm_values)
-        # self.env["resource.booking.combination"]_teamm2odoo_sarch(teamm_values)
-        if combination:
-            # The combination comes from _teamm2odoo_values, see below
-            domain = [
-                ("combination_id", "=", combination.id),
-                ("start", "=", start),
-                ("stop", "=", stop),
-            ]
-        else:
-            domain = [
-                ("combination_id", "in", combinations.ids),
-                ("partner_ids", "in", partner.ids),
-                ("product_id", "=", product.id),
-                ("start", "=", start),
-                ("stop", "=", stop),
-                ("type_id", "=", type.id),
-            ]
-        _logger.warning(domain)
-        return self.search(domain)
-    
-    @api.model
-    def _teamm2odoo_search_fields(self, teamm_values, period=False):
+    def _teamm2odoo(self):
         TeamM = self.env ["teamm"]
-        partner = self.env["res.partner"]._teamm2odoo_search(teamm_values)
-        product = self.env["product.product"]._teamm2odoo_search(teamm_values)
-        start = TeamM._get_date(teamm_values["from"])
-        stop = TeamM._get_date(teamm_values["to"])
-        type = self.env["resource.booking.type"]._teamm2odoo_search(teamm_values)
-        if _is_period(teamm_values):
-            combinations = type.combination_rel_ids.combination_id
-            session = False
-        else:
-            combinations = type.combination_rel_ids.combination_id.filtered(
-                lambda c: teamm_values.get("room") in c.display_name
-            )
-            session = teamm_values.get("session")
-            if session:
-                session = self.search(
-                    [("name", "=", session), ("period_type", "=", "period")]
+
+        partner = self.env["res.partner"]._teamm2odoo_search()
+        booking_type = TeamM.get_booking_type()
+        start = TeamM._get_date("from")
+        stop = TeamM._get_date("to")
+        event_name = self.env["event.event"]._teamm2odoo_get_value("event.event")
+        if event_name:
+            # Identify a resource booking representing the event in timeline
+            if not len(partner):
+                partner = self.env.ref("base.main_partner")
+            if not len(booking_type):
+                booking_type = self.env.ref(
+                    "event_sale_resource_booking_timeline.resource_booking_type_event"
                 )
-        if not combinations:
-            _logger.warning(partner.name)
-            raise UserError("No combination")
-        return combinations, partner, product, session, start, stop, type
+        else:
+            # Assert "Private" or "Share room"
+            privacy = self._teamm2odoo_get_value("room sharing")
+            assert privacy in ("Private", "Share room")
+        # Identify a resource_booking
+        kwargs = {
+            "partner_ids": partner.ids,
+            "type_id": booking_type.id,
+            "start": start,
+            "duration": (stop - start).total_seconds() / 3600,
+        }
+        record = self._teamm2odoo_set_record(kwargs)
+        return record
 
     @api.model
-    def _teamm2odoo_values(self, teamm_values, period=False):
-        val = teamm_values
-        combinations, partner, product, session, start, stop, type = self._teamm2odoo_search_fields(teamm_values)
+    def _teamm2odoo_values(self, kwargs={}):
+        event_name = self._teamm2odoo_get_value("event.event")
+        if event_name:
+            kwargs |= {
+                "name": event_name,
+                "combination_auto_assign": 1,
+            }
+        else:
+            partner = self.env["res.partner"]._teamm2odoo_search()
+            product = self.env["product.product"]._teamm2odoo_search()
+            combination = self.env["teamm"].get_booking_combination()
+            kwargs |= {
+                "name": partner.name,
+                "combination_auto_assign": 0,
+                "combination_id": combination.id,
+                "product_id": product.id,
+            }
 
-        # There may be 2 possible combinations. Select the first which is available.
-        for combination in combinations:
-            booking = self._teamm2odoo_search(teamm_values, combination)
-            if not booking or booking.partner_id == partner:
-                _logger.warning(teamm_values["sale.order"] + " from " + teamm_values["from"] + " session " + str(session))
-                odoo_values = {
-                    "name": teamm_values.get("name") if _is_period(teamm_values) else partner.name,
-                    "parent_id": session.id if session else False,
-                    "product_id": product.id,
-                    "partner_id": partner.id,
-                    "start": start,
-                    "duration": (stop - start).total_seconds() / 3600,
-                    "type_id": type.id,
-                    "combination_id": combination.id,
-                    "combination_auto_assign": False,
-                }
-                return odoo_values
+        return super()._teamm2odoo_values(kwargs)

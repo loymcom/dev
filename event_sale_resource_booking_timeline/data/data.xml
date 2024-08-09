@@ -27,6 +27,7 @@
             name="resource_calendar_id"
             ref="event_sale_resource_booking.resource_calendar"
         />
+        <field name="combination_assignment">sorted</field>
     </record>
     <record
         id="resource_booking_type_combination_rel_a"
@@ -34,6 +35,7 @@
     >
         <field name="type_id" ref="resource_booking_type_event" />
         <field name="combination_id" ref="resource_booking_combination_a" />
+        <field name="sequence" eval="1" />
     </record>
     <record
         id="resource_booking_type_combination_rel_b"
@@ -41,6 +43,7 @@
     >
         <field name="type_id" ref="resource_booking_type_event" />
         <field name="combination_id" ref="resource_booking_combination_b" />
+        <field name="sequence" eval="2" />
     </record>
 
 </odoo>
