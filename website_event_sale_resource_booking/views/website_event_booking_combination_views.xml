@@ -8,13 +8,15 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="event_id" />
+                <field name="date_begin" optional="show" />
+                <field name="date_end" optional="show"/>
                 <field name="product_tmpl_id" />
-                <field name="product_id" />
+                <field name="product_id" optional="hide"/>
+                <field name="product_attribute_value_ids" optional="hide" widget="many2many_tags" />
                 <field name="resource_booking_type_id" />
                 <field name="combination_id" />
-                <field name="available" />
-                <!-- <field name="pav_ids" widget="many2many_tags" />
-                <field name="pav_tag_ids" widget="many2many_tags" /> -->
+                <field name="available" optional="show" />
+                <field name="resource_group_tag_ids" optional="hide" widget="many2many_tags" />
             </tree>
         </field>
     </record>
@@ -26,10 +28,10 @@
                 <field name="event_id" />
                 <field name="product_tmpl_id" />
                 <field name="product_id" />
+                <field name="product_attribute_value_ids" />
                 <field name="resource_booking_type_id" />
                 <field name="combination_id" />
-                <!-- <field name="pav_ids" widget="many2many_tags" />
-                <field name="pav_tag_ids" widget="many2many_tags" /> -->
+                <field name="resource_group_tag_ids" />
                 <filter
                     name="available"
                     string="Available"

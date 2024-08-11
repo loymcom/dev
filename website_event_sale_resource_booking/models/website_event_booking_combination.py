@@ -21,29 +21,24 @@ class EventBookingCombination(models.Model):
 
     id = fields.Char()
     event_id = fields.Many2one("event.event")
+    date_begin = fields.Datetime("Begin")
+    date_end = fields.Datetime("End")
     product_id = fields.Many2one("product.product")
     combination_id = fields.Many2one("resource.booking.combination")
-    # resource_ids = fields.Many2many(
-    #     "resource.resource",
-    #     related="combination_id.resource_ids",
-    # )
 
     # Computed fields
-    available = fields.Boolean(compute="_compute_available", search="_search_available")
-    # pav_ids = fields.Many2many(
-    #     "product.attribute.value",
-    #     relation="resource_booking_type_product_attribute_value_rel",
-    #     related="resource_booking_type_id.product_attribute_value_ids",
-    # )
-    # pav_tag_ids = fields.Many2many(
-    #     "product.attribute.value.tag",
-    #     compute="_compute_pav_tag_ids",
-    # )
 
-    # def _compute_pav_tag_ids(self):
-    #     for record in self:
-    #         pav_ids = record.pav_ids
-    #         record.pav_tag_ids = pav_ids.tag_ids
+    available = fields.Boolean(compute="_compute_available", search="_search_available")
+    resource_group_tag_ids = fields.Many2many(
+        "resource.group.tag",
+        compute="_compute_resource_group_tag_ids",
+        search="_search_resource_group_tag_ids",
+    )
+    product_attribute_value_ids = fields.Many2many(
+        "product.attribute.value",
+        relation="resource_booking_type_product_attribute_value_rel",
+        related="resource_booking_type_id.product_attribute_value_ids",
+    )
 
     def _compute_available(self):
         # records_per_event = self.grouped("event_id") # 17.0
@@ -76,7 +71,24 @@ class EventBookingCombination(models.Model):
         assert operator in compare and value in (True, False)
         future = self.search([("event_id.date_end", ">", datetime.now())])
         filtered = future.filtered(lambda r: r.available == value)
-        return [('id', compare[operator], filtered.ids)]
+        return [("id", compare[operator], filtered.ids)]
+
+    def _compute_resource_group_tag_ids(self):
+        for record in self:
+            record.resource_group_tag_ids = record.combination_id.resource_ids.group_id.tag_ids.ids
+
+    def _search_resource_group_tag_ids(self, operator, value):
+        tags = self.env["resource.group.tag"].search(
+            [
+                "|",
+                ("name", operator, value),  # search view
+                ("id", operator, value),    # /shop
+            ]
+        )
+        combinations = tags.group_ids.resource_ids.combination_ids
+        return [("combination_id", "in", combinations.ids)]
+
+    # SQL VIEW
 
     def init(self):
         tools.drop_view_if_exists(self._cr, "website_event_booking_combination")
@@ -91,42 +103,18 @@ class EventBookingCombination(models.Model):
         # Add missing columns of the next models.
         models = [("pp", pp), ("pt", pt), ("ee", ee), ("rbt", rbt), ("rbc", rbc)]
 
-        # col_names = {"id", "product_id"}
-        # columns = ["ee.id::text || '_' || pp.id::text AS id", "pp.id AS product_id"]
         column_name_expr = [
             ("id", "ee.id::text || '_' || pp.id::text || '_' || rbc.id::text"),
             ("event_id", "ee.id"),
             ("product_id", "pp.id"),
             ("combination_id", "rbc.id"),
-            # (
-            #     "available",
-            #     """CASE 
-            #     WHEN EXISTS (
-            #         SELECT 1
-            #         FROM resource_booking rb
-            #         JOIN resource_booking_combination_resource_resource_rel rbc_rr
-            #             ON rbc_rr.resource_booking_combination_id = ebc.combination_id
-            #         JOIN resource_resource rr ON rr.id = rbc_rr.resource_resource_id
-            #         WHERE rb.resource_booking_combination_id = rbc_rr.resource_booking_combination_id
-            #         AND (
-            #             (ee.date_begin <= rb.start AND rb.start < ee.date_end)
-            #             OR
-            #             (ee.date_end >= rb.stop AND rb.stop > ee.date_begin)
-            #         )
-            #     ) THEN FALSE
-            #     ELSE TRUE
-            #     END""",
-            # ),
         ]
-        # col_names = [name for name, _ in column_name_expr]
 
         for code, Model in models:
             for name, field in Model._fields.items():
                 if field.store and field.column_type:
                     if name not in [c[0] for c in column_name_expr]:
                         column_name_expr.append((name, code + "." + name))
-                        # col_names.add(name)
-                        # columns.append(code + "." + name)
         select = ["{} AS {}".format(expr, name) for name, expr in column_name_expr]
 
         self._cr.execute(

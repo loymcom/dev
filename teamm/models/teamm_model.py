@@ -6,7 +6,9 @@ class TeamMModel(models.Model):
     _name = "teamm.model"
     _order = "sequence"
 
+    teamm_id = fields.Many2one("teamm")
     sequence = fields.Integer()
     is_active = fields.Boolean()
     name = fields.Char()
-    teamm_id = fields.Many2one("teamm")
+    primary_key = fields.Char()
+    values = fields.Char()

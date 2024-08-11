@@ -67,6 +67,8 @@
                                 <field name="sequence" widget="handle" />
                                 <field name="is_active" />
                                 <field name="name" />
+                                <field name="primary_key" />
+                                <field name="values" />
                             </tree>
                         </field>
                         <field name="alias_ids">

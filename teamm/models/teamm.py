@@ -39,7 +39,13 @@ class TeamM(models.Model):
     )
     src_begin = fields.Integer(string="Begin With")
     src_end = fields.Integer(string="End With")
-    model_ids = fields.One2many("teamm.model", "teamm_id", string="Models")
+    model_ids = fields.One2many(
+        "teamm.model",
+        "teamm_id",
+        string="Models",
+        help="Active models will be imported. Import one at a time to see the result."
+        "Primary Key and Values are only for documentation."
+    )
     alias_ids = fields.One2many("teamm.alias", "teamm_id", string="Aliases")
     url = fields.Char()
     param_ids = fields.One2many("teamm.param", "teamm_id", string="Params")
@@ -132,20 +138,19 @@ class TeamM(models.Model):
         datestring = self._teamm2odoo_get_value(key)
         if datestring:
             return datetime.strptime(datestring, self.env.context["teamm_date_format"])
-    
-    """ datetime will be useful to customize booking datetimes (start & stop) """
-    # def _get_datetime(self, datestring):
-    #     dt = self._get_date(datestring)
-    #     tz = pytz.utc
-    #     astz = pytz.timezone(self.env.user.tz)
-    #     tz_datetime = (
-    #         tz
-    #         .localize(dt)
-    #         .astimezone(astz)
-    #         .replace(tzinfo=None)
-    #     )
-    #     _logger.warning(tz_datetime)
-    #     return tz_datetime
+
+    def _get_datetime(self, datestring):
+        dt = self._get_date(datestring)
+        tz = pytz.utc
+        astz = pytz.timezone(self.env.user.tz)
+        tz_datetime = (
+            tz
+            .localize(dt)
+            .astimezone(astz)
+            .replace(tzinfo=None)
+        )
+        _logger.warning(tz_datetime)
+        return tz_datetime
 
     # res.partner
     GENDER = {

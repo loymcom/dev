@@ -6,6 +6,7 @@ class EventEvent(models.Model):
 
     resource_booking_id = fields.Many2one(
         "resource.booking",
+        ondelete="cascade",
         help="A booking to show the event in the timeline."
     )
 

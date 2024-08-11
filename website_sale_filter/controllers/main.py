@@ -45,7 +45,7 @@ class WebsiteSaleFilterController(WebsiteSaleProductVariant):
                 domain += [(filter.related_field, "in", filter.selected_ids)]
                 # domain = ["&"] + domain + [(f.related_field, "in", f.selected_ids)]
         products = request.env[website.shop_model].search(domain)
-        # The filter options will be the products' related records.
+        # Filter options (which are relevant for the filtered products)
         for filter in website_sale_filters:
             filter.records = getattr(products, filter.related_field)
 

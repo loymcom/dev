@@ -5,7 +5,11 @@ from odoo.exceptions import UserError
 class EventRegistration(models.Model):
     _inherit = "event.registration"
 
-    resource_booking_id = fields.Many2one("resource.booking", string="Booking")
+    resource_booking_id = fields.Many2one(
+        "resource.booking",
+        string="Booking",
+        ondelete="cascade",
+    )
     product_id = fields.Many2one(
         "product.product",
         # related="resource_booking_id.product_id",

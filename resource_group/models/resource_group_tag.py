@@ -6,7 +6,7 @@ class ResourceGroupTag(models.Model):
 
     name = fields.Char()
     group_ids = fields.Many2many(
-        comodel_name="resource.group.tag",
+        comodel_name="resource.group",
         relation="resource_group_tag_rel",
         string="Groups",
     )

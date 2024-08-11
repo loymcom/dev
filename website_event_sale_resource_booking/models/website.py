@@ -28,9 +28,10 @@ class Website(models.Model):
     def _website_sale_filters(self):
         filters = super()._website_sale_filters()
         add = [
-            (5, "select", "event_id", "event.event", _("Event"), [("date_end", ">", datetime.now())]),
+            (30, "select", "event_id", "event.event", _("Event"), [("date_end", ">", datetime.now())]),
             (40, "select", "resource_booking_type_id", "resource.booking.type", _("Booking Type")),
             (50, "select", "combination_id", "resource.booking.combination", _("Booking")),
+            (60, "radio", "resource_group_tag_ids", "resource.group.tag", _("Tags")),
         ]
         for values in add:
             filters.append(WebsiteSaleFilter(*values))
