@@ -6,14 +6,24 @@ class ProductAttributeValue(models.Model):
 
     @api.model
     def _teamm2odoo(self):
-        Attribute = self.env["product.attribute"]
+        records = self
         names = self._teamm2odoo_names()
         for name in names:
-            attribute = Attribute._teamm2odoo_search()
-            record = self._teamm2odoo_set_record(
-                {"name": name, "attribute_id": attribute.id}
-            )
-        return record
+            self = self.with_context(**{"product.attribute.value": name})
+            records |= self._teamm2odoo_set_record()
+        return records
+    
+    @api.model
+    def _teamm2odoo_search_kwargs(self, kwargs):
+        kwargs["attribute_id"] =self.env["product.attribute"]._teamm2odoo_search().id
+
+        discount = self.env.context.get("teamm_discount")
+        if discount:
+            kwargs["name"] = discount.name
+        else:
+            kwargs["name"] = self._teamm2odoo_name()
+
+        return super()._teamm2odoo_search_kwargs(kwargs)
 
     @api.model
     def _teamm2odoo_values(self, kwargs):

@@ -10,16 +10,14 @@ class EventRegistration(models.Model):
     _inherit = "event.registration"
 
     @api.model
-    def _teamm2odoo(self):
-        session_number = self._teamm2odoo_get_value("session number")
-        event = self.env["event.event"]._teamm2odoo_search({"name": session_number})
+    def _teamm2odoo_search_kwargs(self, kwargs):
+        event = self.env["event.event"]._teamm2odoo_search()
         booking = self.env["resource.booking"]._teamm2odoo_search()
-        kwargs = {
+        kwargs |= {
             "event_id": event.id,
             "resource_booking_id": booking.id,
         }
-        records = self._teamm2odoo_set_record(kwargs)
-        return records
+        return super()._teamm2odoo_search_kwargs(kwargs)
 
     @api.model
     def _teamm2odoo_values(self, kwargs):

@@ -87,6 +87,7 @@
                             </tree>
                         </field>
                         <field name="date_format" attrs="{'invisible': [('src', '=', 'api')]}" />
+                        <field name="csv_delimiter" />
                         <field name="csv_file" filename="csv_file_name" attrs="{'invisible': [('src', '!=', 'csv_file')]}" />
                         <field name="csv" attrs="{'invisible': [('src', '!=', 'csv_field')]}" />
                     </group>
@@ -113,8 +114,6 @@
         <field name="name">Team M</field>
         <field name="res_model">teamm</field>
         <field name="view_mode">tree,form</field>
-        <!-- <field name="domain">[]</field> -->
-        <!-- <field name="context">{}</field> -->
     </record>
     <menuitem
         id="teamm_menu"

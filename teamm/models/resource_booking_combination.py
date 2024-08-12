@@ -6,25 +6,38 @@ class ResourceBookingCombination(models.Model):
 
     @api.model
     def _teamm2odoo(self):
-        TeamM = self.env["teamm"]
-        Resource = self.env["resource.resource"]
-
         records = self
-        resources = Resource
-        
+
         beds = self._teamm2odoo_get_value("room size")
         if beds and int(beds) > 1:
             # A record for each bed
             for i in range(int(beds)):
-                resource_name = TeamM.bed_name(i + 1)
-                resource = Resource._teamm2odoo_search({"name": resource_name})
-                records |= self._teamm2odoo_set_record({"resource_ids": resource.ids})
-                resources |= resource
+                self_shared_room = self.with_context(
+                    teamm_bed_counter=i+1,
+                    teamm_room_sharing="Share room",
+                )
+                records |= self_shared_room._teamm2odoo_set_record()
             # A record for all beds
-            records |= self._teamm2odoo_set_record({"resource_ids": resources.ids})
+            self_private_room = self.with_context(
+                teamm_room_sharing="Private",
+            )
+            records |= self_private_room._teamm2odoo_set_record()
         else:
-            # A record for the resource
-            resource = Resource._teamm2odoo_search({})
-            records |= self._teamm2odoo_set_record({"resource_ids": resource.ids})
+            # A record for the room
+            records |= self._teamm2odoo_set_record()
 
         return records
+
+    @api.model
+    def _teamm2odoo_search_kwargs(self, kwargs):
+        room_size = self._teamm2odoo_get_value("room size")
+        room_sharing = self.env.context.get("teamm_room_sharing")
+        if room_size and int(room_size) > 1:
+            if room_sharing == "Share room":
+                pass
+            else:
+                resources = self.env["resource.group"]._teamm2odoo_search().resource_ids
+        else:
+            resources = self.env["resource.resource"]._teamm2odoo_search()
+        kwargs["resource_ids"] = resources.ids
+        return super()._teamm2odoo_search_kwargs(kwargs)

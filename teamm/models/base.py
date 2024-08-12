@@ -10,8 +10,9 @@ class Base(models.AbstractModel):
     def _teamm2odoo(self):
         record = self._teamm2odoo_set_record()
         return record
-    
-    def _teamm2odoo_set_record(self, kwargs={}):
+
+    @api.model
+    def _teamm2odoo_set_record(self):
         """
         kwargs are used both to search for and to create/update a record.
         kwargs format:
@@ -22,28 +23,33 @@ class Base(models.AbstractModel):
             "many2many_field": [ids],
         }
         """
-        record = self._teamm2odoo_search(kwargs)
-        odoo_values = self._teamm2odoo_values(kwargs)
-        if len(record) == 1:
-            record.write(odoo_values)
-        else:
-            record = record.create(odoo_values)
-            record._teamm2odoo_after_create()
+        record = self._teamm2odoo_search()
+        odoo_values = self._teamm2odoo_values({})
+        if odoo_values:
+            if len(record) == 1:
+                record.write(odoo_values)
+            else:
+                record = record.create(odoo_values)
+                record._teamm2odoo_after_create()
         return record
-    
+
     @api.model
-    def _teamm2odoo_values(self, kwargs={}):
-        odoo_values = kwargs or self._teamm2odoo_default_kwargs()
+    def _teamm2odoo_values(self, kwargs):
+        odoo_values = self._teamm2odoo_search_kwargs({}) | kwargs
         for x2many_field, ids in self._teamm2odoo_x2many(odoo_values).items():
-            odoo_values[x2many_field] = [fields.Command.set(ids)]
+            if self._fields[x2many_field].type =="many2many":
+                # This makes odoo_values different than kwargs
+                odoo_values[x2many_field] = [fields.Command.set(ids)]
         return odoo_values
 
     @api.model
-    def _teamm2odoo_search(self, kwargs={}):
-        domain = self._teamm2odoo_domain(kwargs)
+    def _teamm2odoo_search(self):
+        domain = self._teamm2odoo_domain()
+        if self._name == "product.product":
+            debug = True
         # Don't search if there is no search domain
         record = self.search(domain) if domain else self
-        x2many = self._teamm2odoo_x2many(kwargs)
+        x2many = self._teamm2odoo_x2many()
         if x2many:
             # Check if record.x2many_field.ids == kwargs[x2many_field]
             record = record.filtered(
@@ -52,26 +58,32 @@ class Base(models.AbstractModel):
                     for field, ids in x2many.items()
                 )
             )
-        assert len(record) in (0, 1)
+        assert len(record) in (0, 1), f"Error: multiple records: {str(record)}."
         return record
     
     @api.model
-    def _teamm2odoo_domain(self, kwargs={}):
-        kwargs = kwargs or self._teamm2odoo_default_kwargs()
+    def _teamm2odoo_domain(self):
+        kwargs = self._teamm2odoo_search_kwargs({})
         domain = []
-        x2many = self._teamm2odoo_x2many(kwargs)
+        x2many = self._teamm2odoo_x2many()
         for key, value in kwargs.items():
             operator = "in" if key in x2many else "="
             domain.append((key, operator, value))
         return domain
     
     @api.model
-    def _teamm2odoo_x2many(self, kwargs):
+    def _teamm2odoo_x2many(self, kwargs={}):
+        kwargs = kwargs or self._teamm2odoo_search_kwargs({})
         x2many_kwargs = {
             key: val for key, val in kwargs.items()
             if self._fields[key].type in ("one2many", "many2many")
         }
         return x2many_kwargs
+    
+    @api.model
+    def _teamm2odoo_search_kwargs(self, kwargs):
+        kwargs = kwargs or self._teamm2odoo_default_kwargs()
+        return kwargs
     
     @api.model
     def _teamm2odoo_default_kwargs(self):
@@ -80,8 +92,12 @@ class Base(models.AbstractModel):
 
     @api.model
     def _teamm2odoo_name(self):
-        names = self._teamm2odoo_names()
-        return names[0] if names else None
+        name = self.env.context.get(self._name)
+        if name:
+            return name
+        else:
+            names = self._teamm2odoo_names()
+            return names[0] if names else None
 
     @api.model
     def _teamm2odoo_names(self):
@@ -89,10 +105,11 @@ class Base(models.AbstractModel):
         # E.g. a product template may have multiple product attributes.
         names = self._teamm2odoo_get_value(self._name)
         if names:
-            return names.split(",")
+            return [name.strip() for name in names.split(",")]
         else:
             return []
 
+    @api.model
     def _teamm2odoo_get_value(self, key):
         # Get a key which exists in teamm_values. Search for the key and its aliases.
         try_keys = self.env.context["teamm_aliases"].get(key, [key])

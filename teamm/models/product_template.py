@@ -13,7 +13,8 @@ class ProductTemplate(models.Model):
 
         attribute_names = Attribute._teamm2odoo_names()
         for name in attribute_names:
-            attribute = Attribute._teamm2odoo_search({"name": name})
+            Attribute = Attribute.with_context(**{"product.attribute": name})
+            attribute = Attribute._teamm2odoo_search()
             attribute_line_ids.append(
                 fields.Command.create(
                     {

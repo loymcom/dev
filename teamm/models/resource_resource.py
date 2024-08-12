@@ -13,16 +13,25 @@ class ResourceResource(models.Model):
         beds = self._teamm2odoo_get_value("room size")
         if beds and int(beds) > 1:
             for i in range(int(beds)):
-                name = TeamM.bed_name(i + 1)
-                records |= self._teamm2odoo_set_record({"name": name})
+                self = self.with_context(teamm_bed_counter=i+1)
+                records |= self._teamm2odoo_set_record()
         else:
-            records = super()._teamm2odoo_set_record()
+            records = self._teamm2odoo_set_record()
 
         return records
 
     @api.model
+    def _teamm2odoo_search_kwargs(self, kwargs):
+        counter = self.env.context.get("teamm_bed_counter")
+        if counter:
+            kwargs["name"] = self.env["teamm"].bed_name(counter)
+        else:
+            kwargs["name"] = self.env["resource.group"]._teamm2odoo_search().name
+        return super()._teamm2odoo_search_kwargs(kwargs)
+
+    @api.model
     def _teamm2odoo_values(self, kwargs):
-        odoo_values = super()._teamm2odoo_values(kwargs)
+        kwargs = self._teamm2odoo_search_kwargs(kwargs)
 
         calendar = self.env["resource.calendar"]._teamm2odoo_search()
         if not len(calendar) == 1:
@@ -30,10 +39,10 @@ class ResourceResource(models.Model):
 
         group = self.env["resource.group"]._teamm2odoo_search()
 
-        odoo_values |= {
+        kwargs |= {
             "resource_type": "material",
             "calendar_id": calendar.id,
             "group_id": group and group.id or False,
         }
 
-        return odoo_values
+        return super()._teamm2odoo_values(kwargs)

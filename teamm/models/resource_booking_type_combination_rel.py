@@ -6,39 +6,32 @@ class ResourceBookingTypeCombinationRel(models.Model):
 
     @api.model
     def _teamm2odoo(self):
-        TeamM = self.env["teamm"]
-        Resource = self.env["resource.resource"]
-        Combination = self.env["resource.booking.combination"]
-        Type = self.env["resource.booking.type"]
-
         records = self
-        resources = Resource
 
         beds = self._teamm2odoo_get_value("room size")
         if beds and int(beds) > 1:
             # A record for each bed
             for i in range(int(beds)):
-                resource_name = TeamM.bed_name(i + 1)
-                resource = Resource._teamm2odoo_search({"name": resource_name})
-                comb = Combination._teamm2odoo_search({"resource_ids": resource.ids})
-                type_name = TeamM.booking_type_shared()
-                type = Type._teamm2odoo_search({"name": type_name})
-                records |= self._teamm2odoo_set_record(
-                    {"type_id": type.id, "combination_id": comb.id}
+                self_shared_room = self.with_context(
+                    teamm_bed_counter=i+1,
+                    teamm_room_sharing="Share room",
                 )
-                resources |= resource
+                records |= self_shared_room._teamm2odoo_set_record()
             # A record for all beds
-            comb = Combination._teamm2odoo_search({"resource_ids": resources.ids})
-            type = Type._teamm2odoo_search()
-            records |= self._teamm2odoo_set_record(
-                {"type_id": type.id, "combination_id": comb.id}
+            self_private_room = self.with_context(
+                teamm_room_sharing="Private",
             )
+            records |= self_private_room._teamm2odoo_set_record()
         else:
-            # A record for the resource
-            resource = Resource._teamm2odoo_search()
-            comb = Combination._teamm2odoo_search({"resource_ids": resource.ids})
-            type = Type._teamm2odoo_search()
-            records |= self._teamm2odoo_set_record(
-                {"type_id": type.id, "combination_id": comb.id}
-            )
+            # A record for the room
+            records |= self._teamm2odoo_set_record()
+
         return records
+
+    @api.model
+    def _teamm2odoo_search_kwargs(self, kwargs):
+        kwargs |= {
+            "type_id": self.env["resource.booking.type"]._teamm2odoo_search().id,
+            "combination_id": self.env["resource.booking.combination"]._teamm2odoo_search().id,
+        }
+        return super()._teamm2odoo_search_kwargs(kwargs)

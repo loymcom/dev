@@ -8,10 +8,14 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
     
     @api.model
-    def _teamm2odoo_search(self, kwargs={}):
+    def _teamm2odoo_search_kwargs(self, kwargs):
         hubspot_id = self._teamm2odoo_get_value("hubspot contact id")
-        kwargs |= {"ref": hubspot_id}
-        return super()._teamm2odoo_search(kwargs)
+        if hubspot_id:
+            kwargs |= {"ref": hubspot_id}
+        else:
+            # Without hubspot_id, don't return any contact.
+            kwargs |= {"id": 0}
+        return super()._teamm2odoo_search_kwargs(kwargs)
 
     @api.model
     def _teamm2odoo_values(self, kwargs):
@@ -27,9 +31,9 @@ class ResPartner(models.Model):
         categories = PartnerCategory
         category_names = self._teamm2odoo_get_value("customer category")
         for name in category_names:
-            categories |= PartnerCategory._teamm2odoo_search({"name": name})
+            categories |= PartnerCategory.search([("name", "=", name)])
 
-        url = self.env.context["teamm_url"]
+        url = self.env.context["teamm"].url
         if url and url[-12:] == "/orders/list":
             odoo_values = {
                 # "firstname": values["mainGuest"]["firstName"],

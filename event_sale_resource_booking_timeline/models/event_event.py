@@ -29,3 +29,8 @@ class EventEvent(models.Model):
                     rec.resource_booking_id.write(values)
                 else:
                     rec.resource_booking_id = Booking.create(values)
+
+    @api.ondelete(at_uninstall=False)
+    def _delete_the_resource_booking(self):
+        for record in self:
+            record.resource_booking_id.unlink()

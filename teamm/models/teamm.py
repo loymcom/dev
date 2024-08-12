@@ -12,6 +12,7 @@ from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
+# TODO: replace KEY & VALUE with teamm.alias
 KEY = {
     "Record ID - Contact - Hubspot": "hubspot contact id",
     "Ordre nr. ": "sale.order",
@@ -52,6 +53,7 @@ class TeamM(models.Model):
     csv_file = fields.Binary(string='CSV File')
     csv_file_name = fields.Char(string='CSV Filename')
     csv = fields.Text()
+    csv_delimiter = fields.Char(default=",")
     date_format = fields.Char()
 
     active = fields.Boolean(default=True)
@@ -80,12 +82,12 @@ class TeamM(models.Model):
         if self.csv_file:
             file_data = base64.b64decode(self.csv_file)
             csv_file = io.StringIO(file_data.decode('utf-8'))
-            csv_reader = csv.DictReader(csv_file)
+            csv_reader = csv.DictReader(csv_file, delimiter=self.csv_delimiter)
             return self._action_import([line for line in csv_reader])
         
     def action_import_csv_field(self):
         csv_file = io.StringIO(self.csv.strip())
-        csv_reader = csv.DictReader(csv_file)
+        csv_reader = csv.DictReader(csv_file, delimiter=self.csv_delimiter)
         return self._action_import([line for line in csv_reader])
     
     def action_clear_csv(self):
@@ -101,7 +103,6 @@ class TeamM(models.Model):
         }
         for model_name in model_names:
             record_ids = []
-            # values = {}
             for i, teamm_values in enumerate(teamm_values_list, start=1):
                 if (begin and begin > i) or (end and end < i):
                     continue
@@ -113,8 +114,7 @@ class TeamM(models.Model):
                     for key, val in teamm_values.items()
                 }
                 Model = self.env[model_name].with_context(
-                    teamm_url=self.url,
-                    teamm_date_format=self.date_format,
+                    teamm=self,
                     teamm_aliases=teamm_aliases,
                     teamm_values=teamm_values,
                 )
@@ -137,20 +137,18 @@ class TeamM(models.Model):
     def _get_date(self, key):
         datestring = self._teamm2odoo_get_value(key)
         if datestring:
-            return datetime.strptime(datestring, self.env.context["teamm_date_format"])
-
-    def _get_datetime(self, datestring):
-        dt = self._get_date(datestring)
-        tz = pytz.utc
-        astz = pytz.timezone(self.env.user.tz)
-        tz_datetime = (
-            tz
-            .localize(dt)
-            .astimezone(astz)
-            .replace(tzinfo=None)
-        )
-        _logger.warning(tz_datetime)
-        return tz_datetime
+            return datetime.strptime(datestring, self.env.context["teamm"].date_format)
+    
+    def _get_datetime(self, key):
+        date_string = self._teamm2odoo_get_value(key)
+        date_format = self.env.context["teamm"].date_format
+        naive_date = datetime.strptime(date_string, date_format)
+        naive_date = naive_date.replace(hour=0, minute=0, second=0, microsecond=0)
+        user_timezone = pytz.timezone(self.env.user.tz)
+        local_date = user_timezone.localize(naive_date)
+        utc_date = local_date.astimezone(pytz.utc)
+        naive_date = utc_date.replace(tzinfo=None)
+        return naive_date
 
     # res.partner
     GENDER = {
@@ -163,6 +161,9 @@ class TeamM(models.Model):
     # resource.booking.type(.combination.rel)
     SHARED_ROOM = " (shared)"
 
+    # Used for discount product and discount attribute
+    DISCOUNT = "Discount"
+
     # # product.product (for product.attribute.value)
     # # resoure.booking.type
     # def room_booking_type_domain(self, teamm_values, field):
@@ -172,59 +173,6 @@ class TeamM(models.Model):
     #     if beds > 2 or (beds == 2 and teamm_values["room sharing"] == "Share room"):
     #         name += self.SHARED_ROOM
     #     return [(field, "=", name)]
-
-    def get_booking_combination(self):
-        """ Get a booking combination for the booking. """
-        room = self.env["resource.group"]._teamm2odoo_search()
-        combinations = self.env["resource.booking.combination"].search(
-            [("resource_ids", "in", room.resource_ids.ids)]
-        )
-        room_size = self._teamm2odoo_get_value("room size")
-        if room_size and int(room_size) > 1:
-            privacy = self._teamm2odoo_get_value("Room sharing")
-            if privacy == "Share room":
-                combinations = combination.filtered(lambda c: len(c.resource_ids) == 1)
-                start = TeamM._get_date("from")
-                stop = TeamM._get_date("to")
-                bookings = self.env["resource.booking"].search(
-                    [
-                        ("combination_id", "in", combinations.ids),
-                        "|"
-                        "&", ("start", ">=", start), ("start", "<", stop),
-                        "&", ("stop", ">", start), ("stop", "<=", stop),
-                    ]
-                )
-                available_combinations = combinations.filtered(
-                    lambda c: c.id not in bookings.combination_id.id
-                )
-                combination = available_combinations.sorted(key=lambda c: c.name)[0]
-            else:
-                combination = combinations.filtered(lambda c: len(c.resource_ids) > 1)
-        else:
-            combination = combinations
-        assert len(combination) == 1
-        return combination
-
-    def get_booking_type(self):
-        event_name = self._teamm2odoo_get_value("event.event")
-        if event_name:
-            type = self.env.ref("event_sale_resource_booking_timeline.resource_booking_type_event")
-            return type
-
-        room = self.env["resource.group"]._teamm2odoo_search()
-        combinations = self.env["resource.booking.combination"].search(
-            [("resource_ids", "in", room.resource_ids.ids)]
-        )
-        type = combinations.type_rel_ids.mapped("type_id")
-        room_size = self._teamm2odoo_get_value("room size")
-        if room_size and int(room_size) > 1:
-            privacy = self._teamm2odoo_get_value("Room sharing")
-            if privacy == "Share room":
-                type = type.filtered(lambda t: TeamM.SHARED_ROOM in t.name)
-            else:
-                type = type.filtered(lambda t: TeamM.SHARED_ROOM not in t.name)
-        assert len(type) == 1
-        return type
     
     def booking_type_shared(self):
         BookingType = self.env["resource.booking.type"]

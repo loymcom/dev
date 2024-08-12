@@ -4,6 +4,7 @@ from odoo.exceptions import UserError
 
 class TeammAlias(models.Model):
     _name = "teamm.alias"
+    _descripti = "teamm.alias"
     _order = "name"
 
     name = fields.Char()
