@@ -9,9 +9,9 @@ class SaleOrder(models.Model):
         TeamM = self.env["teamm"]
         main_guest = self._teamm2odoo_get_value("main guest")
         if main_guest == "Yes":
-            odoo_values = {
-                "name": self._teamm2odoo_name(),
+            kwargs |= {
+                # "name": self._teamm2odoo_name(),
                 "partner_id": self.env["res.partner"]._teamm2odoo_search().id,
                 "date_order": TeamM._get_date("booked at"),
             }
-            return odoo_values
+            return super()._teamm2odoo_values(kwargs)

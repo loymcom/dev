@@ -45,7 +45,7 @@ class TeamM(models.Model):
         "teamm_id",
         string="Models",
         help="Active models will be imported. Import one at a time to see the result."
-        "Primary Key and Values are only for documentation."
+        "Description, Primary Key and Values are only for documentation."
     )
     alias_ids = fields.One2many("teamm.alias", "teamm_id", string="Aliases")
     url = fields.Char()

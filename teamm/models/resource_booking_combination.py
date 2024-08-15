@@ -34,7 +34,7 @@ class ResourceBookingCombination(models.Model):
         room_sharing = self.env.context.get("teamm_room_sharing")
         if room_size and int(room_size) > 1:
             if room_sharing == "Share room":
-                pass
+                resources = self.env["resource.resource"]._teamm2odoo_search()
             else:
                 resources = self.env["resource.group"]._teamm2odoo_search().resource_ids
         else:

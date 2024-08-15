@@ -1,4 +1,4 @@
-# Copyright 2023 Ows - Henrik Norlin
+# Copyright 2024 Henrik Norlin
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
@@ -10,6 +10,7 @@
         "security/ir.model.access.csv",
         "views/res_partner_views.xml",
         "views/teamm_views.xml",
+        # "data/teamm.xml",
     ],
     "depends": [
         "event_sale_resource_booking",
@@ -19,6 +20,7 @@
         "partner_firstname",
         # "partner_product_price",
         "resource_group",
+        "sale_start_end_dates",
     ],
     "development_status": "Alpha",
     "license": "AGPL-3",

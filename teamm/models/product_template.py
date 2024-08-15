@@ -6,6 +6,7 @@ class ProductTemplate(models.Model):
 
     @api.model
     def _teamm2odoo_values(self, kwargs):
+        # value_ids is formatted as odoo_values, not as kwargs
         odoo_values = super()._teamm2odoo_values(kwargs)
         Attribute = self.env["product.attribute"]
 

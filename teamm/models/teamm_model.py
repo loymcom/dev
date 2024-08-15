@@ -11,5 +11,6 @@ class TeamMModel(models.Model):
     sequence = fields.Integer()
     is_active = fields.Boolean()
     name = fields.Char()
-    primary_key = fields.Char()
-    values = fields.Char()
+    description = fields.Text()
+    primary_key = fields.Text()
+    values = fields.Text()
