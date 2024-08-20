@@ -7,7 +7,7 @@ import app_templates as t
 
 
 csv_file = sys.argv[1]
-csv_delimiter = ","
+csv_delimiter = ";"
 # csv_delimiter = sys.argv.get(2) or ","
 app_parent_path = ".."
 
@@ -181,10 +181,14 @@ def get_fields_py(model, fields):
             do_attr("inverse_name", "field.inverse_name", quote=True)
             do_attr("selection", "field.selection", quote=False)
             do_attr("groups", "field.groups", quote=True)
+            do_attr("model_field", "field.model_field", quote=True)
+            do_attr("copy", "field.copy", quote=False)
+            do_attr("required", "field.required", quote=False)
+            do_attr("definition", "field.definition", quote=True)
 
             fields_py.append(t.model_field.format(
                 field=field["field.underscore"],
-                ttype=field["field.type"].capitalize(),
+                ttype=field["field.type"],
                 attrs="".join(attrs_py),
             ))
     return "".join(fields_py)

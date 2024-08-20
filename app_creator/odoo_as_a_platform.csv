@@ -1,0 +1,27 @@
+app.underscore;model.dot;field.underscore;field.type;field.comodel_name;field.relation;field.inverse_name;field.selection;field.form;field.model_field;field.copy;field.required;field.definition
+odoo_as_a_platform;tags;name;Char;;;;;;;;;
+;;many2many_ids;Many2many;field.types;demo_model_tag_rel;;;;;;;
+;;one2many_ids;One2many;field.types;;required_many2one_id;;;;;;
+;;properties_definition;PropertiesDefinition;;;;;"invisible=""1""";;;;
+;field.types;required_many2one_id;Many2one;tags;;;;;;;True;
+;;properties;Properties;;;;;;;True;;required_many2one_id.properties_definition
+;;name;Char;;;;;;;;;
+;;multiline_text;Text;;;;;;;;;
+;;filename;Char;;;;;"invisible=""1""";;;;
+;;binary;Binary;;;;;"filename=""filename""";;;;
+;;boolean;Boolean;;;;;;;;;
+;;date_from;Date;;;;;"widget=""daterange"" options=""{'related_end_date': 'date_to'}""";;;;
+;;date_to;Date;;;;;"widget=""daterange"" options=""{'related_start_date': 'date_from'}""";;;;
+;;datetime_from;Datetime;;;;;"widget=""daterange"" options=""{'related_end_date': 'datetime_to'}""";;;;
+;;datetime_to;Datetime;;;;;"widget=""daterange"" options=""{'related_start_date': 'datetime_from'}""";;;;
+;;float;Float;;;;;;;;;
+;;html;Html;;;;;;;;;
+;;image;Image;;;;;"widget=""image"" options=""{'size': (64, 64)}""";;;;
+;;integer;Integer;;;;;;;;;
+;;integer_hide_zero;Integer;;;;;"widget=""char""";;;;
+;;currency_id;Many2one;res.currency;;;;;;;;
+;;price;Monetary;;;;;;;;;
+;;many2many_ids;Many2many;field.types;demo_model_tag_rel;;;"widget=""many2many_tags""";;;;
+;;reference;Reference;;;;[('res.partner', 'Contacts'), ('res.users', 'Users'), ('res.country', 'Countries')];;;;;
+;;model;Selection;;;;[('res.partner', 'Contacts'), ('res.users', 'Users'), ('res.country', 'Countries')];;;;;
+;;many2one_reference;Many2oneReference;;;;;;model;;;

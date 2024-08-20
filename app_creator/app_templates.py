@@ -6,7 +6,7 @@ manifest = """
         "security/ir.model.access.csv",
     ],
     "depends": [
-        "base",
+        "mail",
     ],
     "version": "1.0",
 }}
@@ -23,6 +23,7 @@ model = """from odoo import api, fields, models
 class {Model}(models.Model):
     _name = "{model}"
     _description = "{model}"
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 {fields_py}
 """
 
@@ -75,7 +76,12 @@ group_by = """
 
 sheet = """
                 <sheet>{content}
-                </sheet>"""
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>"""
 
 group = """
                     <group>{content}
