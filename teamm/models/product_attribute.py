@@ -13,6 +13,5 @@ class ProductAttribute(models.Model):
 
     @api.model
     def _teamm2odoo_values(self, kwargs):
-        create_variant = self._teamm2odoo_get_value("create variant") or "always"
-        kwargs["create_variant"] = create_variant
+        kwargs["create_variant"] = "always"
         return super()._teamm2odoo_values(kwargs)
