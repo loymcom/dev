@@ -27,7 +27,10 @@ class ProductAttributeValue(models.Model):
 
     @api.model
     def _teamm2odoo_values(self, kwargs):
-        booking_type = self.env["resource.booking.type"]._teamm2odoo_search()
+        odoo_values = super()._teamm2odoo_values(kwargs)
+        booking_type = self.env["resource.booking.type"].search(
+            [("name", "=", odoo_values["name"])]
+        )
         # TODO: Add support for multiple booking types
-        kwargs["resource_booking_type_ids"] = booking_type.ids
-        return super()._teamm2odoo_values(kwargs)
+        odoo_values["resource_booking_type_ids"] = booking_type.ids
+        return odoo_values

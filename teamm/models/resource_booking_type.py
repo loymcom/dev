@@ -35,7 +35,7 @@ class ResourceBookingType(models.Model):
             type = resource_group.resource_ids.combination_ids.type_rel_ids.type_id
             room_size = self._teamm2odoo_get_value("room size")
             if room_size and int(room_size) > 1:
-                room_sharing = self._teamm2odoo_get_value("Room sharing")
+                room_sharing = self._teamm2odoo_get_value("room sharing")
                 if room_sharing == "Share room":
                     type = type.filtered(lambda t: TeamM.SHARED_ROOM in t.name)
                 else:

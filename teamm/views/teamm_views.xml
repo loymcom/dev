@@ -89,6 +89,7 @@
                         </field>
                         <field name="date_format" attrs="{'invisible': [('src', '=', 'api')]}" />
                         <field name="csv_delimiter" />
+                        <field name="csv_file_name" invisible="1" />
                         <field name="csv_file" filename="csv_file_name" attrs="{'invisible': [('src', '!=', 'csv_file')]}" />
                         <field name="csv" attrs="{'invisible': [('src', '!=', 'csv_field')]}" />
                     </group>

@@ -23,7 +23,7 @@ class EventBookingCombination(models.Model):
     event_id = fields.Many2one("event.event")
     date_begin = fields.Datetime("Begin")
     date_end = fields.Datetime("End")
-    product_id = fields.Many2one("product.product")
+    product_id = fields.Many2one("product.product", required=True, ondelete="cascade")
     combination_id = fields.Many2one("resource.booking.combination")
 
     # Computed fields

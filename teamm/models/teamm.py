@@ -44,10 +44,16 @@ class TeamM(models.Model):
         "teamm.model",
         "teamm_id",
         string="Models",
+        copy=True,
         help="Active models will be imported. Import one at a time to see the result."
         "Description, Primary Key and Values are only for documentation."
     )
-    alias_ids = fields.One2many("teamm.alias", "teamm_id", string="Aliases")
+    alias_ids = fields.One2many(
+        "teamm.alias",
+        "teamm_id",
+        string="Aliases",
+        copy=True,
+    )
     url = fields.Char()
     param_ids = fields.One2many("teamm.param", "teamm_id", string="Params")
     csv_file = fields.Binary(string='CSV File')
@@ -94,6 +100,7 @@ class TeamM(models.Model):
         self.csv = ""
 
     def _action_import(self, teamm_values_list):
+        _logger.info(f"{self.name} begin import")
         record_ids = []
         begin, end = self.src_begin, self.src_end
         model_names = self.model_ids.filtered("is_active").mapped("name")
@@ -120,7 +127,7 @@ class TeamM(models.Model):
                 )
                 records = Model._teamm2odoo()
                 record_ids.extend(records.ids)
-
+        _logger.info(f"{self.name} end import")
         if len(model_names) == 1:
             return {
                 "type": "ir.actions.act_window",
@@ -137,7 +144,10 @@ class TeamM(models.Model):
     def _get_date(self, key):
         datestring = self._teamm2odoo_get_value(key)
         if datestring:
-            return datetime.strptime(datestring, self.env.context["teamm"].date_format)
+            date_format = self.env.context["teamm"].date_format
+            if not date_format:
+                raise UserError("Missing Date Format")
+            return datetime.strptime(datestring, date_format).date()
     
     def _get_datetime(self, key):
         date_string = self._teamm2odoo_get_value(key)

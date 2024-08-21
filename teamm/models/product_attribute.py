@@ -6,9 +6,9 @@ class ProductAttribute(models.Model):
 
     @api.model
     def _teamm2odoo_search_kwargs(self, kwargs):
-        discount = self.env.context.get("teamm_discount")
-        if discount:
-            kwargs |= {"name": self.env["teamm"].DISCOUNT}
+        # discount = self.env.context.get("teamm_discount")
+        # if discount:
+        #     kwargs |= {"name": self.env["teamm"].DISCOUNT}
         return super()._teamm2odoo_search_kwargs(kwargs)
 
     @api.model

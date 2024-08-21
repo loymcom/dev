@@ -105,7 +105,7 @@ class Base(models.AbstractModel):
         # E.g. a product template may have multiple product attributes.
         names = self._teamm2odoo_get_value(self._name)
         if names:
-            return [name.strip() for name in names.split(",")]
+            return [str(name).strip() for name in names.split(",")]
         else:
             return []
 
@@ -116,7 +116,8 @@ class Base(models.AbstractModel):
         # Get the first key found in teamm_values
         teamm_values = self.env.context["teamm_values"]
         key = next((k for k in try_keys if k in teamm_values), None)
-        return teamm_values.get(key)
+        assert key, f"not found: {try_keys}"
+        return teamm_values[key]
 
     def _teamm2odoo_after_create(self):
         pass

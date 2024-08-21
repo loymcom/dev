@@ -12,7 +12,7 @@ class EventEvent(models.Model):
     @api.model
     def _teamm2odoo_search_kwargs(self, kwargs):
         TeamM = self.env ["teamm"]
-        kwargs |= {"name": self._teamm2odoo_name()}
+        kwargs = super()._teamm2odoo_search_kwargs(kwargs)
 
         create_event = bool(self.env.context["teamm"].model_ids.filtered(lambda m: m.name == "event.event"))
         if create_event:

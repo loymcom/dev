@@ -11,21 +11,22 @@ class EventRegistration(models.Model):
 
     @api.model
     def _teamm2odoo_search_kwargs(self, kwargs):
-        event = self.env["event.event"]._teamm2odoo_search()
-        booking = self.env["resource.booking"]._teamm2odoo_search()
+        hubspot_deal_id = self._teamm2odoo_get_value("hubspot deal id")
         kwargs |= {
-            "event_id": event.id,
-            "resource_booking_id": booking.id,
+            "hubspot_deal_id": hubspot_deal_id,
         }
         return super()._teamm2odoo_search_kwargs(kwargs)
 
     @api.model
     def _teamm2odoo_values(self, kwargs):
-        first_name = self._teamm2odoo_get_value("first name")
-        last_name = self._teamm2odoo_get_value("last name")
-        name = "{} {}".format(first_name, last_name)
+        event = self.env["event.event"]._teamm2odoo_search()
+        booking = self.env["resource.booking"]._teamm2odoo_search()
         kwargs |= {
-            "name": name,
+            "name": booking.partner_id.name,
+            "email": booking.partner_id.email,
+            "phone": booking.partner_id.mobile,
+            "event_id": event.id,
+            "resource_booking_id": booking.id,
         }
         return super()._teamm2odoo_values(kwargs)
 

@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -17,10 +18,14 @@ def _parse_discounts(teamm_values):
             if key.lower().startswith("gavekort"):
                 key = "Gavekort"
             value = elements[-1]
-            if value[-1] == "%":
-                value = int(teamm_values["subtotal"]) * int(value[:-1]) / 100
-            else:
-                value = int(value)
+            try:
+                if value[-1] == "%":
+                    value = int(teamm_values["subtotal"]) * int(value[:-1]) / 100
+                else:
+                    value = int(value)
+            except:
+                hubspot_deal_id = teamm_values.get("hubspot deal id")
+                raise ValidationError(f"Discount: {discount}\nDeal: {hubspot_deal_id}")
             output.append(Discount(key, value))
     return output
 
@@ -38,10 +43,11 @@ class SaleOrderLine(models.Model):
     def _teamm2odoo(self):
         records = self._teamm2odoo_set_record()
 
-        discounts = _parse_discounts(self.env.context["teamm_values"])
-        for discount in discounts:
-            self = self.with_context(teamm_discount=discount)
-            records |= self._teamm2odoo_set_record()
+        # FIXME: Temporarily disabled discounts
+        # discounts = _parse_discounts(self.env.context["teamm_values"])
+        # for discount in discounts:
+        #     self = self.with_context(teamm_discount=discount)
+        #     records |= self._teamm2odoo_set_record()
 
         return records
 
@@ -59,14 +65,19 @@ class SaleOrderLine(models.Model):
     
     @api.model
     def _teamm2odoo_values(self, kwargs):
+        TeamM = self.env ["teamm"]
 
         # values
         product = self.env["product.product"]._teamm2odoo_search()
+        start_date = TeamM._get_date("from")
+        end_date = TeamM._get_date("to")
         if not len(product):
             debug = True
         kwargs |= {
             "name": product.name,
             "product_uom_qty": 1,
+            "start_date": start_date,
+            "end_date": end_date,
         }
 
         # conditional values

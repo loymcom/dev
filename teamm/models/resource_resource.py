@@ -33,9 +33,7 @@ class ResourceResource(models.Model):
     def _teamm2odoo_values(self, kwargs):
         kwargs = self._teamm2odoo_search_kwargs(kwargs)
 
-        calendar = self.env["resource.calendar"]._teamm2odoo_search()
-        if not len(calendar) == 1:
-            calendar = self.env.ref("event_sale_resource_booking.resource_calendar")
+        calendar = self.env.ref("event_sale_resource_booking.resource_calendar")
 
         group = self.env["resource.group"]._teamm2odoo_search()
 

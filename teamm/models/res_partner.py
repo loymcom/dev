@@ -11,7 +11,7 @@ class ResPartner(models.Model):
     def _teamm2odoo_search_kwargs(self, kwargs):
         hubspot_id = self._teamm2odoo_get_value("hubspot contact id")
         if hubspot_id:
-            kwargs |= {"ref": hubspot_id}
+            kwargs |= {"hubspot_contact_id": hubspot_id}
         else:
             # Without hubspot_id, don't return any contact.
             kwargs |= {"id": 0}
@@ -41,11 +41,10 @@ class ResPartner(models.Model):
             }
         else:             
             kwargs |= {
-                "ref": self._teamm2odoo_get_value("hubspot contact id"),
                 "firstname": self._teamm2odoo_get_value("first name"),
                 "lastname": self._teamm2odoo_get_value("last name"),
                 "email": self._teamm2odoo_get_value("email"),
-                "phone": self._teamm2odoo_get_value("phone"),
+                "mobile": self._teamm2odoo_get_value("phone"),
                 "street": self._teamm2odoo_get_value("street"),
                 "zip": self._teamm2odoo_get_value("zip"),
                 "city": self._teamm2odoo_get_value("city"),

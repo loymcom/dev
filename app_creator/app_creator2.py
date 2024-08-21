@@ -10,6 +10,7 @@ csv_file = sys.argv[1]
 csv_delimiter = ";"
 # csv_delimiter = sys.argv.get(2) or ","
 app_parent_path = ".."
+quotechar = ''
 
 # We say "app" instead of "module".
 
@@ -30,7 +31,7 @@ def csv2lists(csv_file):
     model_dot = ""
 
     with open(csv_file) as f:
-        reader = csv.DictReader(f, delimiter=csv_delimiter, quotechar='"')
+        reader = csv.DictReader(f, delimiter=csv_delimiter)
         lines = [d for d in reader]
         for counter, line in enumerate(lines):
             line = line_add_defaults(line)
