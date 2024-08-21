@@ -7,7 +7,7 @@ class TeamMModel(models.Model):
     _description = "teamm.model"
     _order = "sequence"
 
-    teamm_id = fields.Many2one("teamm")
+    teamm_id = fields.Many2one("teamm", ondelete="cascade")
     sequence = fields.Integer()
     is_active = fields.Boolean()
     name = fields.Char()

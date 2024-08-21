@@ -167,26 +167,29 @@ class TeamM(models.Model):
     }
 
     # product.product
-    DEFAULT_PROGRAM = "No program"
+    DEFAULT_PROGRAM = {
+        "en_US": "No program",
+        "nb_NO": "Uten program",
+    }
     # resource.booking.type(.combination.rel)
-    SHARED_ROOM = " (shared)"
+    SHARED_ROOM = {
+        "en_US": " (shared)",
+        "nb_NO": " (delt)",
+    }
 
     # Used for discount product and discount attribute
-    DISCOUNT = "Discount"
-
-    # # product.product (for product.attribute.value)
-    # # resoure.booking.type
-    # def room_booking_type_domain(self, teamm_values, field):
-    #     rooms = self.env["resource.resource"]._teamm2odoo_search(teamm_values)
-    #     name = rooms.category_id.name
-    #     beds = int(teamm_values["room size"])
-    #     if beds > 2 or (beds == 2 and teamm_values["room sharing"] == "Share room"):
-    #         name += self.SHARED_ROOM
-    #     return [(field, "=", name)]
+    DISCOUNT = {
+        "en_US": "Discount",
+        "nb_NO": "Rabatt",
+    }
+    UNKNOWN_DISCOUNT = {
+        "en_US": "Unknown",
+        "nb_NO": "Ukjent",
+    }
     
     def booking_type_shared(self):
         BookingType = self.env["resource.booking.type"]
-        name = BookingType._teamm2odoo_name() + self.SHARED_ROOM
+        name = BookingType._teamm2odoo_name() + self.SHARED_ROOM[self.env.lang]
         return name
 
     # resource.resource

@@ -19,7 +19,7 @@ class ProductAttributeValue(models.Model):
 
         discount = self.env.context.get("teamm_discount")
         if discount:
-            kwargs["name"] = discount.name
+            kwargs["name"] = discount[0]
         else:
             kwargs["name"] = self._teamm2odoo_name()
 

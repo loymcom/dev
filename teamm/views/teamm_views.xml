@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <data>
-    <!-- Views -->
     <record id="teamm_view_tree" model="ir.ui.view">
-        <field name="name">teamm</field>
+        <field name="name">teamm.view.tree</field>
         <field name="model">teamm</field>
         <field name="arch" type="xml">
             <tree>
@@ -16,7 +15,7 @@
         </field>
     </record>
     <record id="teamm_view_form" model="ir.ui.view">
-        <field name="name">teamm form</field>
+        <field name="name">teamm.view.form</field>
         <field name="model">teamm</field>
         <field name="arch" type="xml">
             <form>
@@ -42,16 +41,6 @@
                         bg_color="bg-danger"
                         attrs="{'invisible': [('active', '=', True)]}"
                     />
-                    <!-- <div class="oe_button_box" name="button_box">
-                        <button
-                            name="action_teamm"
-                            type="object"
-                            class="oe_stat_button"
-                            icon="fa-globe"
-                        >
-                            <span>Teamm Action</span>
-                        </button>
-                    </div> -->
                     <div class="oe_title">
                         <h1>
                             <field name="name" placeholder="Record Name" />
@@ -75,6 +64,7 @@
                         <field name="alias_ids">
                             <tree editable="bottom">
                                 <field name="teamm_id" invisible="1" />
+                                <field name="note" />
                                 <field name="name" />
                                 <field name="aliases" />
                             </tree>
@@ -111,14 +101,19 @@
             </search>
         </field>
     </record>
-    <!-- Actions -->
     <record id="teamm_action" model="ir.actions.act_window">
         <field name="name">Team M</field>
         <field name="res_model">teamm</field>
         <field name="view_mode">tree,form</field>
     </record>
     <menuitem
+        id="teamm_main_menu"
+        name="Team M"
+        sequence="10"
+    />
+    <menuitem
         id="teamm_menu"
+        parent="teamm_main_menu"
         name="Team M"
         action="teamm_action"
         sequence="10"

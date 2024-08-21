@@ -9,6 +9,8 @@
     "data": [
         "security/ir.model.access.csv",
         "views/teamm_views.xml",
+        "views/teamm_alias_views.xml",
+        "views/teamm_model_views.xml",
         # "data/teamm.xml",
     ],
     "depends": [

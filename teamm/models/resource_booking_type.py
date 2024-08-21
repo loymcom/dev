@@ -36,10 +36,11 @@ class ResourceBookingType(models.Model):
             room_size = self._teamm2odoo_get_value("room size")
             if room_size and int(room_size) > 1:
                 room_sharing = self._teamm2odoo_get_value("room sharing")
+                SHARED_ROOM = TeamM.SHARED_ROOM[self.env.lang]
                 if room_sharing == "Share room":
-                    type = type.filtered(lambda t: TeamM.SHARED_ROOM in t.name)
+                    type = type.filtered(lambda t: SHARED_ROOM in t.name)
                 else:
-                    type = type.filtered(lambda t: TeamM.SHARED_ROOM not in t.name)
+                    type = type.filtered(lambda t: SHARED_ROOM not in t.name)
                 kwargs["id"] = type.id
             else:
                 kwargs["id"] = type.id
