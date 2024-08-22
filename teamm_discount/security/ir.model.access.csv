@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_teamm_discount,teamm.discount,model_teamm_discount,base.group_user,1,1,1,1
+access_teamm_discount_product_variant,teamm.discount.product.variant,model_teamm_discount_product_variant,base.group_user,1,1,1,1
+access_teamm_discount_product,teamm.discount.product,model_teamm_discount_product,base.group_user,1,1,1,1

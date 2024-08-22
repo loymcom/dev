@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+        id="teamm_discount_main_menu"
+        parent=""
+        name="Teamm Discount"
+    />
+    <menuitem
+        id="teamm_discount_menu"
+        action="teamm_discount_action"
+        parent="teamm_discount_main_menu"
+        name="Teamm Discount"
+        sequence="1"
+    />
+    <menuitem
+        id="teamm_discount_product_variant_menu"
+        action="teamm_discount_product_variant_action"
+        parent="teamm_discount_main_menu"
+        name="Teamm Discount Product Variant"
+        sequence="5"
+    />
+    <menuitem
+        id="teamm_discount_product_menu"
+        action="teamm_discount_product_action"
+        parent="teamm_discount_main_menu"
+        name="Teamm Discount Product"
+        sequence="9"
+    />
+</odoo>
