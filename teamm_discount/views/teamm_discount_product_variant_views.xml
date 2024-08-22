@@ -10,7 +10,6 @@
                         <field name="name" />
                         <field name="discount_ids" />
                         <field name="product_id" />
-                        <field name="" />
                     </group>
                 </sheet>
                 <div class="oe_chatter">
@@ -29,7 +28,6 @@
                         <field name="name" optional="show" />
                         <field name="discount_ids" optional="show" />
                         <field name="product_id" optional="show" />
-                        <field name="" optional="show" />
             </tree>
         </field>
     </record>
@@ -64,7 +62,6 @@
                         <field name="name" />
                         <field name="discount_ids" />
                         <field name="product_id" />
-                        <field name="" />
                 <group string="Group By">
                     <filter
                         string="Name"
@@ -80,11 +77,6 @@
                         string="Product Id"
                         name="product_id"
                         context="{'group_by':'product_id'}"
-                    />
-                    <filter
-                        string=""
-                        name=""
-                        context="{'group_by':''}"
                     />
                 </group>
             </search>

@@ -14,5 +14,3 @@ class TeammDiscountProductVariant(models.Model):
     product_id = fields.Many2one(
         comodel_name="teamm.discount.product",
     )
-     = fields.(
-    )

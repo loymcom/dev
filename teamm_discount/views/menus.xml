@@ -10,20 +10,20 @@
         action="teamm_discount_action"
         parent="teamm_discount_main_menu"
         name="Teamm Discount"
-        sequence="1"
+        sequence="0"
     />
     <menuitem
         id="teamm_discount_product_variant_menu"
         action="teamm_discount_product_variant_action"
         parent="teamm_discount_main_menu"
         name="Teamm Discount Product Variant"
-        sequence="5"
+        sequence="3"
     />
     <menuitem
         id="teamm_discount_product_menu"
         action="teamm_discount_product_action"
         parent="teamm_discount_main_menu"
         name="Teamm Discount Product"
-        sequence="9"
+        sequence="6"
     />
 </odoo>

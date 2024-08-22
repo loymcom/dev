@@ -14,5 +14,3 @@ class TeammDiscount(models.Model):
         comodel_name="teamm.discount.product",
         related="variant_id.product_id",
     )
-     = fields.(
-    )
