@@ -7,10 +7,10 @@ class TeammDiscountProductVariant(models.Model):
 
     name = fields.Char(
     )
+    product_id = fields.Many2one(
+        comodel_name="teamm.discount.product",
+    )
     discount_ids = fields.One2many(
         comodel_name="teamm.discount",
         inverse_name="variant_id",
-    )
-    product_id = fields.Many2one(
-        comodel_name="teamm.discount.product",
     )
