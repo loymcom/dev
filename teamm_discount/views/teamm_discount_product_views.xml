@@ -83,7 +83,7 @@
         </field>
     </record>
     <record id="teamm_discount_product_action" model="ir.actions.act_window">
-        <field name="name">Teamm Discount Product</field>
+        <field name="name">Odoo Product</field>
         <field name="res_model">teamm.discount.product</field>
         <field name="view_mode">tree,kanban,pivot,form</field>
     </record>

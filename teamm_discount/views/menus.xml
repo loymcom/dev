@@ -16,14 +16,14 @@
         id="teamm_discount_product_variant_menu"
         action="teamm_discount_product_variant_action"
         parent="teamm_discount_main_menu"
-        name="Teamm Discount Product Variant"
+        name="Odoo Product Variant"
         sequence="3"
     />
     <menuitem
         id="teamm_discount_product_menu"
         action="teamm_discount_product_action"
         parent="teamm_discount_main_menu"
-        name="Teamm Discount Product"
+        name="Odoo Product"
         sequence="6"
     />
 </odoo>
