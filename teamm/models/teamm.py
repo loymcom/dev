@@ -162,7 +162,7 @@ class TeamM(models.Model):
                 name, amount = discount.split(": ")
             else:
                 name = discount
-                amount = total_discount
+                amount = total_discount[1:]  # remove minus
             # Remove codes
             name = re.sub(r'\s*\(.*?\)\s*', '', name)
             # Replace aliases
