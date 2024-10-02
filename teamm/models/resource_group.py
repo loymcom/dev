@@ -6,10 +6,10 @@ class ResourceGroup(models.Model):
 
     # FIXME: Hard-coded for Fredheim
     @api.model
-    def _teamm2odoo_search_kwargs(self, kwargs):
-        name = self._teamm2odoo_get_value("resource.group")
-        if len(name) == 1 or name == "Massage room":
-            kwargs |= {
-                "name": f"Spania rom {name}",
-            }
-        return super()._teamm2odoo_search_kwargs(kwargs)
+    def _teamm2odoo_get_value(self, key):
+        value = super()._teamm2odoo_get_value(key)
+        if key == "resource.group":
+            if len(value) == 1 or value == "Massage room":
+                return f"Spania rom {value}"
+            else:
+                return value
