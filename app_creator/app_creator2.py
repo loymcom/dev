@@ -186,6 +186,7 @@ def get_fields_py(model, fields):
             do_attr("copy", "field.copy", quote=False)
             do_attr("required", "field.required", quote=False)
             do_attr("definition", "field.definition", quote=True)
+            do_attr("related", "field.related", quote=True)
 
             fields_py.append(t.model_field.format(
                 field=field["field.underscore"],
@@ -208,7 +209,7 @@ def get_model_views_xml(model, fields):
         if field["model.dot"] == model_dot:
             form = field.get("field.form", "")
             tree = 'optional="show" '
-            if field["field.type"] in ("one2many", "many2many"):
+            if field["field.type"] in ("One2many", "Many2many"):
                 tree += 'widget="many2many_tags" '
             fld_underscore = "field.underscore"
             form_fields.append(t.field.format(field=field[fld_underscore], extra=form))
