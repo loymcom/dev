@@ -2,6 +2,7 @@
 {
     "name": "Teamm Discount",
     "data": [
+        "views/teamm_views.xml",
         "views/teamm_discount_views.xml",
         "views/teamm_discount_product_variant_views.xml",
         "views/teamm_discount_product_views.xml",
@@ -10,6 +11,7 @@
     ],
     "depends": [
         "mail",
+        "teamm",
     ],
     "version": "1.0",
 }

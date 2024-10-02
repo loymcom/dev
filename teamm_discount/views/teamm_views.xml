@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+    <record id="teamm_view_form" model="ir.ui.view">
+        <field name="name">teamm.view.form</field>
+        <field name="model">teamm</field>
+        <field name="inherit_id" ref="teamm.teamm_view_form" />
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button
+                    name="action_discounts_to_aliases"
+                    class="btn"
+                    string="Set discount aliases"
+                    type="object"
+                />
+            </header>
+        </field>
+    </record>
+</data>
