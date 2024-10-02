@@ -148,6 +148,8 @@ class TeamM(models.Model):
         total_discount = teamm_values.get("total discount")
         if not total_discount or total_discount == "0":
             return []
+        else:
+            total_discount = total_discount[1:]  # remove minus
 
         # Get string
         discounts = teamm_values.get("discounts")
@@ -162,7 +164,7 @@ class TeamM(models.Model):
                 name, amount = discount.split(": ")
             else:
                 name = discount
-                amount = total_discount[1:]  # remove minus
+                amount = total_discount
             # Remove codes
             name = re.sub(r'\s*\(.*?\)\s*', '', name)
             # Replace aliases
@@ -183,7 +185,10 @@ class TeamM(models.Model):
         return final_discounts
 
     def _replace_discount_amount(self, teamm_values, amount):
-        """ amount: string """
+        """
+        amount: string
+        return: float
+        """
         try:
             if amount[-1] == "%":
                 amount = float(teamm_values["subtotal"]) * float(amount[:-1]) / 100
