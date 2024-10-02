@@ -8,6 +8,9 @@ class SaleOrder(models.Model):
     def _teamm2odoo_values(self, kwargs):
         TeamM = self.env["teamm"]
         main_guest = self._teamm2odoo_get_value("main guest")
+        # FIXME: Hard-coded for Fredheim
+        if TeamM._get_date("from").year < 2024:
+            main_guest = True
         if main_guest in ("Yes", "SANN", "TRUE", True, 1):
             kwargs |= {
                 "name": self._teamm2odoo_name(),

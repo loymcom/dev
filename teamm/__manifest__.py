@@ -24,6 +24,7 @@
         "resource_group",
         "sale_start_end_dates",
         "sale_start_end_dates_inverse",
+        "website_event_sale_resource_booking", # resource.resource.combination_ids
     ],
     "development_status": "Alpha",
     "license": "AGPL-3",

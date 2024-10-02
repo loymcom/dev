@@ -6,7 +6,7 @@ _logger = logging.getLogger(__name__)
 
 class ResPartner(models.Model):
     _inherit = "res.partner"
-    
+
     @api.model
     def _teamm2odoo_search_kwargs(self, kwargs):
         hubspot_id = self._teamm2odoo_get_value("hubspot contact id")

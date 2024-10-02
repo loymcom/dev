@@ -62,7 +62,7 @@
                             </tree>
                         </field>
                         <field name="alias_ids">
-                            <tree editable="bottom">
+                            <tree editable="bottom" limit="1000">
                                 <field name="teamm_id" invisible="1" />
                                 <field name="note" />
                                 <field name="name" />
@@ -70,9 +70,10 @@
                             </tree>
                         </field>
                         <field name="url" attrs="{'invisible': [('src', '!=', 'api')]}" />
-                        <field name="param_ids" attrs="{'invisible': [('src', '!=', 'api')]}">
+                        <field name="param_ids">
                             <tree editable="bottom">
                                 <field name="teamm_id" invisible="1" />
+                                <field name="type" />
                                 <field name="key" />
                                 <field name="value" />
                             </tree>

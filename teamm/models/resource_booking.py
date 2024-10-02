@@ -81,8 +81,8 @@ class ResourceBooking(models.Model):
         combinations = self.env["resource.booking.combination"].search(
             [("resource_ids", "in", room.resource_ids.ids)]
         )
-        room_size = self._teamm2odoo_get_value("room size")
-        if room_size and int(room_size) > 1:
+        room_size = len(room.resource_ids)
+        if room_size > 1:
             room_sharing = self._teamm2odoo_get_value("room sharing")
             if room_sharing == "Share room":
                 combinations = combinations.filtered(lambda c: len(c.resource_ids) == 1)

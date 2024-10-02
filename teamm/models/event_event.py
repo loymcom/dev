@@ -34,7 +34,7 @@ class EventEvent(models.Model):
         }
         odoo_values = super()._teamm2odoo_values(kwargs)
 
-        # # FIXME: EVENT PRODUCT variable
+        # # TODO: Create event ticket
         # odoo_values |= {
         #     "event_ticket_ids": [
         #         fields.Command.create(
@@ -47,3 +47,18 @@ class EventEvent(models.Model):
         #     ],
         # }
         return odoo_values
+
+    @api.model
+    def _teamm2odoo_get_value(self, key):
+        if key == "event.event":
+            try:
+                year = self.env["teamm"]._get_date("from").year
+                if year == 2024:
+                    value = super()._teamm2odoo_get_value(key)
+                    return f"2024-{value}"
+                elif year < 2024:
+                    return f"{year}"
+            except AssertionError:
+                pass
+
+        return super()._teamm2odoo_get_value(key)

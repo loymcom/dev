@@ -6,6 +6,7 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="teamm_id" />
+                <field name="note" />
                 <field name="name" />
                 <field name="aliases" />
             </tree>
@@ -17,6 +18,7 @@
         <field name="arch" type="xml">
             <search>
                 <field name="teamm_id" />
+                <field name="note" />
                 <field name="name" />
                 <field name="aliases" />
             </search>

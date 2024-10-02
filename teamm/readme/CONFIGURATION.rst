@@ -23,11 +23,12 @@ CONTEXT
 Use context to send information from one method to another.
 
 Always available:
-    teamm Odoo record
-    teamm_aliases
     teamm_values
+    teamm_params
 Some places:
+    teamm_bed_counter
     teamm_discount (name, amount)
+    teamm_room_sharing
 
 
 METHODS

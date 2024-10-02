@@ -31,16 +31,16 @@ class ResourceBookingType(models.Model):
             if bed_counter > 0 and room_sharing == "Share room":
                 kwargs["name"] = self.env["teamm"].booking_type_shared()
         else:
-            resource_group = self.env["resource.group"]._teamm2odoo_search()
-            type = resource_group.resource_ids.combination_ids.type_rel_ids.type_id
-            room_size = self._teamm2odoo_get_value("room size")
-            if room_size and int(room_size) > 1:
+            room = self.env["resource.group"]._teamm2odoo_search()
+            type = room.resource_ids.combination_ids.type_rel_ids.type_id
+            room_size = len(room.resource_ids)
+            if room_size > 1:
                 room_sharing = self._teamm2odoo_get_value("room sharing")
-                SHARED_ROOM = TeamM.SHARED_ROOM[self.env.lang]
+                shared_room = self.env.context["teamm_params"]["shared_room"]
                 if room_sharing == "Share room":
-                    type = type.filtered(lambda t: SHARED_ROOM in t.name)
+                    type = type.filtered(lambda t: shared_room in t.name)
                 else:
-                    type = type.filtered(lambda t: SHARED_ROOM not in t.name)
+                    type = type.filtered(lambda t: shared_room not in t.name)
                 kwargs["id"] = type.id
             else:
                 kwargs["id"] = type.id

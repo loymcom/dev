@@ -14,18 +14,26 @@ class ProductProduct(models.Model):
 
         discount = self.env.context.get("teamm_discount")
         if discount:
-            if discount[0].lower().startswith("gavekort"):
-                debug = True
-            pav = self.env["product.attribute.value"]._teamm2odoo_search()
-            ptav = self.env["product.template.attribute.value"].search(
-                [("product_attribute_value_id", "=", pav.id)]
-            )
+            # # TODO: Someone may want discounts with variants
+            # if discount[0].lower().startswith("gavekort"):
+            #     debug = True
+            # pav = self.env["product.attribute.value"]._teamm2odoo_search()
+            # ptav = self.env["product.template.attribute.value"].search(
+            #     [("product_attribute_value_id", "=", pav.id)]
+            # )
+            # kwargs |= {
+            #     "name": TeamM.DISCOUNT[self.env.lang],
+            #     "product_template_attribute_value_ids": ptav.ids,
+            # }
             kwargs |= {
-                "name": TeamM.DISCOUNT[self.env.lang],
-                "product_template_attribute_value_ids": ptav.ids,
+                "name": discount[0],
             }
         else:
-            program_name = self._teamm2odoo_get_value("program") or TeamM.DEFAULT_PROGRAM[self.env.lang]
+            program_name = (
+                self._teamm2odoo_get_value("program")
+                or
+                self.env.context["teamm_params"]["default_program"]
+            )
             booking_type = self.env["resource.booking.type"]._teamm2odoo_search()
             kwargs |= {
                 "name": program_name,

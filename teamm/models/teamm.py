@@ -2,27 +2,30 @@ import base64
 import csv
 import logging
 import io
+import re
 import requests
 import pytz
 
 from datetime import datetime
 
 from odoo import api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 _logger = logging.getLogger(__name__)
 
 # TODO: replace KEY & VALUE with teamm.alias
-KEY = {
-    "Record ID - Contact - Hubspot": "hubspot contact id",
-    "Ordre nr. ": "sale.order",
-}
-VALUE = {
-    "NEWSTART Smal": "NEWSTART Sølv",
-    "Unlocx Pain Relife": "Unlocx Pain Relief",
-    "Stressmestrings seminar": "Stressmestring",
-    "! Not entered": "",
-}
+# KEY = {
+#     "Record ID - Contact - Hubspot": "hubspot contact id",
+#     "Ordre nr. ": "sale.order",
+# }
+# VALUE = {
+#     "NEWSTART Smal": "NEWSTART Sølv",
+#     "Unlocx Pain Relife": "Unlocx Pain Relief",
+#     "Stressmestrings seminar": "Stressmestring",
+#     "! Not entered": "",
+#     "Del rom": "Share room",
+#     "Privat": "Private",
+# }
 
 class TeamM(models.Model):
     _name = "teamm"
@@ -78,7 +81,7 @@ class TeamM(models.Model):
             "X-API-PUBLIC-KEY": Param.get_param("X-API-PUBLIC-KEY"),
             "X-API-APP-ID": Param.get_param("X-API-APP-ID"),
         }
-        params = {p.key: p.value for p in self.param_ids}
+        params = {p.key: p.value for p in self.param_ids if p.type == "api"}
         response = requests.get(self.url, headers=headers, params=params)
         if response.status_code != 200:
             raise UserError(response.text)
@@ -101,29 +104,33 @@ class TeamM(models.Model):
 
     def _action_import(self, teamm_values_list):
         _logger.info(f"{self.name} begin import")
+        aliases = {
+            alias_name: alias_record.name or ""
+            for alias_record in self.alias_ids
+            for alias_name in [a.strip() for a in alias_record.aliases.split(",")]
+        }
         record_ids = []
         begin, end = self.src_begin, self.src_end
         model_names = self.model_ids.filtered("is_active").mapped("name")
-        teamm_aliases = {
-            alias.name: [alias.name] + alias.aliases.split(",")
-            for alias in self.alias_ids
-        }
         for model_name in model_names:
             record_ids = []
             for i, teamm_values in enumerate(teamm_values_list, start=1):
                 if (begin and begin > i) or (end and end < i):
                     continue
-                # Keys: rename KEY-words, strip first/last spaces, lowercase
-                # Values: rename VALUE-words, strip first/last spaces
+                # Keys: replace alias, strip first/last spaces, lowercase
+                # Values: replace alias, strip first/last spaces
                 teamm_values = {
                     # Mismatch between CSV header and rows may cause error here
-                    KEY.get(key, key).strip().lower(): VALUE.get(val, val).strip()
+                    aliases.get(key.strip(), key).strip().lower():
+                    aliases.get(val.strip(), val).strip()
                     for key, val in teamm_values.items()
                 }
+                teamm_values["discounts"] = self.convert_discounts(teamm_values, aliases)
+                teamm_params = {p.key: p.value for p in self.param_ids if p.type == "code"}
                 Model = self.env[model_name].with_context(
                     teamm=self,
-                    teamm_aliases=teamm_aliases,
                     teamm_values=teamm_values,
+                    teamm_params=teamm_params,
                 )
                 records = Model._teamm2odoo()
                 record_ids.extend(records.ids)
@@ -136,6 +143,56 @@ class TeamM(models.Model):
                 "views": [[False, "tree"], [False, "form"]],
                 "domain": [("id", "in", record_ids)],
             }
+
+    def convert_discounts(self, teamm_values, aliases):
+        total_discount = teamm_values.get("total discount")
+        if not total_discount or total_discount == "0":
+            return []
+
+        # Get string
+        discounts = teamm_values.get("discounts")
+        # Convert to list
+        discounts = discounts.split(", ")
+        # Final discounts
+        final_discounts = []
+        for discount in discounts:
+            if "Total discount" in discount:
+                continue
+            if ": " in discount:
+                name, amount = discount.split(": ")
+            else:
+                name = discount
+                amount = total_discount
+            # Remove codes
+            name = re.sub(r'\s*\(.*?\)\s*', '', name)
+            # Replace aliases
+            name = aliases.get(name, name)
+            # Convert percentages
+            amount = self._replace_discount_amount(teamm_values, amount)
+            # Exclude "Total discount"
+            if name != "Total discount":
+                final_discounts.append((name, amount))
+
+        known_discount = sum(amount for _, amount in final_discounts)
+        unknown_discount = float(total_discount) - known_discount
+        if unknown_discount:
+            name = self.param_ids.filtered(
+                lambda p: p.type == "code" and p.key == "default_discount"
+            ).value
+            final_discounts.append((name, unknown_discount))
+        return final_discounts
+
+    def _replace_discount_amount(self, teamm_values, amount):
+        """ amount: string """
+        try:
+            if amount[-1] == "%":
+                amount = int(teamm_values["subtotal"]) * int(amount[:-1]) / 100
+            else:
+                amount = int(amount)
+            return amount
+        except:
+            hubspot_deal_id = teamm_values.get("hubspot deal id")
+            raise ValidationError(f"Discount error on deal {hubspot_deal_id}")
 
     #
     # Used by other models
@@ -165,35 +222,18 @@ class TeamM(models.Model):
         "F": "female",
         "M": "male",
     }
-
-    # product.product
-    DEFAULT_PROGRAM = {
-        "en_US": "No program",
-        "nb_NO": "Uten program",
-    }
-    # resource.booking.type(.combination.rel)
-    SHARED_ROOM = {
-        "en_US": " (shared)",
-        "nb_NO": " (delt)",
-    }
-
-    # Used for discount product and discount attribute
-    DISCOUNT = {
-        "en_US": "Discount",
-        "nb_NO": "Rabatt",
-    }
-    UNKNOWN_DISCOUNT = {
-        "en_US": "Unknown",
-        "nb_NO": "Ukjent",
-    }
     
     def booking_type_shared(self):
         BookingType = self.env["resource.booking.type"]
-        name = BookingType._teamm2odoo_name() + self.SHARED_ROOM[self.env.lang]
+        shared_room = self.param_ids.filtered(
+            lambda p: p.type == "code" and p.key == "shared_room"
+        ).value
+        name = BookingType._teamm2odoo_name() + shared_room
         return name
 
     # resource.resource
     def bed_name(self, num):
+        # TODO: Consider alternative naming
         # return "Room {standard} {number}".format(
         #     standard=teamm_values["resource.booking.type"].split()[0],
         #     number=teamm_values["resource.resource"],
@@ -201,12 +241,12 @@ class TeamM(models.Model):
 
         # Booking has "room" (number) and master data has "resource.resource"
         # TODO: Include "room name" when this becomes available?
-        # name = self._teamm2odoo_get(teamm_values, "room")
+        # name = self._teamm2odoo_get(teamm_values, "resource.group")
         teamm_values = self.env.context["teamm_values"]
         name = (
-            teamm_values.get("room") or 
-            teamm_values.get("resource.group") or
-            teamm_values.get("resource.resource")
+            # teamm_values.get("room") or 
+            # teamm_values.get("resource.resource") or
+            teamm_values.get("resource.group")
         )
         assert name
         name = "{name} {letter}".format(name=name, letter=chr(num + 64))

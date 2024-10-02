@@ -30,9 +30,10 @@ class ResourceBookingCombination(models.Model):
 
     @api.model
     def _teamm2odoo_search_kwargs(self, kwargs):
-        room_size = self._teamm2odoo_get_value("room size")
+        room = self.env["resource.group"]._teamm2odoo_search()
+        room_size = len(room.resource_ids)
         room_sharing = self.env.context.get("teamm_room_sharing")
-        if room_size and int(room_size) > 1:
+        if room_size > 1:
             if room_sharing == "Share room":
                 resources = self.env["resource.resource"]._teamm2odoo_search()
             else:

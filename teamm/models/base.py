@@ -58,7 +58,7 @@ class Base(models.AbstractModel):
                     for field, ids in x2many.items()
                 )
             )
-        assert len(record) in (0, 1), f"Error: multiple records: {str(record)}."
+        assert len(record) in (0, 1), f"Error: multiple records ({str(record)}) match the search {domain}."
         return record
     
     @api.model
@@ -111,13 +111,7 @@ class Base(models.AbstractModel):
 
     @api.model
     def _teamm2odoo_get_value(self, key):
-        # Get a key which exists in teamm_values. Search for the key and its aliases.
-        try_keys = self.env.context["teamm_aliases"].get(key, [key])
-        # Get the first key found in teamm_values
-        teamm_values = self.env.context["teamm_values"]
-        key = next((k for k in try_keys if k in teamm_values), None)
-        assert key, f"not found: {try_keys}"
-        return teamm_values[key]
+        return self.env.context["teamm_values"][key]
 
     def _teamm2odoo_after_create(self):
         pass
