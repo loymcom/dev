@@ -240,14 +240,7 @@ class TeamM(models.Model):
         # )
 
         # Booking has "room" (number) and master data has "resource.resource"
-        # TODO: Include "room name" when this becomes available?
-        # name = self._teamm2odoo_get(teamm_values, "resource.group")
-        teamm_values = self.env.context["teamm_values"]
-        name = (
-            # teamm_values.get("room") or 
-            # teamm_values.get("resource.resource") or
-            teamm_values.get("resource.group")
-        )
+        name = self._teamm2odoo_get_value("resource.group")
         assert name
         name = "{name} {letter}".format(name=name, letter=chr(num + 64))
         return name
