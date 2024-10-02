@@ -156,7 +156,7 @@ class TeamM(models.Model):
         # Final discounts
         final_discounts = []
         for discount in discounts:
-            if "Total discount" in discount:
+            if "total discount" in discount.lower():
                 continue
             if ": " in discount:
                 name, amount = discount.split(": ")

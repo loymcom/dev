@@ -6,4 +6,8 @@ class ProductTemplate(models.Model):
 
     @api.model
     def _teamm2odoo_values(self, kwargs):
+        kwargs |= {
+            "detailed_type": "service",
+            "taxes_id": [],
+        }
         return super()._teamm2odoo_values(kwargs)
