@@ -4,12 +4,12 @@
     <!-- EVENT BOOKING TYPE ETC. TO SEE EVENTS IN THE TIMELINE -->
 
     <record id="resource_resource_event_a" model="resource.resource">
-        <field name="name">Event Resource A</field>
+        <field name="name">EVENT RESOURCE A</field>
         <field name="resource_type">material</field>
         <field name="calendar_id" ref="event_sale_resource_booking.resource_calendar" />
     </record>
     <record id="resource_resource_event_b" model="resource.resource">
-        <field name="name">Event Resource B</field>
+        <field name="name">EVENT RESOURCE B</field>
         <field name="resource_type">material</field>
         <field name="calendar_id" ref="event_sale_resource_booking.resource_calendar" />
     </record>
