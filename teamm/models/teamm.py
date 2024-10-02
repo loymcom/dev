@@ -186,9 +186,9 @@ class TeamM(models.Model):
         """ amount: string """
         try:
             if amount[-1] == "%":
-                amount = int(teamm_values["subtotal"]) * int(amount[:-1]) / 100
+                amount = float(teamm_values["subtotal"]) * float(amount[:-1]) / 100
             else:
-                amount = int(amount)
+                amount = float(amount)
             return amount
         except:
             hubspot_deal_id = teamm_values.get("hubspot deal id")
