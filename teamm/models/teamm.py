@@ -230,17 +230,3 @@ class TeamM(models.Model):
         ).value
         name = BookingType._teamm2odoo_name() + shared_room
         return name
-
-    # resource.resource
-    def bed_name(self, num):
-        # TODO: Consider alternative naming
-        # return "Room {standard} {number}".format(
-        #     standard=teamm_values["resource.booking.type"].split()[0],
-        #     number=teamm_values["resource.resource"],
-        # )
-
-        # Booking has "room" (number) and master data has "resource.resource"
-        name = self._teamm2odoo_get_value("resource.group")
-        assert name
-        name = "{name} {letter}".format(name=name, letter=chr(num + 64))
-        return name

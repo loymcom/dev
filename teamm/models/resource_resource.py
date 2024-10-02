@@ -21,15 +21,6 @@ class ResourceResource(models.Model):
         return records
 
     @api.model
-    def _teamm2odoo_search_kwargs(self, kwargs):
-        counter = self.env.context.get("teamm_bed_counter")
-        if counter:
-            kwargs["name"] = self.env["teamm"].bed_name(counter)
-        else:
-            kwargs["name"] = self.env["resource.group"]._teamm2odoo_search().name
-        return super()._teamm2odoo_search_kwargs(kwargs)
-
-    @api.model
     def _teamm2odoo_values(self, kwargs):
         kwargs = self._teamm2odoo_search_kwargs(kwargs)
 
@@ -44,3 +35,15 @@ class ResourceResource(models.Model):
         }
 
         return super()._teamm2odoo_values(kwargs)
+        
+    @api.model
+    def _teamm2odoo_name(self):
+        room_name = self.env["resource.group"]._teamm2odoo_name()
+        counter = self.env.context.get("teamm_bed_counter")
+        if counter:
+            # TODO: Someone may want to change this naming convention
+            name = f"{room_name} {chr(counter + 64)}"
+        else:
+            name = room_name
+        self = self.with_context(**{"resource.resource": name})
+        return super()._teamm2odoo_name()
