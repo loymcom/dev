@@ -8,7 +8,7 @@ class ResourceGroup(models.Model):
     @api.model
     def _teamm2odoo_search_kwargs(self, kwargs):
         name = self._teamm2odoo_get_value("resource.group")
-        if len(name) == 1:
+        if len(name) == 1 or name == "Massage room":
             kwargs |= {
                 "name": f"Spania rom {name}",
             }
