@@ -10,7 +10,7 @@ class ResourceBookingType(models.Model):
 
         beds = self._teamm2odoo_get_value("room size")
         if beds and int(beds) > 1:
-            name = self.env["teamm"].booking_type_shared()
+            name = self._teamm2odoo_booking_type_shared()
             self = self.with_context(**{"resource.booking.type": name})
             records |= self._teamm2odoo_set_record()
 
@@ -29,7 +29,7 @@ class ResourceBookingType(models.Model):
             bed_counter = self.env.context.get("teamm_bed_counter", 0)
             room_sharing = self.env.context.get("teamm_room_sharing")
             if bed_counter > 0 and room_sharing == "Share room":
-                kwargs["name"] = self.env["teamm"].booking_type_shared()
+                kwargs["name"] = self._teamm2odoo_booking_type_shared()
         else:
             room = self.env["resource.group"]._teamm2odoo_search()
             type = room.resource_ids.combination_ids.type_rel_ids.type_id
@@ -52,3 +52,9 @@ class ResourceBookingType(models.Model):
         calendar = self.env.ref("event_sale_resource_booking.resource_calendar")
         kwargs["resource_calendar_id"] = calendar.id
         return super()._teamm2odoo_values(kwargs)
+
+    @api.model
+    def _teamm2odoo_booking_type_shared(self):
+        shared_room = self.env.context["teamm_params"]["shared_room"]
+        name = self._teamm2odoo_name() + " " + shared_room
+        return name

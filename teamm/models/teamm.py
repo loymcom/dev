@@ -216,17 +216,3 @@ class TeamM(models.Model):
         utc_date = local_date.astimezone(pytz.utc)
         naive_date = utc_date.replace(tzinfo=None)
         return naive_date
-
-    # res.partner
-    GENDER = {
-        "F": "female",
-        "M": "male",
-    }
-    
-    def booking_type_shared(self):
-        BookingType = self.env["resource.booking.type"]
-        shared_room = self.param_ids.filtered(
-            lambda p: p.type == "code" and p.key == "shared_room"
-        ).value
-        name = BookingType._teamm2odoo_name() + shared_room
-        return name

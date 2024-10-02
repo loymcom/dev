@@ -50,6 +50,7 @@ class EventEvent(models.Model):
 
     @api.model
     def _teamm2odoo_get_value(self, key):
+        # FIXME: Hard-coded for Fredheim
         if key == "event.event":
             try:
                 year = self.env["teamm"]._get_date("from").year

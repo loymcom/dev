@@ -61,7 +61,8 @@ class ResourceBooking(models.Model):
             start = TeamM._get_datetime("from")
             stop = TeamM._get_datetime("to")
             if not len(partner) or not len(product) or not len(combination) or not len(booking_type):
-                raise ValidationError(f"Missing info:\nContact: {partner}\nProduct: {product}\nCombination: {combination}\nBooking Type: {booking_type}")
+                hubspot_deal_id = self._teamm2odoo_get_value("hubspot deal id")
+                raise ValidationError(f"Missing info for hubspot deal id {hubspot_deal_id}:\nContact: {partner}\nProduct: {product}\nCombination: {combination}\nBooking Type: {booking_type}")
 
             kwargs |= {
                 "name": partner.name,

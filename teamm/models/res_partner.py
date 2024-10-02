@@ -3,6 +3,11 @@ from odoo import _, api, fields, models
 import logging
 _logger = logging.getLogger(__name__)
 
+GENDER = {
+    "F": "female",
+    "M": "male",
+}
+
 
 class ResPartner(models.Model):
     _inherit = "res.partner"
@@ -51,7 +56,7 @@ class ResPartner(models.Model):
                 "country_id": country.id,
                 "category_id": categories.ids,
                 "birthdate_date": TeamM._get_date("birth date"),
-                "gender": TeamM.GENDER.get(self._teamm2odoo_get_value("gender")),
+                "gender": GENDER.get(self._teamm2odoo_get_value("gender")),
                 # "x_new_guest_year": values["new guest year"],
             }
         return super()._teamm2odoo_values(kwargs)
