@@ -37,6 +37,10 @@ class ResourceBooking(models.Model):
             # room_sharing = self._teamm2odoo_get_value("room sharing")
             # assert room_sharing in ("Private", "Share room")
             hubspot_deal_id = self._teamm2odoo_get_value("hubspot deal id")
+            if not hubspot_deal_id:
+                raise ValidationError(
+                    f"hubspot deal id is missing: {self.env.context['teamm_values']}"
+                )
             kwargs |= {
                 "hubspot_deal_id": hubspot_deal_id,
             }

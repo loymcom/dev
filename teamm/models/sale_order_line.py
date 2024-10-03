@@ -42,6 +42,9 @@ class SaleOrderLine(models.Model):
         product = self.env["product.product"]._teamm2odoo_search()
         start_date = TeamM._get_date("from")
         end_date = TeamM._get_date("to")
+        event = self.env["event.event"]._teamm2odoo_search()
+        event_registration = self.env["event.registration"]._teamm2odoo_search()
+        hubspot_deal_id = self._teamm2odoo_get_value("hubspot deal id")
         if not len(product):
             debug = True
         kwargs |= {
@@ -50,6 +53,9 @@ class SaleOrderLine(models.Model):
             "start_date": start_date,
             "end_date": end_date,
             "currency_id": self.env.company.currency_id.id,
+            "event_id": event.id,
+            "event_registration_id": event_registration.id,
+            "hubspot_deal_id": hubspot_deal_id,
         }
 
         # conditional values
@@ -64,6 +70,20 @@ class SaleOrderLine(models.Model):
 
     @api.model
     def _teamm2odoo_after_create(self):
+        return self._teamm2odoo_after_create_or_write()
+
+    @api.model
+    def _teamm2odoo_after_write(self):
+        return self._teamm2odoo_after_create_or_write()
+
+    @api.model
+    def _teamm2odoo_after_create_or_write(self):
         record = self.filtered("product_id.resource_booking_type_id")
         record.resource_booking_id.sale_order_line_id = record.id
         record.resource_booking_id.sale_order_id = record.order_id.id
+        record.event_registration_id.sale_order_line_id = record.id
+        record.event_registration_id.sale_order_id = record.order_id.id
+
+        # FIXME: Hard-coded for Fredheim
+        if self.start_date.year < 2024:
+            self.order_id.invoice_status = ""
