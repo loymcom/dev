@@ -44,7 +44,6 @@ class ResourceBooking(models.Model):
             kwargs |= {
                 "hubspot_deal_id": hubspot_deal_id,
             }
-        # Identify a resource_booking
 
         return super()._teamm2odoo_search_kwargs(kwargs)
 

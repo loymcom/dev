@@ -57,6 +57,5 @@ class ResPartner(models.Model):
                 "category_id": categories.ids,
                 "birthdate_date": TeamM._get_date("birth date"),
                 "gender": GENDER.get(self._teamm2odoo_get_value("gender")),
-                # "x_new_guest_year": values["new guest year"],
             }
         return super()._teamm2odoo_values(kwargs)

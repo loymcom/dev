@@ -102,6 +102,14 @@ class TeamM(models.Model):
     def action_clear_csv(self):
         self.csv = ""
 
+    def action_select_all_models(self):
+        for model in self.model_ids:
+            model.is_active = True
+
+    def action_deselect_all_models(self):
+        for model in self.model_ids:
+            model.is_active = False
+
     def _action_import(self, teamm_values_list):
         _logger.info(f"{self.name} begin import")
         aliases = {

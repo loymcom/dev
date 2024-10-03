@@ -6,12 +6,12 @@
         <field name="inherit_id" ref="teamm.teamm_view_form" />
         <field name="arch" type="xml">
             <header position="inside">
-                <button
+                <!-- <button
                     name="action_discounts_to_aliases"
                     class="btn"
                     string="Set discount aliases"
                     type="object"
-                />
+                /> -->
             </header>
         </field>
     </record>

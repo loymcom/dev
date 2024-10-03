@@ -38,9 +38,6 @@ class SaleOrderLine(models.Model):
     def _teamm2odoo_values(self, kwargs):
         TeamM = self.env ["teamm"]
 
-        # "resource_booking_ids" is necessary because
-        # _sync_resource_bookings() needs it before the order line is saved.
-
         # values
         product = self.env["product.product"]._teamm2odoo_search()
         start_date = TeamM._get_date("from")
@@ -59,17 +56,18 @@ class SaleOrderLine(models.Model):
             "currency_id": self.env.company.currency_id.id,
             "event_id": event.id,
             "event_registration_id": event_registration.id,
-            "resource_booking_ids": [(fields.Command.set([booking.id]))],
             "hubspot_deal_id": hubspot_deal_id,
         }
 
         # conditional values
         discount = self.env.context.get("teamm_discount")
         if discount:
-            price_unit = -discount[1]
+            kwargs["price_unit"] = -discount[1]
         else:
-            price_unit = self._teamm2odoo_get_value("subtotal")
-        kwargs ["price_unit"] = price_unit
+            kwargs["price_unit"] = self._teamm2odoo_get_value("subtotal")
+            kwargs["resource_booking_ids"] = [(fields.Command.set([booking.id]))]
+            # "resource_booking_ids" is necessary because
+            # _sync_resource_bookings() needs it before the order line is saved.
         
         return super()._teamm2odoo_values(kwargs)
 

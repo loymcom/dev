@@ -35,7 +35,13 @@ class Base(models.AbstractModel):
 
     @api.model
     def _teamm2odoo_values(self, kwargs):
+        # Add param fields
+        for model_field in self._teamm2odoo_fields():
+            field = model_field.replace(self._name + ".", "")
+            kwargs[field] = self._teamm2odoo_get_value(model_field)
+        # Add search fields
         odoo_values = self._teamm2odoo_search_kwargs({}) | kwargs
+        # Handle many2many
         for x2many_field, ids in self._teamm2odoo_x2many(odoo_values).items():
             if self._fields[x2many_field].type =="many2many":
                 # This makes odoo_values different than kwargs
@@ -115,3 +121,20 @@ class Base(models.AbstractModel):
 
     def _teamm2odoo_after_create_or_write(self):
         pass
+
+    def _teamm2odoo_fields(self):
+        """ TODO: teamm_fields with model, field, alias
+        Params may be used to define fields to import.
+        type:   code
+        key:    model.name
+        value:  field1, field2
+
+        Aliases may be used to convert CSV header to model.name.field1
+        name:   model.name.field1
+        aliases:CSV header
+        """
+        fields = self.env.context["teamm_params"].get(self._name)
+        if fields:
+            return [f"{self._name}.{field.strip()}" for field in fields.split(",")]
+        else:
+            return []
