@@ -1,0 +1,10 @@
+app.underscore;model.dot;field.underscore;field.type;field.comodel_name;field.inverse_name;field.form;field.related
+teamm_discount;teamm.discount;name;Char;;;;
+;;variant_id;Many2one;teamm.discount.product.variant;;;
+;;product_id;Many2one;teamm.discount.product;;;variant_id.product_id
+;teamm.discount.product.variant;name;Char;;;;
+;;product_id;Many2one;teamm.discount.product;;;
+;;discount_ids;One2many;teamm.discount;variant_id;"widget=""many2many_tags""";
+;teamm.discount.product;name;Char;;;;
+;;variant_ids;One2many;teamm.discount.product.variant;product_id;"widget=""many2many_tags""";
+;;discount_ids;One2many;teamm.discount;;"widget=""many2many_tags""";variant_ids.discount_ids
