@@ -1,8 +1,6 @@
 from dateutil.relativedelta import relativedelta
 
-from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
-from odoo.tools.misc import format_date
+from odoo import fields, models
 
 
 class SaleOrderLine(models.Model):
