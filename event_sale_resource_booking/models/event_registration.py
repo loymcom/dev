@@ -12,14 +12,14 @@ class EventRegistration(models.Model):
     )
     product_id = fields.Many2one(
         "product.product",
-        # related="resource_booking_id.product_id",
         readonly=False,
+        help="Online registration: Select product"
     )
     resource_booking_combination_id = fields.Many2one(
         "resource.booking.combination",
-        # related="resource_booking_id.combination_id",
         readonly=False,
         string="Booked",
+        help="Online registration: Select combination"
     )
 
     """ SET RESOURCE BOOKING """
@@ -33,8 +33,8 @@ class EventRegistration(models.Model):
             if booking_vals:
                 booking = self.env['resource.booking'].create(booking_vals)
                 vals["resource_booking_id"] = booking.id
-                vals.pop("product_id")
-                vals.pop("resource_booking_combination_id")
+                # vals.pop("product_id")
+                # vals.pop("resource_booking_combination_id")
         return super(EventRegistration, self).create(vals)
 
     def write(self, vals):
@@ -48,8 +48,8 @@ class EventRegistration(models.Model):
                     else:
                         booking = self.env['resource.booking'].create(booking_vals)
                     vals["resource_booking_id"] = booking.id
-                vals.pop("product_id")
-                vals.pop("resource_booking_combination_id")
+                # vals.pop("product_id")
+                # vals.pop("resource_booking_combination_id")
         return super().write(vals)
 
     def _get_booking_vals(self, vals):

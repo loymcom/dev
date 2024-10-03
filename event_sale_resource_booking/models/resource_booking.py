@@ -12,6 +12,10 @@ class ResourceBooking(models.Model):
         "event.registration",
         ondelete="cascade",
     )
+    event_id = fields.Many2one(
+        "event.event",
+        related="event_registration_id.event_id",
+    )
 
     def _get_available_slots(self, start_dt, end_dt):
         result = super()._get_available_slots(start_dt, end_dt)

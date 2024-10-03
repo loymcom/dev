@@ -12,13 +12,15 @@
         "views/event_registration_views.xml",
         "views/product_template_views.xml",
         "views/resource_booking_views.xml",
+        "views/sale_order_line_views.xml",
+        "views/sale_order_views.xml",
     ],
     "depends": [
         "event",
         "sale_resource_booking",
     ],
     "license": "AGPL-3",
-    "maintainers": ["ows-cloud"],
+    "maintainers": ["norlinhenrik"],
     "version": "16.0.1.0.0",
     "website": "https://github.com/OCA/sale-workflow",
 }
