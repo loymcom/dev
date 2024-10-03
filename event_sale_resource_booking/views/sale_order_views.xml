@@ -5,10 +5,8 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
-            <xpath 
-                expr="//field[@name='order_line']//tree//field[@name='product_template_id']"
-                position="after"
-            >
+            <xpath expr="//field[@name='order_line']//tree//field[@name='product_template_id']" position="after">
+                <field name="resource_booking_ids" optional="hide" widget="many2many_tags"/>
                 <field name="event_registration_id" optional="hide" />
             </xpath>
         </field>

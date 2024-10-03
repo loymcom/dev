@@ -28,10 +28,9 @@ class Base(models.AbstractModel):
         if odoo_values:
             if len(record) == 1:
                 record.write(odoo_values)
-                record._teamm2odoo_after_write()
             else:
                 record = record.create(odoo_values)
-                record._teamm2odoo_after_create()
+            record._teamm2odoo_after_create_or_write()
         return record
 
     @api.model
@@ -114,8 +113,5 @@ class Base(models.AbstractModel):
     def _teamm2odoo_get_value(self, key):
         return self.env.context["teamm_values"][key]
 
-    def _teamm2odoo_after_create(self):
-        pass
-
-    def _teamm2odoo_after_write(self):
+    def _teamm2odoo_after_create_or_write(self):
         pass

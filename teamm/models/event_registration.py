@@ -37,9 +37,10 @@ class EventRegistration(models.Model):
             "resource_booking_id": booking.id,
             "resource_booking_combination_id": combination.id,
             "product_id": product.id,
+            "state": "done",
         }
         return super()._teamm2odoo_values(kwargs)
 
-    def _teamm2odoo_after_create(self):
+    def _teamm2odoo_after_create_or_write(self):
         booking = self.env["resource.booking"]._teamm2odoo_search()
         booking.event_registration_id = self.id

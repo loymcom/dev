@@ -13,8 +13,8 @@ class ResourceBooking(models.Model):
     def _teamm2odoo_search_kwargs(self, kwargs):
         TeamM = self.env ["teamm"]
 
-        create_event = bool(self.env.context["teamm"].model_ids.filtered(lambda m: m.name == "event.event"))
-        if create_event:
+        create_event = self.env.context["teamm_params"].get("create_event", "0")
+        if int(create_event):
             # Identify a resource booking representing the event in timeline
             partner = self.env["res.partner"]._teamm2odoo_search()
             booking_type = self.env["resource.booking.type"]._teamm2odoo_search()
@@ -51,8 +51,8 @@ class ResourceBooking(models.Model):
     @api.model
     def _teamm2odoo_values(self, kwargs):
         TeamM = self.env ["teamm"]
-        create_event = bool(self.env.context["teamm"].model_ids.filtered(lambda m: m.name == "event.event"))
-        if create_event:
+        create_event = self.env.context["teamm_params"].get("create_event", "0")
+        if int(create_event):
             kwargs |= {
                 "name": self.env["event.event"]._teamm2odoo_name(),
                 "combination_auto_assign": 1,
@@ -119,3 +119,6 @@ class ResourceBooking(models.Model):
                 debug = True
         assert len(combination) == 1, f"{str(combinations)} - probably missing room size or room sharing."
         return combination
+
+    def _teamm2odoo_after_create_or_write(self):
+        self.action_confirm()

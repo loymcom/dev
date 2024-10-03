@@ -18,6 +18,7 @@ class SaleOrder(models.Model):
                 "name": self._teamm2odoo_name(),
                 "partner_id": self.env["res.partner"]._teamm2odoo_search().id,
                 "date_order": TeamM._get_date("booked at"),
+                "state": "sale",
             }
 
             # FIXME: Hard-coded for Fredheim

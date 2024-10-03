@@ -14,8 +14,8 @@ class EventEvent(models.Model):
         TeamM = self.env ["teamm"]
         kwargs = super()._teamm2odoo_search_kwargs(kwargs)
 
-        create_event = bool(self.env.context["teamm"].model_ids.filtered(lambda m: m.name == "event.event"))
-        if create_event:
+        create_event = self.env.context["teamm_params"].get("create_event", "0")
+        if int(create_event):
             kwargs |= {
                 "date_begin": TeamM._get_datetime("from"),
                 "date_end": TeamM._get_datetime("to"),

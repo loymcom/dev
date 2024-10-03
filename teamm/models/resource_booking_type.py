@@ -19,13 +19,13 @@ class ResourceBookingType(models.Model):
     @api.model
     def _teamm2odoo_search_kwargs(self, kwargs):
         TeamM = self.env["teamm"]
-        create_event = bool(self.env.context["teamm"].model_ids.filtered(lambda m: m.name == "event.event"))
-        create_resource = bool(self.env.context["teamm"].model_ids.filtered(lambda m: m.name == "resource.resource"))
-        if create_event:
+        create_event = self.env.context["teamm_params"].get("create_event", "0")
+        create_resource = self.env.context["teamm_params"].get("create_resource", "0")
+        if int(create_event):
             kwargs["id"] = self.env.ref(
                 "event_sale_resource_booking_timeline.resource_booking_type_event"
             ).id
-        elif create_resource:
+        elif int(create_resource):
             bed_counter = self.env.context.get("teamm_bed_counter", 0)
             room_sharing = self.env.context.get("teamm_room_sharing")
             if bed_counter > 0 and room_sharing == "Share room":

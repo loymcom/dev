@@ -1,4 +1,4 @@
-from odoo import _, api, models
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 import logging
@@ -38,12 +38,16 @@ class SaleOrderLine(models.Model):
     def _teamm2odoo_values(self, kwargs):
         TeamM = self.env ["teamm"]
 
+        # "resource_booking_ids" is necessary because
+        # _sync_resource_bookings() needs it before the order line is saved.
+
         # values
         product = self.env["product.product"]._teamm2odoo_search()
         start_date = TeamM._get_date("from")
         end_date = TeamM._get_date("to")
         event = self.env["event.event"]._teamm2odoo_search()
         event_registration = self.env["event.registration"]._teamm2odoo_search()
+        booking = self.env["resource.booking"]._teamm2odoo_search()
         hubspot_deal_id = self._teamm2odoo_get_value("hubspot deal id")
         if not len(product):
             debug = True
@@ -55,6 +59,7 @@ class SaleOrderLine(models.Model):
             "currency_id": self.env.company.currency_id.id,
             "event_id": event.id,
             "event_registration_id": event_registration.id,
+            "resource_booking_ids": [(fields.Command.set([booking.id]))],
             "hubspot_deal_id": hubspot_deal_id,
         }
 
@@ -67,14 +72,6 @@ class SaleOrderLine(models.Model):
         kwargs ["price_unit"] = price_unit
         
         return super()._teamm2odoo_values(kwargs)
-
-    @api.model
-    def _teamm2odoo_after_create(self):
-        return self._teamm2odoo_after_create_or_write()
-
-    @api.model
-    def _teamm2odoo_after_write(self):
-        return self._teamm2odoo_after_create_or_write()
 
     @api.model
     def _teamm2odoo_after_create_or_write(self):

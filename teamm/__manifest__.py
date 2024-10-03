@@ -21,8 +21,9 @@
         "partner_contact_gender",
         "partner_firstname",
         # "partner_product_price",
+        "resource_booking_inverse",
         "resource_group",
-        "sale_invoice_status_inverse",
+        "sale_inverse",
         "sale_start_end_dates",
         "sale_start_end_dates_inverse",
         "website_event_sale_resource_booking", # resource.resource.combination_ids
