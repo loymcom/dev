@@ -5,3 +5,11 @@ class ResPartner(models.Model):
 
 
     hubspot_contact_id = fields.Char()
+
+    _sql_constraints = [
+        (
+            "hubspot_unique",
+            "unique (hubspot_contact_id)",
+            "Hubspot Contact ID must be unique!",
+        )
+    ]
