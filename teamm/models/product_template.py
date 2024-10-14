@@ -9,5 +9,6 @@ class ProductTemplate(models.Model):
         kwargs |= {
             "detailed_type": "service",
             "taxes_id": [],
+            "must_have_dates": True,
         }
         return super()._teamm2odoo_values(kwargs)
