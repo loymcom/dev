@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<odoo>
+<odoo noupdate="1">
 
     <!-- EVENT BOOKING CALENDAR - AVAILABLE 24/7 -->
 
     <record id="resource_calendar" model="resource.calendar">
-        <field name="name">Event Booking Calendar</field>
+        <field name="name">EVENT BOOKING CALENDAR</field>
         <field name="attendance_ids" eval="[(6, 0, [])]" />
     </record>
     <record id="resource_calendar_monday" model="resource.calendar.attendance">
